@@ -1,11 +1,11 @@
 import React from 'react';
 
-const Index = () => {
+const MyNfts = () => {
     return (
         <div>
-            LoanNFT
+            Horror Scene
         </div>
     );
 };
 
-export default Index;
+export default MyNfts;
