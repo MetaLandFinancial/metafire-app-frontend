@@ -3,14 +3,19 @@ import Hero from "./Hero";
 import Financing from "./Financing";
 import Works from "./Works";
 import Faq from "./Faq";
+import Collaction from "./Collaction";
+
 // import Accordion from "./AccordionItem ";
 
 const page = () => {
   return (
     <div>
       <Hero />
-      <Financing />
-      <Works />
+      <Collaction />
+      <div className="relative before:content-[''] before:bg-[url('/img/financeWork.png')] before:absolute before:z-[-2] before:top-0 before:bottom-0 before:left-0 before:right-0 full w-full">
+        <Financing />
+        <Works />
+      </div>
       <Faq />
       {/* <Accordion /> */}
     </div>

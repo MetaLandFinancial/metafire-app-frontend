@@ -29,13 +29,17 @@ const Works = () => {
                       through our smart contract financing option.
                     </p>
                   </div>
-                  <div className="w-full max-h-[170px] md:max-h-[270px] lg:max-h-[300px] xl:max-h-[348px] max-w-[170px] md:max-w-[270px] lg:max-w-[300px] xl:max-w-[348px] mt-16 md:mt-0">
-                    <Image src={w1} alt="w1" />
+                  <div className="w-full max-h-[170px] md:max-h-[220px] lg:max-h-[280px] xl:max-h-[348px] max-w-[170px] md:max-w-[220px] lg:max-w-[280px] xl:max-w-[348px] mt-16 md:mt-0">
+                    <Image
+                      src={w1}
+                      alt="w1"
+                      className="max-w-full h-full w-full"
+                    />
                   </div>
                 </div>
               </div>
               <div className="workBanner">
-                <div className="w-full flex flex-col md:flex-row items-center justify-between">
+                <div className="w-full flex flex-col md:flex-row-reverse items-center justify-between">
                   <div className="w-full md:max-w-[60%] xl:max-w-[544px]">
                     <h2 className="text-white text-lg sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold">
                       Smart Contracts
@@ -45,8 +49,12 @@ const Works = () => {
                       you finish the payment.
                     </p>
                   </div>
-                  <div className="w-full max-h-[170px] md:max-h-[270px] lg:max-h-[300px] xl:max-h-[348px] max-w-[170px] md:max-w-[270px] lg:max-w-[300px] xl:max-w-[348px] mt-16 md:mt-0">
-                    <Image src={w2} alt="w2" />
+                  <div className="w-full max-h-[170px] md:max-h-[220px] lg:max-h-[280px] xl:max-h-[348px] max-w-[170px] md:max-w-[220px] lg:max-w-[280px] xl:max-w-[348px] mt-16 md:mt-0">
+                    <Image
+                      src={w2}
+                      alt="w2"
+                      className="max-w-full h-full w-full"
+                    />
                   </div>
                 </div>
               </div>
@@ -62,8 +70,12 @@ const Works = () => {
                       the payment.
                     </p>
                   </div>
-                  <div className="w-full max-h-[170px] md:max-h-[270px] lg:max-h-[300px] xl:max-h-[348px] max-w-[170px] md:max-w-[270px] lg:max-w-[300px] xl:max-w-[348px] mt-16 md:mt-0">
-                    <Image src={w3} alt="w3" />
+                  <div className="w-full max-h-[170px] md:max-h-[220px] lg:max-h-[280px] xl:max-h-[348px] max-w-[170px] md:max-w-[220px] lg:max-w-[280px] xl:max-w-[348px] mt-16 md:mt-0">
+                    <Image
+                      src={w3}
+                      alt="w3"
+                      className="max-w-full h-full w-full"
+                    />
                   </div>
                 </div>
               </div>

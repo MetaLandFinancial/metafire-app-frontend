@@ -18,16 +18,12 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   isOpen,
   onToggle,
 }) => {
-  const transitionDuration = isOpen ? "0.7s" : "0.3s";
+  // const transitionDuration = isOpen ? 700 : 500;
   return (
     <div className="mt-4">
       <div
-        className="faqbg transition cursor-pointer"
+        className="faqbg transition duration-300 cursor-pointer"
         onClick={onToggle}
-        style={{
-          transitionProperty: "background-color",
-          transitionDuration: "0.3s",
-        }}
       >
         <div className="flex items-center">
           <Image
@@ -41,11 +37,11 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
                 : "rotate-0 transition-transform duration-700"
             }`}
           />
-          <p className="text-white text-xl font-medium">{title}</p>
+          <p className="text-white text-lg lg:text-xl font-medium">{title}</p>
         </div>
       </div>
       <div
-        className={`mt-4 transition-max-height duration-700 overflow-hidden ${
+        className={`mt-4 transition-max-height duration-500 overflow-hidden ${
           isOpen ? "max-h-96" : "max-h-0"
         }`}
       >
@@ -54,8 +50,6 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
     </div>
   );
 };
-
-// export default AccordionItem;
 
 const Accordion = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
