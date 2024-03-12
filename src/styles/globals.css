@@ -20,7 +20,7 @@ body {
 }
 
 .hero_img {
-    background-image: url("../../public/assets/nft_img.svg");
+    background-image: url("/assets/nft_img.svg");
 }
 
 .profile_section {
