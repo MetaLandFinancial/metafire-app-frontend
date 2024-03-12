@@ -5,8 +5,6 @@ import Works from "./Works";
 import Faq from "./Faq";
 import Collaction from "./Collaction";
 
-// import Accordion from "./AccordionItem ";
-
 const page = () => {
   return (
     <div>
@@ -17,7 +15,6 @@ const page = () => {
         <Works />
       </div>
       <Faq />
-      {/* <Accordion /> */}
     </div>
   );
 };

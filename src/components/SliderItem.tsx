@@ -120,7 +120,7 @@ const SliderItem = () => {
       {SliderData.map((item) => (
         <>
           <div key={item.id} className="BoxItem mb-6">
-            <div className="flex items-center h-full">
+            <div className="flex items-center">
               <div className="h-[68px] min-w-16 md:min-h-20 md:min-w-20 lg:h-[85px] lg:min-w-[85px] xl:h-[106px] xl:min-w-[97px] mr-[18px]">
                 <Image
                   src={item.imageSrc}
