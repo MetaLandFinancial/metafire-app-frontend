@@ -6,10 +6,8 @@ import Footer from "@/components/shared/Footer";
 const AccountSummary = () => {
     return (
         <>
-            <Navbar/>
-            {/* <Hero/>
+            <Hero/>
             <Profile/>
-            <Footer/> */}
         </>
     );
 };
