@@ -7,7 +7,7 @@ import nftLine from "../../../public/img/nftLine.png";
 const Financing = () => {
   return (
     <>
-      <div className="relative mt-20 py-[100px] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:mix-blend-color-dodge before:bg-[url('/img/nftLine.png')] before:z-[1] before:bg-cover before:bg-center before:bg-no-repeat border-y-2 border-[#4776E6]">
+      <div className="relative mt-20 py-[100px] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:mix-blend-color-dodge before:bg-[url('/img/nftLine.png')] before:z-[1] before:bg-cover before:bg-top before:bg-no-repeat border-finance">
         <div className="container">
           <div className="w-full relative z-10">
             <div className="text-center">

@@ -4,15 +4,13 @@ import Image from "next/image";
 import faqmain from "../../../public/img/faqmain.png";
 import faqBG from "../../../public/img/faqBG.png";
 import Accordion from "./AccordionItem ";
+import blockchainImg from "../../../public/img/blockchainImg.png";
 const Faq = () => {
   return (
     <>
-      <div className="relative mb-[120px]">
-        <div className="absolute w-full h-full top-0 bottom-0 left-0 right-0 mix-blend-color-dodge blur-3xl">
-          <Image src={faqBG} alt="faqBG" className="w-full h-full max-w-full" />
-        </div>
+      <div className="relative pb-[120px] before:mix-blend-color-dodge before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('/img/blockchainImg.png')] before:h-full before:w-full before:bg-no-repeat before:bg-center">
         <div className="container">
-          <div className="text-center">
+          <div className="text-center relative">
             <h1 className="font-bold text-white text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[58px] leading-none">
               FAQ’s
             </h1>
@@ -20,13 +18,13 @@ const Faq = () => {
               Frequently Asked Questions
             </p>
           </div>
-          <div className="relative mt-10 md:mt-12 lg:mt-14 xl:mt-[100px]">
+          <div className="relative mt-10 md:mt-12 lg:mt-14 xl:mt-[100px] z-20">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <div className="w-full max-w-[200px] md:max-w-[260px] lg:max-w-[40%] xl:max-w-[418px] lg:max-h-[350px] xl:max-h-[418px] mb-11 md:mb-0">
                 <Image
                   src={faqmain}
                   alt="faqmain"
-                  className="max-w-full h-full block mx-auto"
+                  className="max-w-full h-full block mx-auto my-auto"
                 />
               </div>
               <div className="w-full md:max-w-[55%] lg:max-w-[55%] xl:max-w-[700px]">

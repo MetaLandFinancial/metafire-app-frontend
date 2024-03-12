@@ -1,37 +1,34 @@
 "use client";
-import React, { useRef } from "react";
+import React from "react";
 import Slider from "react-slick";
-import bgGredient from "../../../public/img/bgGredient.png";
 import Image from "next/image";
-import SD1 from "../../public/img/SD1.png";
-import SD2 from "../../public/img/SD2.png";
-import SD3 from "../../public/img/SD3.png";
-import SD4 from "../../public/img/SD4.png";
-import SD5 from "../../public/img/SD5.png";
-import SD21 from "../../public/img/SD21.png";
-import SD22 from "../../public/img/SD22.png";
-import SD23 from "../../public/img/SD23.png";
-import SD24 from "../../public/img/SD24.png";
-import SD25 from "../../public/img/SD25.png";
-import SD31 from "../../public/img/SD31.png";
-import SD32 from "../../public/img/SD32.png";
-import SD33 from "../../public/img/SD33.png";
-import SD34 from "../../public/img/SD34.png";
-import SD35 from "../../public/img/SD35.png";
+
 import eth from "../../public/img/eth.svg";
 import { SliderData } from "@/components/constant/SliderData";
-
-const SampleNextArrow = (props: any) => {
+interface SamplePrevArrowProps {
+  className: string;
+  style?: React.CSSProperties;
+  onClick: () => void;
+}
+interface SampleNextArrowProps {
+  className: string;
+  style?: React.CSSProperties; // Specify the correct type for the style property
+  onClick: () => void;
+}
+const SampleNextArrow: React.FC<SampleNextArrowProps> = (props) => {
   const { className, style, onClick } = props;
   return (
     <div
       className={`${className} next-arrow`}
       style={{
         ...style,
+        maxWidth: "64px",
+        height: "64px",
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "20px",
+        padding: "15px",
         borderRadius: "15px",
         border: "1px solid rgba(187, 207, 255, 0.40)",
         background:
@@ -40,23 +37,26 @@ const SampleNextArrow = (props: any) => {
         position: "absolute",
         top: "100%",
         left: "50%",
-        transform: "translate(24px,100%)",
+        transform: "translate(20%,100%)",
       }}
       onClick={onClick}
     />
   );
 };
-const SamplePrevArrow = (props: any) => {
+const SamplePrevArrow: React.FC<SamplePrevArrowProps> = (props) => {
   const { className, style, onClick } = props;
   return (
     <div
       className={`${className} prev-arrow`}
       style={{
         ...style,
+        maxWidth: "64px",
+        height: "64px",
+        width: "100%",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        padding: "20px",
+        padding: "15px",
         borderRadius: "15px",
         border: "1px solid rgba(187, 207, 255, 0.40)",
         background:
@@ -65,7 +65,7 @@ const SamplePrevArrow = (props: any) => {
         position: "absolute",
         top: "100%",
         left: "50%",
-        transform: "translate(-24px,100%)",
+        transform: "translate(-120%,100%)",
       }}
       onClick={onClick}
     />
@@ -121,7 +121,7 @@ const SliderItem = () => {
         <>
           <div key={item.id} className="BoxItem mb-6">
             <div className="flex items-center h-full">
-              <div className="h-[68px] md:h-20 lg:h-[85px] xl:h-[106px] min-w-16 md:w-20 lg:min-w-[85px] xl:min-w-[97px] mr-[18px]">
+              <div className="h-[68px] min-w-16 md:min-h-20 md:min-w-20 lg:h-[85px] lg:min-w-[85px] xl:h-[106px] xl:min-w-[97px] mr-[18px]">
                 <Image
                   src={item.imageSrc}
                   alt="images"
@@ -130,11 +130,11 @@ const SliderItem = () => {
                 />
               </div>
               <div className="w-full flex flex-col justify-center">
-                <div className="text-white text-sm md:text-xl   font-bold">
+                <div className="text-white text-sm md:text-base lg:text-lg xl:text-xl font-bold">
                   <h1>{item.title}</h1>
                 </div>
-                <div className="h-[1px] w-full my-[13px] bg-gradient-to-r from-[#e8d9ff63] to-[#ffffff00]"></div>
-                <div className="flex">
+                <div className="h-[1px] w-full my-2 xl:my-[13px] bg-gradient-to-r from-[#e8d9ff63] to-[#ffffff00]"></div>
+                <div className="flex justify-between">
                   <div className="w-1/2 flex flex-col gap-1">
                     <h5 className="text-white text-xs md:text-sm  font-medium">
                       Floor Price
@@ -146,7 +146,7 @@ const SliderItem = () => {
                       <p className="ETH_text flex">{item.floorPrice}</p>
                     </div>
                   </div>
-                  <div className="w-1/2 flex flex-col gap-1">
+                  <div className="w-fit md:w-1/2 flex flex-col gap-1">
                     <h5 className="text-white text-xs md:text-sm  font-medium">
                       Volume
                     </h5>
