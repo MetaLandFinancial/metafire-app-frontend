@@ -7,9 +7,9 @@ const AccountSummary = () => {
     return (
         <>
             <Navbar/>
-            <Hero/>
+            {/* <Hero/>
             <Profile/>
-            <Footer/>
+            <Footer/> */}
         </>
     );
 };
