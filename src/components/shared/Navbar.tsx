@@ -11,7 +11,7 @@ const Navbar = () => {
         setOpenNav(!openNav)
     }
     return (
-        <header className={"bg-[#8E54E933] py-2 md:py-6 border-b-2 border-b-purple-600 absolute w-full"}>
+        <header className={"bg-[#8E54E933] py-2 md:py-6 border-b-2 border-b-purple-600 w-full"}>
             <div className="main_container">
                 <div className="nav_wrapper flex items-center">
                     <div className="nav_brand">

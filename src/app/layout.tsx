@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Navbar from "@/components/shared/Navbar"; // Adjust the import path as necessary
+import Footer from '@/components/shared/Footer';
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -16,6 +17,7 @@ const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
     <div className={inter.className}>
       <Navbar />
       {children}
+      <Footer />
     </div>
   );
 }
