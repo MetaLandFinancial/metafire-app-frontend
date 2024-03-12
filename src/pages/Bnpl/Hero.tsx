@@ -3,6 +3,8 @@ import Image from "next/image";
 import down from "../../../public/img/down.svg";
 import elipse from "../../../public/img/elipse.svg";
 import heroLine from "../../../public/img/heroLine.png";
+import herotext from "../../../public/img/herotext.png";
+import Link from "next/link";
 const Hero = () => {
   return (
     <>
@@ -15,24 +17,30 @@ const Hero = () => {
         <div className="container">
           <div className="pt-[99px] md:pt-[136px] pb-8 md:pb-10">
             <div className="relative flex flex-col justify-center items-center ">
-              <div className="text-center">
-                <span className="main-title-1">Buy Now</span>
-                <br className="block sm:hidden" />
-                <span className="main-title-2 ml-0 sm:ml-2 md:ml-4 xl:ml-5 xxl:ml-7">
-                  Pay Later
-                </span>
+              <div className="text-center max-w-[832px]">
+                <Image
+                  src={herotext}
+                  alt="herotext"
+                  className="w-full h-full"
+                />
               </div>
               <div className="mb-10 md:mb-[83px]">
-                <p className="text-white font-bold text-lg md:text-2xl mt-5 md:mt-9">
+                <p className="text-white font-bold text-lg md:text-2xl">
                   Finance the NFT of Your Dreams
                 </p>
               </div>
               <div className="w-fit h-fit">
-                <div className="w-[52px] h-[52px] relative bg-[url('/img/elipse.svg')] flex items-center cursor-pointer">
-                  <span className="block h-full w-full max-w-6 max-h-6 mx-auto">
-                    <Image src={down} alt="downArrow" className="" />
-                  </span>
-                </div>
+                <Link href="#collection">
+                  <div className="w-[52px] h-[52px] flex justify-center items-center rounded-full bg-gradient-to-tr from-[#4776e633] to-[#8e54e933] border-2 border-[#4776E6] hover:bg-gradient-to-tr hover:from-[#3b82f6] hover:to-[#9333ea] hover:border-2 hover:border-[#9333ea]">
+                    <span className="block h-full w-full max-w-6 max-h-6 mx-auto">
+                      <Image
+                        src={down}
+                        alt="downArrow"
+                        className="max-w-full h-full"
+                      />
+                    </span>
+                  </div>
+                </Link>
               </div>
             </div>
           </div>

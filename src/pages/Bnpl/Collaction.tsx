@@ -7,7 +7,7 @@ import SliderItem from "@/components/SliderItem";
 const Collaction = () => {
   return (
     <>
-      <div className="relative pt-[45px] pb-[102px] md:pt-14 md:pb-20 lg:pt-20 lg:pb-28 xl:pt-[105px] xl:pb-[130px]">
+      <div id='collection' className="relative pt-[45px] pb-[102px] md:pt-14 md:pb-20 lg:pt-20 lg:pb-28 xl:pt-[105px] xl:pb-[130px]">
         <div className="absolute w-full h-full top-0 bottom-0 left-0 right-0 mix-blend-color-dodge blur-3xl">
           <Image
             src={bgGredient}
