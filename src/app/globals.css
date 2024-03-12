@@ -15,6 +15,12 @@
   }
 }
 
+@layer components {
+  .main_container {
+    @apply max-w-[1440px] w-full mx-auto px-5
+  }
+}
+
 /* slick slider only css */
 .slick-arrow:hover {
   color: #fff !important;
@@ -56,30 +62,32 @@
   color: #fff !important;
 }
 
-.border-t{
+.border-t {
   border-top: 4px solid transparent;
   border-image: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)
 }
+
 @layer utilities {
-  .main-title-1 {
-    @apply font-bold text-white text-[53px] md:text-5xl lg:text-6xl xl:text-[100px];
+  .main-title {
+    @apply font-bold text-[53px] md:text-5xl lg:text-6xl xl:text-[100px] leading-normal tracking-tight md:tracking-tighter;
     text-shadow: 0px 4px 70px #8E54E9;
+    -webkit-text-stroke-width: 7px;
+    -webkit-text-stroke-color: transparent;
     background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
     -webkit-background-clip: text;
-    -webkit-text-stroke: 10px transparent;
+    -webkit-text-fill-color: #FFF;
   }
 
-  .main-title-2 {
-    @apply font-bold text-[53px] md:text-5xl lg:text-6xl xl:text-[100px];
+  .main-title-span {
+    @apply font-bold text-transparent text-[53px] md:text-5xl lg:text-6xl xl:text-[100px] leading-normal;
     text-shadow: 0px 4px 70px #8E54E9;
-    -webkit-text-stroke-width: 5;
+    -webkit-text-stroke-width: 2.5px;
     -webkit-text-stroke-color: #FFF;
     background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 4px #fff;
-    text-stroke: 4px #fff;
-
   }
 
   .bg-after {
@@ -115,10 +123,17 @@
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
+}
 
-  .border-finance {
-    @apply border-y border-4 border-transparent;
-    border-top: 4px solid transparent;
-    border-image: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%)
+@media (max-width: 768px) {
+  .main-title {
+    text-shadow: 0px 2.399px 41.983px #8E54E9;
+    -webkit-text-stroke-width: 3.99879789352417px;
+  }
+
+  .main-title-span {
+    text-shadow: 0px 2.399px 41.983px #8E54E9;
+    -webkit-text-stroke-width: 2.99879789352417px;
+    -webkit-text-stroke-color: #FFF;
   }
 }

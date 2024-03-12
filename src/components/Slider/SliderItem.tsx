@@ -2,8 +2,7 @@
 import React from "react";
 import Slider from "react-slick";
 import Image from "next/image";
-
-import eth from "../../public/img/eth.svg";
+import eth from "../../../public/img/eth.svg";
 import { SliderData } from "@/components/constant/SliderData";
 interface SamplePrevArrowProps {
   className: string;
@@ -12,7 +11,7 @@ interface SamplePrevArrowProps {
 }
 interface SampleNextArrowProps {
   className: string;
-  style?: React.CSSProperties; // Specify the correct type for the style property
+  style?: React.CSSProperties;
   onClick: () => void;
 }
 const SampleNextArrow: React.FC<SampleNextArrowProps> = (props) => {
@@ -147,7 +146,7 @@ const SliderItem = () => {
                     </div>
                   </div>
                   <div className="w-fit md:w-1/2 flex flex-col gap-1">
-                    <h5 className="text-white text-xs md:text-sm  font-medium">
+                    <h5 className="text-white text-xs md:text-sm font-medium">
                       Volume
                     </h5>
                     <div className="flex items-center gap-[6px]">

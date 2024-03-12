@@ -1,8 +1,6 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import faqmain from "../../../public/img/faqmain.png";
-import plus from "../../../public/img/plus.svg";
 import accordionData from "@/components/constant/accordionData";
 
 interface AccordionItemProps {
@@ -18,7 +16,6 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
   isOpen,
   onToggle,
 }) => {
-  // const transitionDuration = isOpen ? 700 : 500;
   return (
     <div className="mt-4">
       <div
@@ -60,7 +57,7 @@ const Accordion = () => {
 
   return (
     <div>
-      {accordionData.map((item, index) => (
+      {accordionData.map((item: any, index: any) => (
         <AccordionItem
           key={index}
           title={item.title}
