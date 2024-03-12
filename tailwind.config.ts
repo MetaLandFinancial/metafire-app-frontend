@@ -20,6 +20,11 @@ const config: Config = {
         'button': '0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset',
         'custom-shadow': '0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset',
       },
+
+      backgroundImage:{
+        'deporitsImg': 'url(../../public/assets/deposit_summery_bg.svg)',
+        'deporitsImgTwo': 'url(../../public/assets/deposit_respon.svg)'
+      }
     },
   },
   plugins: [],

@@ -125,6 +125,44 @@ export const tableBody: tableBody[] = [
     },
 ]
 
+export const responsiveTableHead: any = [
+
+    {
+        title: "assest Class",
+        rightSight: '5.0'
+    },
+
+    {
+        title: "time Period",
+        rightSight: '120'
+    },
+
+    {
+        title: "deposited Date",
+        rightSight: 'February 22, 2024'
+    },
+
+    {
+        title: "unlock Date",
+        rightSight: 'November 22, 2024'
+    },
+
+    {
+        title: "total Staked",
+        rightSight: 'November 22, 2024'
+    },
+
+    {
+        title: "apy",
+        rightSight: '2.9755'
+    },
+
+    {
+        title: "operation",
+        rightSight: 'Withdraw'
+    },
+]
+
 interface footerOne {
     name: string,
     link: string

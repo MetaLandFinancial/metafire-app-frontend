@@ -5,7 +5,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 body {
     font-family: "Barlow", sans-serif;
 }
@@ -15,7 +14,6 @@ body {
         @apply max-w-[1440px] w-full mx-auto px-5
     }
 }
-
 
 .hero_section {
     background-image: url("../../public/assets/hero_bg.svg");
@@ -33,9 +31,9 @@ body {
     background-image: url("../../public/assets/deposit_bg.svg");
 }
 
-.deposit_summery {
-    background-image: url("../../public/assets/deposit_summery_bg.svg");
-}
+/*.deposit_summery {*/
+/*    background-image: url("../../public/assets/deposit_summery_bg.svg");*/
+/*}*/
 
 .text-gradient {
     background: linear-gradient(90deg, #4776E6, #8E54E9);
