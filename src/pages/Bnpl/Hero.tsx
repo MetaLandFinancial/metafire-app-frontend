@@ -15,13 +15,13 @@ const Hero = () => {
         <div className="container">
           <div className="pt-[99px] md:pt-[136px] pb-8 md:pb-10">
             <div className="relative flex flex-col justify-center items-center ">
-              <h1 className="text-center">
+              <div className="text-center">
                 <span className="main-title-1">Buy Now</span>
                 <br className="block sm:hidden" />
                 <span className="main-title-2 ml-0 sm:ml-2 md:ml-4 xl:ml-5 xxl:ml-7">
                   Pay Later
                 </span>
-              </h1>
+              </div>
               <div className="mb-10 md:mb-[83px]">
                 <p className="text-white font-bold text-lg md:text-2xl mt-5 md:mt-9">
                   Finance the NFT of Your Dreams

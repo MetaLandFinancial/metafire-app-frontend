@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import faqmain from "../../../public/img/faqmain.png";
 import plus from "../../../public/img/plus.svg";
-import accordionData from "@/components/constant/accordionData.json";
+import accordionData from "@/components/constant/accordionData";
 
 interface AccordionItemProps {
   title: string;
