@@ -4,72 +4,9 @@ import Slider from "react-slick";
 import Image from "next/image";
 import eth from "../../../public/img/eth.svg";
 import { SliderData } from "@/components/constant/SliderData";
-interface SamplePrevArrowProps {
-  className: string;
-  style?: React.CSSProperties;
-  onClick: () => void;
-}
-interface SampleNextArrowProps {
-  className: string;
-  style?: React.CSSProperties;
-  onClick: () => void;
-}
-const SampleNextArrow: React.FC<SampleNextArrowProps> = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={`${className} next-arrow`}
-      style={{
-        ...style,
-        maxWidth: "64px",
-        height: "64px",
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "15px",
-        borderRadius: "15px",
-        border: "1px solid rgba(187, 207, 255, 0.40)",
-        background:
-          "linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%)",
-        boxShadow: "0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset",
-        position: "absolute",
-        top: "100%",
-        left: "50%",
-        transform: "translate(20%,100%)",
-      }}
-      onClick={onClick}
-    />
-  );
-};
-const SamplePrevArrow: React.FC<SamplePrevArrowProps> = (props) => {
-  const { className, style, onClick } = props;
-  return (
-    <div
-      className={`${className} prev-arrow`}
-      style={{
-        ...style,
-        maxWidth: "64px",
-        height: "64px",
-        width: "100%",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "15px",
-        borderRadius: "15px",
-        border: "1px solid rgba(187, 207, 255, 0.40)",
-        background:
-          " linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%)",
-        boxShadow: " 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset",
-        position: "absolute",
-        top: "100%",
-        left: "50%",
-        transform: "translate(-120%,100%)",
-      }}
-      onClick={onClick}
-    />
-  );
-};
+import { SamplePrevArrow } from "./Prev";
+import { SampleNextArrow } from "./Next";
+
 const SliderItem = () => {
   const settings = {
     className: "center",

@@ -6,19 +6,19 @@ import Link from "next/link";
 const Hero = () => {
   return (
     <>
-      <div className="relative bg-[url('/img/herobgG.png')] bg-cover mix-blend-lighten">
+      <div className="relative bg-[url('/img/herobgG.png')] bg-cover mix-blend-lighten ">
         <Image
           src={heroLine}
           alt="line images"
           className="absolute w-full h-full z-[-1]"
         />
         <div className="container">
-          <div className="pt-[161px] md:pt-[238px] pb-8 md:pb-10">
+          <div className="pt-[161px] md:pt-[238px] pb-8 md:pb-10 ">
             <div className="relative flex flex-col justify-center items-center ">
               <div className="text-center">
                 <h1 className="main-title">
                   Buy Now <br className="block md:hidden" />
-                  <span className="main-title-span md::ml-4 xl:ml-5 xxl:ml-6">
+                  <span className="main-title-span ml-0 md:ml-3 xl:ml-6">
                     Pay Later
                   </span>
                 </h1>

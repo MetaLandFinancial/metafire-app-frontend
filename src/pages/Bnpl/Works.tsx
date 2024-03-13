@@ -29,7 +29,7 @@ const Works = () => {
                       through our smart contract financing option.
                     </p>
                   </div>
-                  <div className="w-full max-h-[170px] md:max-h-[220px] lg:max-h-[280px] xl:max-h-[348px] max-w-[170px] md:max-w-[220px] lg:max-w-[280px] xl:max-w-[294px] mt-16 md:mt-0">
+                  <div className="w-full max-h-[170px] md:max-h-[220px] lg:max-h-[280px] xl:max-h-[294px] max-w-[170px] md:max-w-[220px] lg:max-w-[280px] xl:max-w-[294px] mt-16 md:mt-0">
                     <Image
                       src={w1}
                       alt="w1"
@@ -70,7 +70,7 @@ const Works = () => {
                       the payment.
                     </p>
                   </div>
-                  <div className="w-full max-h-[170px] md:max-h-[220px] lg:max-h-[280px] xl:max-h-[348px] max-w-[170px] md:max-w-[220px] lg:max-w-[280px] xl:max-w-[252px] mt-16 md:mt-0">
+                  <div className="w-full max-h-[170px] md:max-h-[220px] lg:max-h-[262px] xl:max-h-[262px] max-w-[170px] md:max-w-[220px] lg:max-w-[252px] xl:max-w-[252px] mt-16 md:mt-0">
                     <Image
                       src={w3}
                       alt="w3"

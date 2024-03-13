@@ -1,7 +1,10 @@
 "use client";
 import React, { useState } from "react";
 import Image from "next/image";
-import accordionData from "@/components/constant/accordionData";
+import {
+  MetaFireItem,
+  metaFireData,
+} from "@/components/constant/accordionData";
 
 interface AccordionItemProps {
   title: string;
@@ -36,13 +39,13 @@ const AccordionItem: React.FC<AccordionItemProps> = ({
           />
           <p className="text-white text-lg lg:text-xl font-medium">{title}</p>
         </div>
-      </div>
-      <div
-        className={`mt-4 transition-max-height duration-500 overflow-hidden ${
-          isOpen ? "max-h-96" : "max-h-0"
-        }`}
-      >
-        <div className="faqbg text-white text-base">{content}</div>
+        <div
+          className={`transition-max-height duration-500 overflow-hidden ${
+            isOpen ? "max-h-96" : "max-h-0"
+          }`}
+        >
+          <div className="text-white text-base mt-4 px-1">{content}</div>
+        </div>
       </div>
     </div>
   );
@@ -57,7 +60,7 @@ const Accordion = () => {
 
   return (
     <div>
-      {accordionData.map((item: any, index: any) => (
+      {metaFireData.map((item: MetaFireItem, index: number) => (
         <AccordionItem
           key={index}
           title={item.title}

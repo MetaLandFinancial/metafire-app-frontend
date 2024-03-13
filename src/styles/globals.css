@@ -16,23 +16,23 @@ body {
 }
 
 .hero_section {
-    background-image: url("/assets/hero_bg.svg");
+    background-image: url("../../public/assets/hero_bg.svg");
 }
 
 .hero_img {
-    background-image: url("/assets/nft_img.svg");
+    background-image: url("../../public/assets/nft_img.svg");
 }
 
 .profile_section {
-    background-image: url("/assets/profile_details_img.svg");
+    background-image: url("../../public/assets/profile_details_img.svg");
 }
 
 .deposit {
-    background-image: url("/assets/deposit_bg.svg");
+    background-image: url("../../public/assets/deposit_bg.svg");
 }
 
 /*.deposit_summery {*/
-/*    background-image: url("/assets/deposit_summery_bg.svg");*/
+/*    background-image: url("../../public/assets/deposit_summery_bg.svg");*/
 /*}*/
 
 .text-gradient {
@@ -43,25 +43,5 @@ body {
 }
 
 #send_mail{
-    background-image: url("/assets/send_email.svg");
-}
-
-
-.border_bottom{
-    position: relative;
-}
-
-
-
-.border_bottom::before{
-    content: '';
-    position: absolute;
-    background-image: url(/assets/nav_border.svg);
-    top: 100%;
-    width: 100px;
-    height: 200px;
-    left: 50%;
-    transform: translateX(-50%);
-    background-repeat: no-repeat;
-
+    background-image: url("../../public/assets/send_email.svg");
 }

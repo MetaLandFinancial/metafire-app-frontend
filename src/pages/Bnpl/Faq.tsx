@@ -1,12 +1,13 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import faqmain from "../../../public/img/faqmain.png";
 import Accordion from "./AccordionItem";
 const Faq = () => {
   return (
     <>
-      <div className="relative pt-10 md:pt-0 pb-[120px] before:mix-blend-color-dodge before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('/img/blockchainImg.png')] before:h-full before:w-full before:bg-no-repeat before:bg-center">
+      {/* <div className="relative pt-10 md:pt-0 pb-[120px] before:mix-blend-color-dodge before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('/img/blockchainImg.png')] before:h-full before:w-full before:bg-no-repeat before:bg-center"> */}
+      <div className="relative pt-10 md:pt-0 pb-[120px]">
         <div className="container">
           <div className="text-center relative">
             <h1 className="font-bold text-white text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[58px] leading-none">

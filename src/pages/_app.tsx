@@ -1,5 +1,4 @@
 // pages/_app.tsx
-
 import type { AppProps } from "next/app";
 import RootLayout from "@/app/layout";
 function MyApp({ Component, pageProps }: AppProps) {
