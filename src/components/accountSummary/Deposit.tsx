@@ -3,6 +3,9 @@ import totalDeposit from "../../../public/assets/total_deposit.svg"
 import {responsiveTableHead, tableBody, tableHead} from "@/utils/data";
 import leftArrow from "@/../public/assets/arrow_left.svg";
 import rightArrow from "@/../public/assets/arrow-right.svg";
+import resposnvieTableImg from "@/../public/assets/bg.svg";
+import resposnvieTableImg2 from "@/../public/assets/bg2.svg";
+import resposnvieTableImg3 from "@/../public/assets/bg3.svg";
 
 const Deposit = () => {
 
@@ -143,7 +146,8 @@ const Deposit = () => {
 
                         <div className="your_deposite_res md:hidden">
                             <div className={"responsive_design_wrapper block md:hidden border border-gray-4 rounded-[15px]"}>
-                                <div className={"responsive_design flex justify-between"}>
+                                <div className={"responsive_design flex justify-between border-b border-b-white"} 
+                                style={{backgroundImage: `url(${resposnvieTableImg.src})`, backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
                                     <div
                                         className={"bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"}>
                                         <ul className={"p-4"}>
@@ -166,7 +170,10 @@ const Deposit = () => {
 
                                                     <li className={"text-white text-[10px] font-medium pb-4 text-end capitalize"}
                                                         key={index}>
-                                                        {respondTableData.rightSight}
+                                                        {respondTableData.rightSight === "Withdraw" ? (<button
+                                                        className={"text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"}>
+                                                        Withdraw
+                                                    </button>) : respondTableData.rightSight}
                                                     </li>
 
                                                 ))
@@ -174,9 +181,11 @@ const Deposit = () => {
                                         </ul>
                                     </div>
                                 </div>
-                                <div className={"responsive_design flex justify-between"}>
+
+                                <div className={"responsive_design flex justify-between border-b border-b-white"} style={{backgroundImage: `url(${resposnvieTableImg2.src})`, backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
                                     <div
-                                        className={"bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"}>
+                                        className={"bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"}
+                                        >
                                         <ul className={"p-4"}>
                                             {
                                                 responsiveTableHead.map((resPonData: any, index: any): any => (
@@ -194,18 +203,21 @@ const Deposit = () => {
                                         <ul className={"p-4"}>
                                             {
                                                 responsiveTableHead.map((respondTableData: any, index: any) => (
-
                                                     <li className={"text-white text-[10px] font-medium pb-4 text-end capitalize"}
-                                                        key={index}>
-                                                        {respondTableData.rightSight}
-                                                    </li>
+                                                    key={index}>
+                                                    {respondTableData.rightSight === "Withdraw" ? (<button
+                                                    className={"text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"}>
+                                                    Withdraw
+                                                </button>) : respondTableData.rightSight}
+                                                </li>
 
                                                 ))
                                             }
                                         </ul>
                                     </div>
                                 </div>
-                                <div className={"responsive_design flex justify-between"}>
+ 
+                                <div className={"responsive_design flex justify-between "} style={{backgroundImage: `url(${resposnvieTableImg3.src})`, backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
                                     <div
                                         className={"bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"}>
                                         <ul className={"p-4"}>
@@ -228,7 +240,10 @@ const Deposit = () => {
 
                                                     <li className={"text-white text-[10px] font-medium pb-4 text-end capitalize"}
                                                         key={index}>
-                                                        {respondTableData.rightSight}
+                                                        {respondTableData.rightSight === "Withdraw" ? (<button
+                                                        className={"text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"}>
+                                                        Withdraw
+                                                    </button>) : respondTableData.rightSight}
                                                     </li>
 
                                                 ))
