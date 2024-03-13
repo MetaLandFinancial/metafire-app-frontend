@@ -5,6 +5,9 @@ import Navbar from "@/components/shared/Navbar"; // Adjust the import path as ne
 import Footer from '@/components/shared/Footer';
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { metadata } from "@/app/metadata";
 
 const inter = Inter({ subsets: ["latin"] });
 

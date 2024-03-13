@@ -7,6 +7,17 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
+        container: {
+      center: true,
+      padding: '1rem',
+      screens: {
+        sm: '572px',
+        md: '752px',
+        lg: '952px',
+        xl: '1152px',
+        xxl: '1252px',
+      },
+    },
     extend: {
       colors: {
         'rgba-blue-500': 'rgba(71, 118, 230, 0.04)',

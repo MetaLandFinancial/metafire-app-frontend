@@ -2,14 +2,16 @@ import Navbar from '@/components/shared/Navbar';
 import Hero from "@/components/accountSummary/Hero";
 import Profile from "@/components/accountSummary/Profile.";
 import Footer from "@/components/shared/Footer";
+// import '../../styles/globals.css';
 
-const AccountSummary = () => {
+const Index = () => {
     return (
         <>
+        {/* dsadsa */}
             <Hero/>
             <Profile/>
         </>
     );
 };
 
-export default AccountSummary;
+export default Index;

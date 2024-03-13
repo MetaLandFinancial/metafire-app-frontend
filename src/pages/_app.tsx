@@ -1,8 +1,8 @@
 // pages/_app.tsx
 
 import type { AppProps } from 'next/app';
-import '../styles/globals.css';
-import RootLayout from '../app/layout'; // Adjust the import path as necessary
+// import '../styles/globals.css';
+import RootLayout from "@/app/layout";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
