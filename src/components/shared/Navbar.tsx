@@ -1,11 +1,12 @@
 "use client";
 import { NavBarData } from "@/utils/data";
 import Link from "next/link";
-import NavBrand from "../../../public/assets/meta_logo.svg";
-import humburger from "../../../public/assets/humburger.svg";
-import { useState } from "react";
+import NavBrand from "../../../public/assets/meta_logo.svg"
+import humburger from "../../../public/assets/humburger.svg"
+import {useState} from "react";
 
 const Navbar = () => {
+const location = usePathname()
     const [openNav, setOpenNav] = useState(false);
     const handleNav = () => {
         setOpenNav(!openNav)
@@ -23,12 +24,11 @@ const Navbar = () => {
                         <ul className="hidden md:flex gap-6">
                             {
                                 NavBarData.map((navItem, index) => (
-                                    <li className="" key={index}>
-                                        <Link className={"text-xs md:text-base font-bold text-white"}
-                                              href={navItem.path}>
-                                            {navItem.name}
-                                        </Link>
-                                    </li>
+                                    <li className={`${location === navItem.path ? 'border_bottom': ''}`} key={index}>
+                    <Link className={"text-xs md:text-base font-bold text-white"} href={navItem.path}>
+                        {navItem.name}
+                    </Link>
+                </li>
                                 ))
                             }
                         </ul>
