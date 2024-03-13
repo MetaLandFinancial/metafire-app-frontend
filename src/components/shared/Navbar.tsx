@@ -4,6 +4,7 @@ import Link from "next/link";
 import NavBrand from "../../../public/assets/meta_logo.svg"
 import humburger from "../../../public/assets/humburger.svg"
 import {useState} from "react";
+import { usePathname } from "next/navigation";
 
 const Navbar = () => {
 const location = usePathname()
