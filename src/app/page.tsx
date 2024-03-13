@@ -1,5 +1,9 @@
 import '../styles/globals.css';
-import Bnpl from "@/pages/Bnpl/page";
+// import Bnpl from "@/pages/Bnpl/page";
 export default function Home() {
-  return <Bnpl />;
+  return (
+    <div>
+      <h1>Home</h1>
+    </div>
+  );
 }
