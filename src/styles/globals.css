@@ -16,7 +16,7 @@ body {
 }
 
 .hero_section {
-    background-image: url("../../public/assets/hero_bg.svg");
+    background-image: url("/assets/hero_bg.svg");
 }
 
 .hero_img {
@@ -24,15 +24,15 @@ body {
 }
 
 .profile_section {
-    background-image: url("../../public/assets/profile_details_img.svg");
+    background-image: url("/assets/profile_details_img.svg");
 }
 
 .deposit {
-    background-image: url("../../public/assets/deposit_bg.svg");
+    background-image: url("/assets/deposit_bg.svg");
 }
 
 /*.deposit_summery {*/
-/*    background-image: url("../../public/assets/deposit_summery_bg.svg");*/
+/*    background-image: url("/assets/deposit_summery_bg.svg");*/
 /*}*/
 
 .text-gradient {
@@ -43,7 +43,7 @@ body {
 }
 
 #send_mail{
-    background-image: url("../../public/assets/send_email.svg");
+    background-image: url("/assets/send_email.svg");
 }
 
 
@@ -56,7 +56,7 @@ body {
 .border_bottom::before{
     content: '';
     position: absolute;
-    background-image: url(../../public//assets/nav_border.svg);
+    background-image: url(/assets/nav_border.svg);
     top: 100%;
     width: 100px;
     height: 200px;
