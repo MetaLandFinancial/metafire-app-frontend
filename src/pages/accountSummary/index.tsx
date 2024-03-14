@@ -2,7 +2,7 @@ import Navbar from '@/components/shared/Navbar';
 import Hero from "@/components/accountSummary/Hero";
 import Profile from "@/components/accountSummary/Profile.";
 import Footer from "@/components/shared/Footer";
-// import '../../styles/globals.css';
+import '../../styles/accountSummary.css';
 
 const Index = () => {
     return (
