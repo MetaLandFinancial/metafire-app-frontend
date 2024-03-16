@@ -1,129 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+/* styles/globals.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@import url('https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&display=swap');
 
-
-@layer base {
-
-  html,
-  body {
+body {
     font-family: "Barlow", sans-serif;
-    scroll-behavior: smooth;
-    background: linear-gradient(180deg, #1C1424 0%, #0B0A1C 41.5%);
-  }
 }
 
 @layer components {
-  .main_container {
-    @apply max-w-[1440px] w-full mx-auto px-5;
-  }
+    .main_container {
+        @apply max-w-[1440px] w-full mx-auto px-5
+    }
+
+    .tabBtn{
+        @apply py-[10px] md:py-5 px-[10px] md:px-9 text-sm md:text-xl font-bold text-white
+    }
+
+    .activeBtn {
+        @apply rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-blue-500 to-purple-600
+    }
+
+    .InActiveBtn {
+        @apply bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button rounded-tl-xl rounded-tr-xl
+    }
 }
 
-/* slick slider only css */
-.slick-arrow:hover {
-  opacity: 1;
-  color: #fff !important;
-  border-radius: 15px;
-  border: 1px solid transparent !important;
-  background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%) !important;
-  box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset !important;
+.hero_section {
+    background-image: url("../../public/assets/hero_bg.svg");
 }
 
-.next-arrow::before {
-  position: absolute;
-  content: '';
-  width: 24px;
-  height: 24px;
-  color: transparent !important;
-  transform: rotate(180deg);
-  -webkit-transform: rotate(180deg);
-  -moz-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  -o-transform: rotate(180deg);
+.hero_img {
+    background-image: url("/assets/nft_img.svg");
 }
 
-
-.prev-arrow::before {
-  position: absolute;
-  content: '';
-  width: 24px;
-  height: 24px;
-  color: transparent !important;
+.profile_section {
+    background-image: url("../../public/assets/profile_details_img.svg");
 }
 
+.section_img {
+    background-image: url("../../public/assets/deposit_bg.svg");
+}
 
-@layer utilities {
-  .main-title {
-    @apply font-bold text-[53px] md:text-5xl lg:text-6xl xl:text-[100px] md:leading-normal lg:leading-normal xl:leading-normal leading-normal tracking-tight md:tracking-tighter;
-    text-shadow: 0px 4px 70px #8E54E9;
-    -webkit-text-stroke-width: 7px;
-    -webkit-text-stroke-color: transparent;
-    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
-    background-clip: text;
+.text-gradient {
+    background: linear-gradient(90deg, #4776E6, #8E54E9);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: #FFF;
-  }
-
-  .main-title-span {
-    @apply font-bold text-transparent text-[53px] md:text-5xl lg:text-6xl xl:text-[100px] md:leading-normal lg:leading-normal xl:leading-normal leading-normal;
-    text-shadow: 0px 4px 70px #8E54E9;
-    -webkit-text-stroke-width: 2.5px;
-    -webkit-text-stroke-color: #FFF;
-    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
     background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .financeCard {
-    @apply rounded-[15px] border-[2px] border-[#4776E6] w-full max-w-[278px] md:max-w-[210px] lg:max-w-[300px] xl:max-w-[391px] py-8 px-10 md:py-5 lg:py-6 xl:py-8 md:px-6 lg:px-12 xl:px-16;
-    background: linear-gradient(0deg, rgba(71, 118, 230, 0.10) 0%, rgba(142, 84, 233, 0.10) 100%);
-  }
-
-  .workBanner {
-    @apply rounded-[15px] border border-[#bbcfff66] py-10 px-10 md:py-8 md:px-10 xl:py-14 xl:px-[104px];
-    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
-    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
-  }
-
-  .faqbg {
-    @apply w-full rounded-[13px] border border-[#bbcfff66] p-4 lg:p-5;
-    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
-    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
-  }
-
-  .BoxItem {
-    @apply rounded-[15px] border border-[#bbcfff66] p-3 w-full md:max-w-[96%] xl:max-w-[391px];
-    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
-    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
-  }
-
-  .ETH_text {
-    @apply text-base font-bold;
-    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+    color: transparent;
 }
 
-.bg-section {
-  background: url(../../public/img/financeWork.png), lightgray 50% / cover no-repeat;
-  filter: blur(100px);
+#send_mail{
+    background-image: url("../../public/assets/send_email.svg");
 }
 
-/* hero section main title text in small devices change width of stroke */
-@media (max-width: 768px) {
-  .main-title {
-    text-shadow: 0px 2.399px 41.983px #8E54E9;
-    -webkit-text-stroke-width: 5px;
-    -webkit-text-stroke-color: transparent;
-  }
+.border_bottom{
+    position: relative;
+}
 
-  .main-title-span {
-    text-shadow: 0px 2.399px 41.983px #8E54E9;
-    -webkit-text-stroke-width: 2.0px;
-    -webkit-text-stroke-color: #FFF;
-  }
+.border_bottom::before{
+    content: '';
+    position: absolute;
+    background-image: url(../../public//assets/nav_border.svg);
+    top: 100%;
+    width: 100px;
+    height: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-repeat: no-repeat;
+
+}
+
+.slick-prev {
+    left: unset;
+    top: -58px;
+    right: 61px;
+}
+
+.slick-next {
+    right: 8px;
+    top: -58px;
 }
