@@ -6,8 +6,20 @@ import {myCollections} from "@/utils/data";
 import Pagination from "@/components/shared/Pagination";
 import Slider from "react-slick";
 
+interface SampleNextArrowProps {
+    className?: string;
+    style?: React.CSSProperties;
+    onClick?: () => void;
+  }
 
-function SampleNextArrow(props) {
+  interface SamplePrevtArrowProps {
+    className?: string;
+    style?: React.CSSProperties;
+    onClick?: () => void;
+  }
+
+
+function SampleNextArrow(props: SampleNextArrowProps) {
     const {className, style, onClick} = props;
     return (
         <div
@@ -28,7 +40,7 @@ function SampleNextArrow(props) {
     );
 }
 
-function SamplePrevArrow(props) {
+function SamplePrevArrow(props: SamplePrevtArrowProps) {
     const {className, style, onClick} = props;
     return (
         <div
