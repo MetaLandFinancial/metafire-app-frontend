@@ -1,0 +1,73 @@
+/* first section title */
+.main_title_deposit {
+    @apply font-bold text-white text-[53px] md:text-5xl lg:text-6xl xl:text-[100px] md:leading-normal lg:leading-normal xl:leading-normal leading-normal tracking-tight md:tracking-tighter;
+    text-shadow: 0px 4px 70px #8E54E9;
+    -webkit-text-stroke-width: 7px;
+    -webkit-text-stroke-color: transparent;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    font-family: "Barlow", sans-serif;
+}
+
+/* ____ finance css______ */
+
+.Card_BG {
+    @apply relative rounded-[15px] border-2 border-[#4776E6] w-full max-w-[278px] md:max-w-full xl:max-w-[286px] p-6;
+    background: linear-gradient(0deg, rgba(71, 118, 230, 0.10) 0%, rgba(142, 84, 233, 0.10) 100%);
+}
+
+/* ______ Finance Form  ________ */
+.Form_BG {
+    @apply mx-auto rounded-[15px] border-[1px] border-[#bbcfff66] py-[102px] px-8 md:px-10 md:py-10 lg:px-20 lg:py-16 xl:py-[88px] xl:px-[116px] w-full xl:max-w-[1033px];
+    background: #0F1029;
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.Select_BG {
+    @apply text-white text-base block w-full border-[1px] border-[#bbcfff66] rounded-[15px] outline-none p-5;
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+}
+
+.Select_BG_Form {
+    @apply text-white text-start text-base w-full border-[1px] border-[#bbcfff66] rounded-[15px] outline-none p-5;
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.Customized_inputbox {
+    @apply absolute w-full z-[100];
+    background-color: #0F1029;
+    background-image: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+}
+
+
+.opction_text {
+    @apply hover:bg-[#0F1029];
+}
+
+.Text_gradient {
+    @apply text-base font-semibold;
+    opacity: 0.8;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Btn_BG {
+    @apply rounded-md hover:opacity-[0.8] hover:duration-500;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+}
+
+/* _____ finance tabel bg ______ */
+.Tabel_Bg {
+    @apply rounded-[15px] max-w-[571px];
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
