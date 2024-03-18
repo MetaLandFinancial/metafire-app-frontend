@@ -1,18 +1,25 @@
-import socialOne from "../../public/assets/social1.svg"
-import socialTwo from "../../public/assets/social2.svg"
-import socialThree from "../../public/assets/social3.svg"
-import socialFour from "../../public/assets/social4.svg"
-import socialFive from "../../public/assets/social5.svg"
+import socialOne from "@/../public/assets/social1.svg"
+import socialTwo from "@/../public/assets/social2.svg"
+import socialThree from "@/../public/assets/social3.svg"
+import socialFour from "@/../public/assets/social4.svg"
+import socialFive from "@/../public/assets/social5.svg"
 
-import swOne from "../../public/assets/tele_white.svg"
+import swOne from "@/../public/assets/tele_white.svg"
 
-import swTwo from "../../public/assets/twitter_white.svg"
+import swTwo from "@/../public/assets/twitter_white.svg"
 
-import swThree from "../../public/assets/youtube_white.svg"
+import swThree from "@/../public/assets/youtube_white.svg"
 
-import swFour from "../../public/assets/discord_white.svg"
+import swFour from "@/../public/assets/discord_white.svg"
 
-import swFive from "../../public/assets/website_white.svg"
+import swFive from "@/../public/assets/website_white.svg"
+import collectionImgOne from "@/../public/assets/collectionImgOne.png";
+import collectionImgTwo from "@/../public/assets/collectionImgTwo.png";
+import collectionImgThree from "@/../public/assets/collectionImgThree.png";
+import collectionImgFour from "@/../public/assets/collectionImgFour.png";
+import collectionImgFive from "@/../public/assets/collectionImgFive.png";
+import collectionImgSix from "@/../public/assets/collectionImgSix.png";
+
 
 interface NavItem {
     name: string;
@@ -263,5 +270,143 @@ export const footerSocialInfo: footerSocialInfo[] = [
         icon: swFive,
         name: "website",
         path: "#"
+    },
+]
+
+export const myCollections = [
+    {
+        collectionImg: collectionImgOne,
+        collectionName: "MetaFire NFT #23",
+        floorTitle: "Floor Price",
+        factorTitle: "Liquidation Factor",
+        auctionTitle: "Current Auction Price",
+        bidderTitle: "Bidder",
+        auctionEndTitle: "Auction End",
+        floorPrice: "1.2 ETH",
+        liquidationFactor: "100%",
+        currentAuctionPrice: "N/A",
+        bidder: "N/A",
+        auctionEnd: "23 Feb, 2024",
+        auctionBtn: "Auction",
+        buyNowBtn: "Buy Now"
+    }, {
+        collectionImg: collectionImgTwo,
+        collectionName: "MetaFire NFT #23",
+        floorTitle: "Floor Price",
+        factorTitle: "Liquidation Factor",
+        auctionTitle: "Current Auction Price",
+        bidderTitle: "Bidder",
+        auctionEndTitle: "Auction End",
+        floorPrice: "1.2 ETH",
+        liquidationFactor: "100%",
+        currentAuctionPrice: "N/A",
+        bidder: "N/A",
+        auctionEnd: "23 Feb, 2024",
+        auctionBtn: "Auction",
+        buyNowBtn: "Buy Now"
+    },{
+        collectionImg: collectionImgThree,
+        collectionName: "MetaFire NFT #23",
+        floorTitle: "Floor Price",
+        factorTitle: "Liquidation Factor",
+        auctionTitle: "Current Auction Price",
+        bidderTitle: "Bidder",
+        auctionEndTitle: "Auction End",
+        floorPrice: "1.2 ETH",
+        liquidationFactor: "100%",
+        currentAuctionPrice: "N/A",
+        bidder: "N/A",
+        auctionEnd: "23 Feb, 2024",
+        auctionBtn: "Auction",
+        buyNowBtn: "Buy Now"
+    },{
+        collectionImg: collectionImgFour,
+        collectionName: "MetaFire NFT #23",
+        floorTitle: "Floor Price",
+        factorTitle: "Liquidation Factor",
+        auctionTitle: "Current Auction Price",
+        bidderTitle: "Bidder",
+        auctionEndTitle: "Auction End",
+        floorPrice: "1.2 ETH",
+        liquidationFactor: "100%",
+        currentAuctionPrice: "N/A",
+        bidder: "N/A",
+        auctionEnd: "23 Feb, 2024",
+        auctionBtn: "Auction",
+        buyNowBtn: "Buy Now"
+    },{
+        collectionImg: collectionImgFive,
+        collectionName: "MetaFire NFT #23",
+        floorTitle: "Floor Price",
+        factorTitle: "Liquidation Factor",
+        auctionTitle: "Current Auction Price",
+        bidderTitle: "Bidder",
+        auctionEndTitle: "Auction End",
+        floorPrice: "1.2 ETH",
+        liquidationFactor: "100%",
+        currentAuctionPrice: "N/A",
+        bidder: "N/A",
+        auctionEnd: "23 Feb, 2024",
+        auctionBtn: "Auction",
+        buyNowBtn: "Buy Now"
+    },{
+        collectionImg: collectionImgSix,
+        collectionName: "MetaFire NFT #23",
+        floorTitle: "Floor Price",
+        factorTitle: "Liquidation Factor",
+        auctionTitle: "Current Auction Price",
+        bidderTitle: "Bidder",
+        auctionEndTitle: "Auction End",
+        floorPrice: "1.2 ETH",
+        liquidationFactor: "100%",
+        currentAuctionPrice: "N/A",
+        bidder: "N/A",
+        auctionEnd: "23 Feb, 2024",
+        auctionBtn: "Auction",
+        buyNowBtn: "Buy Now"
+    },
+]
+
+import LoansCardImg from "@/../public/assets/LoansCardImg.png"
+import LoansCardImg2 from "@/../public/assets/LoansCardImg2.png"
+import LoanHealth from "@/../public/assets/loanHealth.svg";
+import LoanHealth2 from "@/../public/assets/loanHealth2.svg"
+export const loansData = [
+    {
+        loanCarImg: LoansCardImg,
+        loanTitle: "MetaFire NFT ",
+        loanNbr: "#39",
+        ethPoints: "0.0025487",
+        balance:  "0.0025487 ETH",
+        borrowRate: "22.7%",
+        loanActiveStatus: 'Active',
+        assetClass :"5 Star",
+        startOn: "Sep, 17th 2024",
+        loanActiveHealth: LoanHealth
+    },
+    {
+        loanCarImg: LoansCardImg2,
+        loanTitle: "MetaFire NFT ",
+        loanNbr: "#39",
+        ethPoints: "0.0025487",
+        balance:  "0.0025487 ETH",
+        borrowRate: "22.7%",
+        loanActiveStatus: 'Inactive',
+        assetClass :"5 Star",
+        startOn: "Sep, 17th 2024",
+        loanActiveHealth: LoanHealth2
+    },
+
+    {
+        loanCarImg: LoansCardImg2,
+        loanTitle: "MetaFire NFT ",
+        loanNbr: "#39",
+        ethPoints: "0.0025487",
+        balance:  "0.0025487 ETH",
+        borrowRate: "22.7%",
+        loanActiveStatus: 'Paused',
+        assetClass :"5 Star",
+        startOn: "Sep, 17th 2024",
+        loanActiveHealth: LoanHealth
     },
 ]
