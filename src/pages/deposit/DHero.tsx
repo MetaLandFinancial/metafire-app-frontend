@@ -13,11 +13,11 @@ const DHero = () => {
           className="absolute w-full h-full z-[-1]"
         />
         <div className="container">
-          <div className="pt-[110px] md:pt-[161px] pb-8 md:pb-10 ">
+          <div className="pt-[110px] md:pt-[136px] pb-8 md:pb-10 ">
             <div className="relative flex flex-col justify-center items-center ">
               <div className="text-center">
                 <div className="main_title_deposit">
-                  <h1>Ether Deposits</h1>
+                  <h1 className="pr-[2px] md:pr-[3px]">Ether Deposits</h1>
                 </div>
               </div>
               <div className="mb-10 md:mb-[83px] mt-5 lg:mt-7 xl:mt-9">

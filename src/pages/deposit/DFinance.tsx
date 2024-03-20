@@ -8,7 +8,7 @@ const DFinance = () => {
     <>
       <div
         id="DFinance"
-        className="relative pt-20 pb-8 md:pb-5 xl:pt-[100px] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0 before:bg-[url('/img/line.png')] before:z-[-1] before:bg-cover before:bg-top before:bg-no-repeat border-y-2 border-[#4776E6]"
+        className="relative pt-20 pb-12 md:pb-5 xl:pt-[100px] before:content-[''] before:absolute before:top-0 before:left-0 before:right-0 before:bottom-0  before:bg-[url('/img/lineM.png')] md:before:bg-[url('/img/line.png')] before:mix-blend-color-dodge before:bg-cover before:bg-top before:bg-no-repeat border-y-2 border-[#4776E6]"
       >
         <div className="container">
           <div className="w-full relative z-10">
@@ -23,7 +23,10 @@ const DFinance = () => {
             <div className="mt-24 md:mt-20 lg:mt-24 xl:mt-32 grid gap-6 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
               {DfinanceData.map((card: DFinanceCard, index: number) => (
                 <>
-                  <div key={index} className="Card_BG mb-14 md:mb-24">
+                  <div
+                    key={index}
+                    className="Card_BG mb-14 md:mb-16 lg:mb-20 xl:mb-24"
+                  >
                     <div className="flex flex-col items-center">
                       <div
                         className={`mt-[-70px] md:mt-[-55px] lg:mt-[-60px] xl:mt-[-85px] flex items-center justify-center border border-[#bbcfff66] bg-gradient-to-r from-blue-500 to-purple-600 h-[75px] md:h-[65px] lg:h-[80px] xl:h-[106px] w-[75px] md:w-[65px] lg:w-[80px] xl:w-[106px] rounded-full`}
@@ -34,7 +37,7 @@ const DFinance = () => {
                           className="max-w-[45px]"
                         />
                       </div>
-                      <p className="text-white text-lg lg:text-2xl text-center mt-4 font-bold">
+                      <p className="text-white text-lg leading-normal lg:text-2xl lg:leading-[38px] text-center mt-4 font-bold">
                         {card.title}
                       </p>
                     </div>

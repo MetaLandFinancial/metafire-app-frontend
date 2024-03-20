@@ -1,6 +1,6 @@
 /* first section title */
 .main_title_deposit {
-    @apply font-bold text-white text-[53px] md:text-5xl lg:text-6xl xl:text-[100px] md:leading-normal lg:leading-normal xl:leading-normal leading-normal tracking-tight md:tracking-tighter;
+    @apply font-bold text-white text-[53px] md:text-6xl xl:text-[100px] md:leading-normal lg:leading-normal xl:leading-normal leading-normal tracking-tight md:tracking-tight;
     text-shadow: 0px 4px 70px #8E54E9;
     -webkit-text-stroke-width: 7px;
     -webkit-text-stroke-color: transparent;
@@ -8,6 +8,14 @@
     background-clip: text;
     -webkit-background-clip: text;
     font-family: "Barlow", sans-serif;
+}
+
+@media (max-width: 767px) {
+    .main_title_deposit {
+        text-shadow: 0px 2.399px 41.983px #8E54E9;
+        -webkit-text-stroke-width: 2.99879789352417;
+        -webkit-text-stroke-color: transparent;
+    }
 }
 
 /* ____ finance css______ */
@@ -30,7 +38,7 @@
 }
 
 .Select_BG_Form {
-    @apply text-white text-start text-base w-full border-[1px] border-[#bbcfff66] rounded-[15px] outline-none p-5;
+    @apply text-white text-start w-full border-[1px] border-[#bbcfff66] rounded-[15px] outline-none p-4 md:p-5;
     background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
     box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
 }
@@ -41,28 +49,27 @@
     background-image: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
 }
 
-
-.opction_text {
-    @apply hover:bg-[#0F1029];
-}
-
 .Text_gradient {
     @apply text-base font-semibold;
-    opacity: 0.8;
-    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background: repeating-linear-gradient(90deg, #4776E6, #4776E6 8%, #8E54E9 12%, #8E54E9 30%);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
+.Text_gradient input[type="text"]::placeholder {
+    color: transparent;
+}
+
 .Btn_BG {
     @apply rounded-md hover:opacity-[0.8] hover:duration-500;
     background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+
 }
 
 /* _____ finance tabel bg ______ */
 .Tabel_Bg {
-    @apply rounded-[15px] max-w-[571px];
+    @apply rounded-[15px] w-full max-w-[571px];
     border: 1px solid rgba(187, 207, 255, 0.40);
     background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
     box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;

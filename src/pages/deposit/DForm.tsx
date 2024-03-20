@@ -10,13 +10,6 @@ const DForm: React.FC = () => {
     { id: 4, name: "2 Stars", unavailable: true },
     { id: 5, name: "1 Stars", unavailable: false },
   ];
-  const anytime = [
-    { id: 1, name: "Anytime", unavailable: false },
-    { id: 2, name: "Anytime", unavailable: false },
-    { id: 3, name: "Anytime", unavailable: false },
-    { id: 4, name: "Anytime", unavailable: true },
-    { id: 5, name: "Anytime", unavailable: false },
-  ];
   const cryptoOptions = [
     { id: 1, name: "Anyone", unavailable: false },
     { id: 2, name: "Any", unavailable: false },
