@@ -3,7 +3,7 @@
 import type { AppProps } from 'next/app';
 import RootLayout from "@/app/layout";
 import { WagmiProvider } from 'wagmi' 
-import { wagmiConfig } from './wagmiConfig' 
+import { wagmiConfig } from '../config/wagmiConfig' 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query' 
 
 const queryClient = new QueryClient() 
