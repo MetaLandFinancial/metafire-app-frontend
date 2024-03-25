@@ -51,7 +51,7 @@ const MobileSidebar: React.FC<SidebarProps> = ({ open, closeModal }) => {
   const [head, setHead] = useState(head1[0]);
   return (
     <>
-      <Transition appear show={open} as={Fragment} className="block lg:hidden">
+      <Transition appear show={open} as={Fragment} >
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}
