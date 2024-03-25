@@ -45,10 +45,11 @@ export const NavBarData: NavItem[] = [
     }, {
         name: "Account Summary",
         path: "/account-summary"
-    }, {
-        name: "Company",
-        path: "/company"
-    },
+    }, 
+    // {
+    //     name: "Company",
+    //     path: "/company"
+    // },
 ]
 
 interface socialInfo {
