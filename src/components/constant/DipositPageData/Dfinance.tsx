@@ -23,7 +23,7 @@ const DfinanceData: DFinanceCard[] = [
   {
     imageSrc: f1,
     altText: "f1",
-    title: "Industry Best Returns",
+    title: "Investing in the Digital Future",
   },
   {
     imageSrc: f4,
