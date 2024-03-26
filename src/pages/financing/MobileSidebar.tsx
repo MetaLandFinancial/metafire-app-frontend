@@ -5,10 +5,10 @@ import React, { useEffect, useRef } from "react";
 import { Dialog, Transition } from "@headlessui/react";
 import FinanceDrop from "./Drop/FinanceDrop";
 interface SidebarProps {
-  open: boolean;
+  IsOpen: boolean;
   closeModal: () => void;
 }
-const MobileSidebar: React.FC<SidebarProps> = ({ open, closeModal }) => {
+const MobileSidebar: React.FC<SidebarProps> = ({ IsOpen, closeModal }) => {
   const properties = [
     { id: 1, name: "Background", unavailable: false },
     { id: 2, name: "Color", unavailable: false },
@@ -51,7 +51,7 @@ const MobileSidebar: React.FC<SidebarProps> = ({ open, closeModal }) => {
   const [head, setHead] = useState(head1[0]);
   return (
     <>
-      <Transition appear show={open} as={Fragment} >
+      <Transition appear show={IsOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <Transition.Child
             as={Fragment}

@@ -64,7 +64,14 @@
 }
 
 .input_Btn {
-    @apply lg:w-full p-[14px] md:p-5 rounded-[15px] max-w-[136px] flex items-center;
+    @apply lg:w-full p-[14px] md:p-5 rounded-[15px] max-w-[136px] max-lg:flex items-center;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.input_Btn_1 {
+    @apply lg:w-full p-[14px] md:p-5 rounded-[15px] max-w-[136px] items-center;
     border: 1px solid rgba(187, 207, 255, 0.40);
     background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
     box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
@@ -156,7 +163,7 @@
     content: '';
     display: block;
     position: absolute;
-    top: 2px;
+    top: 5px;
     left: 7px;
     width: 5px;
     height: 12px;
