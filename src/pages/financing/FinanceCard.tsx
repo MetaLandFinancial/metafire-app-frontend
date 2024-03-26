@@ -8,7 +8,7 @@ import { Financecard } from "@/components/constant/Financecard";
 import Link from "next/link";
 import Detailed from "./Detailed";
 const FinanceCard = () => {
-  let [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
