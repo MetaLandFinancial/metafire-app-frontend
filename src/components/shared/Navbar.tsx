@@ -44,7 +44,7 @@ const location = usePathname()
                         className={"text-base font-semibold text-white py-4 px-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[6px]"}>
                         Connect Wallet
                     </button> */}
-                     <ConnectButton />
+                     <ConnectButton chainStatus="icon" />
                 </div>
 
 
