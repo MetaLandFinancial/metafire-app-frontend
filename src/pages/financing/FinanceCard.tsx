@@ -7,6 +7,7 @@ import ring from "../../../public/img/ring.svg";
 import { Financecard } from "@/components/constant/Financecard";
 import Link from "next/link";
 import Detailed from "./Detailed";
+
 const FinanceCard = () => {
   const [isOpen, setIsOpen] = useState(false);
 

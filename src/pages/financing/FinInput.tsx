@@ -4,7 +4,7 @@ import filter from "../../../public/img/filter.svg";
 import search from "../../../public/img/search.svg";
 import MobileSidebar from "./MobileSidebar";
 const FinInput: React.FC = () => {
-  let [IsOpen, setIsOpen] = useState(false);
+  const [IsOpen, setIsOpen] = useState(false);
 
   function closeModal() {
     setIsOpen(false);
