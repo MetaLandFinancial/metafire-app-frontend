@@ -1,13 +1,9 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import filter from "../../../public/img/filter.svg";
 import search from "../../../public/img/search.svg";
 // import MobileSidebar from "./MobileSidebar";
-// At the top of your FinInput component file
-import dynamic from 'next/dynamic';
-
-const MobileSidebar = dynamic(() => import('./MobileSidebar'), { ssr: false });
-
 
 const FinInput: React.FC = () => {
   const [IsOpen, setIsOpen] = useState(false);
