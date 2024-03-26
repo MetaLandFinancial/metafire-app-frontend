@@ -10,22 +10,21 @@ const DForm: React.FC = () => {
     { id: 4, name: "2 Stars", unavailable: true },
     { id: 5, name: "1 Stars", unavailable: false },
   ];
-  const cryptoOptions = [
-    { id: 1, name: "Anyone", unavailable: false },
-    { id: 2, name: "Any", unavailable: false },
-    { id: 3, name: "one", unavailable: false },
-    { id: 4, name: "Any", unavailable: true },
-    { id: 5, name: "one", unavailable: false },
+  const depositPeriodOptions = [
+    { id: 1, name: "Anytime", unavailable: false },
+    { id: 2, name: "120 Days", unavailable: false },
+    { id: 3, name: "210 Days", unavailable: false },
+    { id: 4, name: "300 Days", unavailable: true }
   ];
   const stakeOptions = [
     { id: 1, name: "ETH", unavailable: false },
-    { id: 2, name: "ETH", unavailable: false },
-    { id: 3, name: "ETH", unavailable: false },
-    { id: 4, name: "ETH", unavailable: true },
-    { id: 5, name: "ETH", unavailable: false },
+    // { id: 2, name: "ETH", unavailable: false },
+    // { id: 3, name: "ETH", unavailable: false },
+    // { id: 4, name: "ETH", unavailable: true },
+    // { id: 5, name: "ETH", unavailable: false },
   ];
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
-  const [selectedCrypto, setSelectedCrypto] = useState(cryptoOptions[0]);
+  const [selectedDepositPeriod, setSelectedDepositPeriod] = useState(depositPeriodOptions[0]);
   const [selectedStake, setSelectedStake] = useState(stakeOptions[0]);
   return (
     <>
@@ -53,13 +52,13 @@ const DForm: React.FC = () => {
                   </div>
                   <div className="flex flex-col">
                     <label className="mb-4 text-white/[0.8]">
-                      Select Crypto type
+                      Select Deposit Time Period
                     </label>
                     <div className="relative">
                       <CustomListbox
-                        options={cryptoOptions}
-                        selectedValue={selectedCrypto}
-                        onChange={setSelectedCrypto}
+                        options={depositPeriodOptions}
+                        selectedValue={selectedDepositPeriod}
+                        onChange={setSelectedDepositPeriod}
                       />
                     </div>
                   </div>
@@ -86,7 +85,7 @@ const DForm: React.FC = () => {
                   <div className="flex flex-col">
                     <div className="mb-4 flex justify-between">
                       <label className="text-white/[0.8]">Enter amount</label>
-                      <label className="text-white/[0.8]">Balance: 0.00 </label>
+                      {/* <label className="text-white/[0.8]">Balance: 0.00 </label> */}
                     </div>
                     <div>
                       <input
