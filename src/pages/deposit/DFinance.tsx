@@ -13,12 +13,12 @@ const DFinance = () => {
         <div className="container">
           <div className="w-full relative z-10">
             <div className="text-center">
-              <h1 className="font-bold text-white text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[58px] leading-none">
+              {/* <h1 className="font-bold text-white text-xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-[58px] leading-none">
                 NFT Financing
               </h1>
               <p className="text-[#ffffffb3] font-medium text-lg md:text-xl xl:text-2xl mt-6">
                 Buy Now Pay Later
-              </p>
+              </p> */}
             </div>
             <div className="mt-24 md:mt-20 lg:mt-24 xl:mt-32 grid gap-6 justify-items-center sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
               {DfinanceData.map((card: DFinanceCard, index: number) => (
