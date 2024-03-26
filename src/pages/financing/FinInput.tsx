@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import Image from "next/image";
 import filter from "../../../public/img/filter.svg";
 import search from "../../../public/img/search.svg";
-// import MobileSidebar from "./MobileSidebar";
+import MobileSidebar from "./MobileSidebar";
 
 const FinInput: React.FC = () => {
   const [IsOpen, setIsOpen] = useState(false);
