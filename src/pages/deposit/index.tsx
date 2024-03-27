@@ -5,6 +5,8 @@ import DHero from "@/pages/deposit/DHero";
 import DFinance from "./DFinance";
 import DTabel from "./DTabel";
 import DForm from "./DForm";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
+
 const Index = () => {
   return (
     <>
@@ -14,7 +16,8 @@ const Index = () => {
         </div>
         <DHero />
         <DFinance />
-        <DForm />
+        {/* <ConnectButton/> */}
+        <DForm connectButton={<ConnectButton />}/>
         <DTabel />
       </div>
     </>
