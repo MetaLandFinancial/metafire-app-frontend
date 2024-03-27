@@ -13,10 +13,10 @@ interface DFormProps {
 
 const people = [
   { id: 1, name: "5 Stars", unavailable: false },
-  { id: 2, name: "4 Stars", unavailable: false },
-  { id: 3, name: "3 Stars", unavailable: false },
-  { id: 4, name: "2 Stars", unavailable: true },
-  { id: 5, name: "1 Stars", unavailable: false },
+  // { id: 2, name: "4 Stars", unavailable: false },
+  // { id: 3, name: "3 Stars", unavailable: false },
+  // { id: 4, name: "2 Stars", unavailable: true },
+  // { id: 5, name: "1 Stars", unavailable: false },
 ];
 const depositPeriodOptions = [
   { id: 1, name: "Anytime",  unavailable: false },
