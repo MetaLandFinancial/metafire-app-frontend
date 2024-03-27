@@ -2,30 +2,54 @@ import { useState } from "react";
 import CustomListbox from "./Form/CustomListbox ";
 import Connect from "./Form/ConnectBtn";
 import StakeBtn from "./Form/StakeBtn";
-const DForm: React.FC = () => {
-  const people = [
-    { id: 1, name: "5 Stars", unavailable: false },
-    { id: 2, name: "4 Stars", unavailable: false },
-    { id: 3, name: "3 Stars", unavailable: false },
-    { id: 4, name: "2 Stars", unavailable: true },
-    { id: 5, name: "1 Stars", unavailable: false },
-  ];
-  const depositPeriodOptions = [
-    { id: 1, name: "Anytime", unavailable: false },
-    { id: 2, name: "120 Days", unavailable: false },
-    { id: 3, name: "210 Days", unavailable: false },
-    { id: 4, name: "300 Days", unavailable: true }
-  ];
-  const stakeOptions = [
-    { id: 1, name: "ETH", unavailable: false },
-    // { id: 2, name: "ETH", unavailable: false },
-    // { id: 3, name: "ETH", unavailable: false },
-    // { id: 4, name: "ETH", unavailable: true },
-    // { id: 5, name: "ETH", unavailable: false },
-  ];
+import { useWriteContract } from 'wagmi'
+
+import WETHGateway from "../../contracts/WETHGateway.json";
+
+interface DFormProps {
+  connectButton: JSX.Element; // Type for the connectButton prop
+}
+
+const people = [
+  { id: 1, name: "5 Stars", unavailable: false },
+  { id: 2, name: "4 Stars", unavailable: false },
+  { id: 3, name: "3 Stars", unavailable: false },
+  { id: 4, name: "2 Stars", unavailable: true },
+  { id: 5, name: "1 Stars", unavailable: false },
+];
+const depositPeriodOptions = [
+  { id: 1, name: "Anytime", unavailable: false },
+  { id: 2, name: "120 Days", unavailable: false },
+  { id: 3, name: "210 Days", unavailable: false },
+  { id: 4, name: "300 Days", unavailable: true }
+];
+const stakeOptions = [
+  { id: 1, name: "ETH", unavailable: false },
+  // { id: 2, name: "ETH", unavailable: false },
+  // { id: 3, name: "ETH", unavailable: false },
+  // { id: 4, name: "ETH", unavailable: true },
+  // { id: 5, name: "ETH", unavailable: false },
+];
+
+const DForm: React.FC<DFormProps> = ({ connectButton }) => {
+  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS;
+
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
   const [selectedDepositPeriod, setSelectedDepositPeriod] = useState(depositPeriodOptions[0]);
   const [selectedStake, setSelectedStake] = useState(stakeOptions[0]);
+
+
+  //add callDeposit function
+  // const { writeContract } = useWriteContract(WETHGateway.abi, WETHGATEWAY_ADDRESS);
+
+
+  const callDeposit = async () => {
+    console.log("Deposit button clicked");
+    const depositAmount = 0.05;
+    const depositPeriod = 120;
+    const stake = "0x"
+  }
+
   return (
     <>
       <div className="relative my-0 md:my-28">
@@ -102,9 +126,11 @@ const DForm: React.FC = () => {
                 <p className="text-white text-[27px] font-bold mb-[31px]">
                   wallet balance
                 </p>
-                <Connect />
+
+               {connectButton}
+                {/* <Connect /> */}
               </div>
-              <div className="flex flex-col items-center md:items-start">
+              <div onClick={callDeposit} className="flex flex-col items-center md:items-start">
                 <p className="text-white text-[27px] font-bold mb-[31px]">
                   3. Stake My Deposit
                 </p>
