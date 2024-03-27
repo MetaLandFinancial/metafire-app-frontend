@@ -43,7 +43,7 @@ export const NavBarData: NavItem[] = [
         name: "Metrics",
         path: "/supply-and-demand"
     }, {
-        name: "Account Summary",
+        name: "Dashboard",
         path: "/account-summary"
     }, 
     // {
