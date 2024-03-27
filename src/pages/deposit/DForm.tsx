@@ -38,14 +38,13 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
   const [selectedDepositPeriod, setSelectedDepositPeriod] = useState(depositPeriodOptions[0]);
   const [selectedStake, setSelectedStake] = useState(stakeOptions[0]);
+  const [depositAmountInput, setDepositAmountInput] = useState('');
 
   const { address, connector, isConnected } = useAccount();
-  const { data: hash, error, isPending, writeContract } = useWriteContract() 
+  // const { data: hash, error, isPending, writeContract } = useWriteContract() 
 
 
   const callDeposit = async () => {
-    console.log("Deposit button clicked");
-    console.log(" depositPeriodOptions: ", selectedDepositPeriod);
   
     let periodCode;
     switch(selectedDepositPeriod.id) {
@@ -64,7 +63,8 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
       default:
         periodCode = "-1";
     }
-    console.log(" depositPeriodOptions: ", periodCode);
+    // console.log(" depositPeriodOptions: ", periodCode);
+    // console.log(" depositAmountInput: ", depositAmountInput);
 
     try {
       const { ethereum } = window as any;
@@ -73,7 +73,7 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
 
       const contract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
       const txResponse = await contract.depositETH(address, periodCode, 0, {
-        value: ethers.parseEther("0.001")
+        value: ethers.parseEther(depositAmountInput)
       });
       // console.log("Transaction Receipt: ", txResponse);
       // const txResponse = await writeContract({ 
@@ -84,9 +84,7 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
       //   value: ethers.parseEther("0.1"),
       // }) 
   
-      // console.log("Transaction Receipt: ", txResponse);
-
-
+      // console.log("Transaction Receipt: ", txResponse)
     } catch (error) {
       console.error("Error depositing ETH: ", error);
     }
@@ -152,14 +150,15 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
                   </div>
                   <div className="flex flex-col">
                     <div className="mb-4 flex justify-between">
-                      <label className="text-white/[0.8]">Enter amount</label>
+                      <label className="text-white/[0.8]">Enter ETH amount</label>
                       {/* <label className="text-white/[0.8]">Balance: 0.00 </label> */}
                     </div>
                     <div>
                       <input
+                        onChange={e => setDepositAmountInput(e.target.value)} 
                         type="text"
                         className="Select_BG_Form Text_gradient"
-                        placeholder="0.05"
+                        placeholder="0"
                       />
                     </div>
                   </div>
