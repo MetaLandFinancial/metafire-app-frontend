@@ -197,7 +197,9 @@ const Deposit = () => {
           .then((data) => {
             // setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
             console.log("Data fetched: ", data.data);
-      
+            console.log(data.data.reserveDataUpdateds[0].liquidityRates)
+            setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
+            console.log(liquidityRates[3]);
           
    
           })
@@ -214,7 +216,7 @@ const Deposit = () => {
                 <div className="deposit_summery_wrapper">
                     <div className="section_title pb-10">
                         <h2 className={"text-3xl md:text-5xl font-medium text-white"}>
-                            Deposite Summary 
+                            Deposite Summary {liquidityRates[3]}
                         </h2>
                     </div>
 
@@ -278,9 +280,9 @@ const Deposit = () => {
 
                                     <tbody>
                                     {
-                                        tableBody.map((tbodyData, items) => (
+                                        tableBody.map((tbodyData, index) => (
                                             <tr className="bg-[#10132F] border-bg-[#10132F] border-b last:border-b-0 border-gray-600"
-                                                key={items}>
+                                                key={index}>
                                                 <td className="px-6 py-4 first:rounded-bl-3xl">
                                                     <p className={"text-base font-bold text-white"}>
                                                         {tbodyData.assestClass} Star
@@ -321,8 +323,9 @@ const Deposit = () => {
                                                 <td className="px-6 py-4">
                                                     <p className={"text-base font-bold text-white"}>
                                                         {
-                                                            tbodyData.apy
-                                                        }
+                                                            // tbodyData.apy
+                                                            (liquidityRates[index]/ 10 ** 25).toFixed(2)
+                                                        }% 
                                                     </p>
                                                 </td>
 

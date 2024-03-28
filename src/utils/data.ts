@@ -84,7 +84,7 @@ export const profileSocialInfo: socialInfo[] = [
 ]
 
 export const tableHead: any = [
-    "Asset Class", "Time Period", "Deposited Date", "Unlock Date", "Total Staked", "APY %", "Operation"
+    "Asset Class", "Lock Period", "Deposited Date", "Unlock Date", "Total Staked", "APY %", "Operation"
 ]
 
 interface tableBody {
@@ -100,7 +100,7 @@ interface tableBody {
 export const tableBody: tableBody[] = [
     {
         assestClass: '5.0',
-        timePeriod: 120,
+        timePeriod: 0,
         depositedDate: "February 22, 2024",
         unlockDate: "November 22, 2024",
         totalStaked: "0.10397",
@@ -116,7 +116,7 @@ export const tableBody: tableBody[] = [
         operation: "Withdraw"
     }, {
         assestClass: '5.0',
-        timePeriod: 120,
+        timePeriod: 210,
         depositedDate: "February 22, 2024",
         unlockDate: "November 22, 2024",
         totalStaked: "0.10397",
@@ -124,7 +124,7 @@ export const tableBody: tableBody[] = [
         operation: "Withdraw"
     }, {
         assestClass: '5.0',
-        timePeriod: 120,
+        timePeriod: 300,
         depositedDate: "February 22, 2024",
         unlockDate: "November 22, 2024",
         totalStaked: "0.10397",
