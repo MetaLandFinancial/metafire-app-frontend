@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState, useEffect } from "react";
 import totalDeposit from "../../../public/assets/total_deposit.svg"
 import {responsiveTableHead, tableBody, tableHead} from "@/utils/data";
 import resposnvieTableImg from "@/../public/assets/bg.svg";
@@ -6,7 +7,103 @@ import resposnvieTableImg2 from "@/../public/assets/bg2.svg";
 import resposnvieTableImg3 from "@/../public/assets/bg3.svg";
 import Pagination from "@/components/shared/Pagination";
 
+import { useWriteContract, useAccount, useWalletClient } from 'wagmi'
+import WETHGateway from "../../contracts/wethGateway.json";
+import { ethers } from "ethers";
+
 const Deposit = () => {
+    const MTOKEN_I_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_I_ADDRESS as string;
+    const MTOKEN_II_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_II_ADDRESS as string;
+    const MTOKEN_III_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_III_ADDRESS as string;
+    const MTOKEN_IV_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_IV_ADDRESS as string;
+    const [mTokenBalance, setMTokenBalance] = useState<string[]>([]);
+
+    const [totalMTokenBalance, setTotalMTokenBalance] = useState(0);
+    const [totalAvailableMTokenBalance, setTotalAvailableMTokenBalance] = useState(0);
+    const { address, connector, isConnected } = useAccount();
+    const { data: walletClient, isError, isLoading } = useWalletClient()
+
+    const fetMTokenBalance = async () => {
+        // const wagProvider = await connector?.getProvider()
+        // console.log("wagProvider: ", wagProvider);
+        // console.log("addr: ", walletClient.);
+
+
+        const { ethereum } = window as any;
+        const provider = new ethers.BrowserProvider(ethereum);
+        const signer = await provider.getSigner();
+        // setSigner(signer);
+        // console.log("signer: ", signer);
+        // const rpcUrl = 'https://eth-mainnet.g.alchemy.com/v2/XlCt1JgWjHXKMpt3K7tFalycMQsb--on';
+        // const provider = new ethers.JsonRpcProvider(rpcUrl);
+
+        const erc20Contract1 = new ethers.Contract(
+            MTOKEN_I_ADDRESS,
+            [ "function balanceOf(address user, uint8 period) view returns (uint256)" ],
+            signer
+        );
+        const erc20Contract2 = new ethers.Contract(
+            MTOKEN_II_ADDRESS,
+            [ "function balanceOf(address user, uint8 period) view returns (uint256)" ],
+            signer
+        );
+        const erc20Contract3 = new ethers.Contract(
+            MTOKEN_III_ADDRESS,
+            [ "function balanceOf(address user, uint8 period) view returns (uint256)" ],
+            signer
+        );
+        const erc20Contract4 = new ethers.Contract(
+            MTOKEN_IV_ADDRESS,
+            [ "function balanceOf(address user, uint8 period) view returns (uint256)" ],
+            signer
+        );
+        
+        const balance1 = await erc20Contract1.balanceOf(address, 0);
+        const balance2 = await erc20Contract2.balanceOf(address, 1);
+        const balance3 = await erc20Contract3.balanceOf(address, 2);
+        const balance4 = await erc20Contract4.balanceOf(address, 3);
+        console.log("balance1: ", balance1);
+        console.log("balance2: ", balance2);
+        console.log("balance3: ", balance3);
+        console.log("balance4: ", balance4);
+        const formattedBalance1 = ethers.formatUnits(balance1, 18);
+        const formattedBalance2 = ethers.formatUnits(balance2, 18);
+        const formattedBalance3 = ethers.formatUnits(balance3, 18);
+        const formattedBalance4 = ethers.formatUnits(balance4, 18);
+        const updatedBalances = [
+            formattedBalance1,
+            formattedBalance2,
+            formattedBalance3,
+            formattedBalance4,
+            ...mTokenBalance.slice(4),
+          ];
+
+        // Update the state with the balance
+        setMTokenBalance(updatedBalances);
+        const formattedTotalBalance =
+          parseFloat(formattedBalance1) +
+          parseFloat(formattedBalance2) +
+          parseFloat(formattedBalance3) +
+          parseFloat(formattedBalance4);
+        setTotalMTokenBalance(parseFloat(formattedTotalBalance.toFixed(6)));
+
+      };
+    useEffect(() => {
+     
+        console.log("address: ", address);
+        
+        console.log("isConnected: ", isConnected);
+        // write a function
+
+        fetMTokenBalance()
+          .catch(console.error); // Catch and log any errors
+        // fetMTokenBalance();
+
+    }, [address,
+        isLoading// use to reload singer
+    ]);
+
+
 
     return (
         <section className={"section_img pt-[50px] md:pt-[94px] pb-[100px] md:pb-[250px] bg-no-repeat bg-cover bg-center"}>
@@ -14,7 +111,7 @@ const Deposit = () => {
                 <div className="deposit_summery_wrapper">
                     <div className="section_title pb-10">
                         <h2 className={"text-3xl md:text-5xl font-medium text-white"}>
-                            Deposite Summary
+                            Deposite Summary 
                         </h2>
                     </div>
 
@@ -30,7 +127,7 @@ const Deposit = () => {
                                     Total Deposit
                                 </h4>
                                 <p className={"text-xl md:text-[40px] font-bold text-white"}>
-                                    0.107305
+                                    {totalMTokenBalance}
                                 </p>
                             </div>
                         </div>
@@ -42,7 +139,7 @@ const Deposit = () => {
                                 </div>
 
                                 <h4 className={"text-3 md:text-2xl font-bold- text-white pb-2 md:pb-3"}>
-                                    Total Deposit
+                                    Available to withdraw
                                 </h4>
 
                                 <p className={"text-xl md:text-[40px] font-bold text-white"}>
