@@ -216,7 +216,7 @@ const Deposit = () => {
                 <div className="deposit_summery_wrapper">
                     <div className="section_title pb-10">
                         <h2 className={"text-3xl md:text-5xl font-medium text-white"}>
-                            Deposite Summary {liquidityRates[3]}
+                            Deposite Summary
                         </h2>
                     </div>
 
