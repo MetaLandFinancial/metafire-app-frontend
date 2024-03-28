@@ -11,23 +11,107 @@ import { useWriteContract, useAccount, useWalletClient } from 'wagmi'
 import WETHGateway from "../../contracts/wethGateway.json";
 import { ethers } from "ethers";
 
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+
+
+
 const Deposit = () => {
     const MTOKEN_I_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_I_ADDRESS as string;
     const MTOKEN_II_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_II_ADDRESS as string;
     const MTOKEN_III_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_III_ADDRESS as string;
     const MTOKEN_IV_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_IV_ADDRESS as string;
+
+    const SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+
     const [mTokenBalance, setMTokenBalance] = useState<string[]>([]);
 
     const [totalMTokenBalance, setTotalMTokenBalance] = useState(0);
     const [totalAvailableMTokenBalance, setTotalAvailableMTokenBalance] = useState(0);
+    const [depositSubgraphData, setDepositSubgraphData] = useState([]);
     const { address, connector, isConnected } = useAccount();
     const { data: walletClient, isError, isLoading } = useWalletClient()
 
-    const fetMTokenBalance = async () => {
-        // const wagProvider = await connector?.getProvider()
-        // console.log("wagProvider: ", wagProvider);
-        // console.log("addr: ", walletClient.);
 
+    const depositQuery = `
+    query {
+      deposit0: deposits(
+        orderBy: blockTimestamp
+        orderDirection: desc
+        first: 1
+        where: {
+          onBehalfOf: "${address}"
+          period: 0
+        }
+      ) {
+        onBehalfOf
+        amount
+        period
+        blockTimestamp
+      }
+      deposit1: deposits(
+        orderBy: blockTimestamp
+        orderDirection: desc
+        first: 1
+        where: {
+          onBehalfOf: "${address}"
+          period: 1
+        }
+      ) {
+        onBehalfOf
+        amount
+        period
+        blockTimestamp
+      }
+        deposit2: deposits(
+        orderBy: blockTimestamp
+        orderDirection: desc
+        first: 1
+        where: {
+          onBehalfOf: "${address}"
+          period: 2
+        }
+      ) {
+        onBehalfOf
+        amount
+        period
+        blockTimestamp
+      }
+        deposit3: deposits(
+        orderBy: blockTimestamp
+        orderDirection: desc
+        first: 1
+        where: {
+          onBehalfOf: "${address}"
+          period: 3
+        }
+      ) {
+        onBehalfOf
+        amount
+        period
+        blockTimestamp
+      }
+      reserveDataUpdateds(
+        orderBy:blockTimestamp, 
+        orderDirection: desc,
+        first: 1
+      ){
+        liquidityRates
+        variableBorrowRate
+      }
+      userBalances(
+        where:{
+          id: "${address}"
+      }){
+        id
+        balance_1
+        balance_2
+        balance_3
+        balance_4
+      }
+    }
+  `;
+
+    const fetMTokenBalance = async () => {
 
         const { ethereum } = window as any;
         const provider = new ethers.BrowserProvider(ethereum);
@@ -62,10 +146,6 @@ const Deposit = () => {
         const balance2 = await erc20Contract2.balanceOf(address, 1);
         const balance3 = await erc20Contract3.balanceOf(address, 2);
         const balance4 = await erc20Contract4.balanceOf(address, 3);
-        console.log("balance1: ", balance1);
-        console.log("balance2: ", balance2);
-        console.log("balance3: ", balance3);
-        console.log("balance4: ", balance4);
         const formattedBalance1 = ethers.formatUnits(balance1, 18);
         const formattedBalance2 = ethers.formatUnits(balance2, 18);
         const formattedBalance3 = ethers.formatUnits(balance3, 18);
@@ -87,14 +167,11 @@ const Deposit = () => {
           parseFloat(formattedBalance4);
         setTotalMTokenBalance(parseFloat(formattedTotalBalance.toFixed(6)));
 
-      };
-    useEffect(() => {
-     
-        console.log("address: ", address);
-        
-        console.log("isConnected: ", isConnected);
-        // write a function
+    };
 
+    useEffect(() => {
+        console.log("Address: ", address);
+        console.log("type of address: ", typeof address);
         fetMTokenBalance()
           .catch(console.error); // Catch and log any errors
         // fetMTokenBalance();
@@ -102,6 +179,32 @@ const Deposit = () => {
     }, [address,
         isLoading// use to reload singer
     ]);
+
+    const [liquidityRates, setLiquidityRates] = React.useState([]);
+
+    const apolloClient = new ApolloClient({
+        uri: SUBGRAPH_URL,
+        cache: new InMemoryCache(),
+      });
+
+    useEffect(() => {
+        // console.log(depositQuery);
+        // query from subgraph
+        apolloClient
+          .query({
+            query: gql(depositQuery),
+          })
+          .then((data) => {
+            // setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
+            console.log("Data fetched: ", data.data);
+      
+          
+   
+          })
+          .catch((err) => {
+            console.log("Error fetching data: ", err);
+          });
+      }, [address]);
 
 
 
