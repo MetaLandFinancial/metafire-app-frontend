@@ -13,7 +13,7 @@ import { ethers } from "ethers";
 
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
-
+const lockDays = [0, 120, 210, 300];
 
 const Deposit = () => {
     const MTOKEN_I_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_I_ADDRESS as string;
@@ -24,9 +24,11 @@ const Deposit = () => {
     const SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
 
     const [mTokenBalance, setMTokenBalance] = useState<string[]>([]);
-
+    const [depositDates, setDepositDates] = useState<number[]>([]);
+    const [unlockDates, setUnlockDates] = useState<number[]>([]);
     const [totalMTokenBalance, setTotalMTokenBalance] = useState(0);
     const [totalAvailableMTokenBalance, setTotalAvailableMTokenBalance] = useState(0);
+
     const [depositSubgraphData, setDepositSubgraphData] = useState([]);
     const { address, connector, isConnected } = useAccount();
     const { data: walletClient, isError, isLoading } = useWalletClient()
@@ -146,6 +148,10 @@ const Deposit = () => {
         const balance2 = await erc20Contract2.balanceOf(address, 1);
         const balance3 = await erc20Contract3.balanceOf(address, 2);
         const balance4 = await erc20Contract4.balanceOf(address, 3);
+        console.log("Balance 1: ", balance1);
+        console.log("Balance 2: ", balance2);
+        console.log("Balance 3: ", balance3);
+        console.log("Balance 4: ", balance4);
         const formattedBalance1 = ethers.formatUnits(balance1, 18);
         const formattedBalance2 = ethers.formatUnits(balance2, 18);
         const formattedBalance3 = ethers.formatUnits(balance3, 18);
@@ -197,9 +203,20 @@ const Deposit = () => {
           .then((data) => {
             // setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
             console.log("Data fetched: ", data.data);
-            console.log(data.data.reserveDataUpdateds[0].liquidityRates)
+            console.log(data.data.deposit0[0].blockTimestamp)
             setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
-            console.log(liquidityRates[3]);
+            setDepositDates([
+              data.data.deposit0[0].blockTimestamp,
+              data.data.deposit1[0].blockTimestamp,
+              data.data.deposit2[0].blockTimestamp,
+              data.data.deposit3[0].blockTimestamp,
+            ]);
+            setUnlockDates([
+              (data.data.deposit0[0].blockTimestamp * 1000 + lockDays[0] * 86400 *1000)/1000,
+              (data.data.deposit1[0].blockTimestamp * 1000 + lockDays[1] * 86400 *1000)/1000,
+              (data.data.deposit0[0].blockTimestamp * 1000 + lockDays[2] * 86400 *1000)/1000,
+              (data.data.deposit1[0].blockTimestamp * 1000 + lockDays[3] * 86400 *1000)/1000
+            ]);
           
    
           })
@@ -297,25 +314,31 @@ const Deposit = () => {
 
                                                 <td className="px-6 py-4">
                                                     <p className={"text-base font-bold text-white"}>
-                                                        {
+                                                         {/* {
                                                             tbodyData.depositedDate
-                                                        }
+                                                        }  */}
+                                                        {new Date(depositDates[index]*1000).toDateString()}
+                                                 
                                                     </p>
 
                                                 </td>
 
                                                 <td className="px-6 py-4">
                                                     <p className={"text-base font-bold text-white"}>
-                                                        {
+                                                        {/* {
                                                             tbodyData.unlockDate
-                                                        }
+                                                        } */}
+                                                         {new Date(unlockDates[index]*1000).toDateString()}
+                                           
+                                                        {/* {unlockDates[index]} */}
                                                     </p>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <p className={"text-base font-bold text-white"}>
-                                                        {
+                                                        {/* {
                                                             tbodyData.totalStaked
-                                                        }
+                                                        } */}
+                                                        {parseFloat(mTokenBalance[index]).toFixed(4)} ETH
                                                     </p>
 
                                                 </td>
