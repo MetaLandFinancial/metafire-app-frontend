@@ -5,6 +5,7 @@ import NavBrand from "../../../public/assets/meta_logo.svg"
 import humburger from "../../../public/assets/humburger.svg"
 import {useState} from "react";
 import { usePathname } from "next/navigation";
+import { ConnectButton } from '@rainbow-me/rainbowkit';
 
 const Navbar = () => {
 const location = usePathname()
@@ -36,13 +37,14 @@ const location = usePathname()
                             }
                         </ul>
                     </nav>
-                    <button className={"mr-3 md:hidden"} onClick={handleNav}>
+                    {/* <button className={"mr-3 md:hidden"} onClick={handleNav}>
                         <img src={humburger.src} alt=""/>
                     </button>
                     <button
                         className={"text-base font-semibold text-white py-4 px-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[6px]"}>
                         Connect Wallet
-                    </button>
+                    </button> */}
+                     <ConnectButton chainStatus="icon" showBalance={false} />
                 </div>
 
 

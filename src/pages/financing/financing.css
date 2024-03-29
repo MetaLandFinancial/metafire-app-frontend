@@ -1,0 +1,185 @@
+.FinanceDrop_BG {
+    @apply text-white text-base font-semibold text-start w-full rounded-[5px] outline-none py-3 px-6;
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.15) 0%, rgba(142, 84, 233, 0.15) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.Customized_inputbox {
+    @apply w-full z-[100];
+    background-color: #0F1029;
+}
+
+/* _________________ sidebar background */
+.basis {
+    flex: 0 0 288px;
+}
+
+.Sidebar_BG {
+    @apply rounded-[15px] p-5 w-full max-w-[288px];
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.Sidebar_BG_Mobile {
+    @apply rounded-[15px] p-5 w-full;
+    background: #151021;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+/* _______________ Status bar */
+.Status_Btn_Bg {
+    @apply text-base text-center text-white font-semibold w-full rounded-[5px] py-3 px-3 hover:duration-500;
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.15) 0%, rgba(142, 84, 233, 0.15) 100%);
+}
+
+.Status_Btn_Bg:hover {
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+}
+
+/* ________________ Finance_Card_BG */
+.Finance_Card_BG {
+    @apply w-full xl:max-w-[288px] rounded-[15px];
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.Finance_img_shadow {
+    box-shadow: 0px 0px 7.825px 1.826px rgba(142, 84, 233, 0.20) inset;
+}
+
+.FinanceCard_Btn {
+    @apply text-xs md:text-base text-white font-semibold text-center rounded-[4px] mt-[19px] p-[6.5px] md:p-[8.5px] hover:opacity-[0.7];
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+}
+
+/* _____________________  iput Bg */
+.Input_Bg {
+    @apply w-full px-3 py-0 md:p-5 rounded-[10px] md:rounded-[15px] flex items-center;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.input_Btn {
+    @apply lg:w-full p-[14px] md:p-5 rounded-[15px] max-w-[136px] max-lg:flex items-center;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.input_Btn_1 {
+    @apply lg:w-full p-[14px] md:p-5 rounded-[15px] max-w-[136px] items-center;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+/* __________ text gradient colored text */
+.Text_gradient {
+    background: repeating-linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* ___________ Detailed card bg */
+.Detailed_Bg {
+    @apply rounded-[15px] py-10 px-5 lg:p-10;
+    border-radius: 15px;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: #0F1029;
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+/* ___________ Amount bg */
+.Amount_Bg {
+    @apply rounded-[10px] md:rounded-[15px] py-[7px] px-[15px] lg:p-5;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.Nft_Bg {
+    @apply w-full text-base font-semibold text-white py-[18px] mt-6 lg:mt-5 hover:opacity-[0.7];
+    border-radius: 4.253px;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+}
+
+.link_bg {
+    @apply hover:text-blue-600 w-full;
+    text-decoration: underline !important;
+    background: linear-gradient(90deg, #8E54E9 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* _________ check box css __________ */
+.form-group {
+    display: block;
+    margin-bottom: 15px;
+}
+
+.form-group input {
+    padding: 0;
+    height: initial;
+    width: initial;
+    margin-bottom: 0;
+    display: none;
+    cursor: pointer;
+}
+
+.form-group label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.form-group label:before {
+    content: '';
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: 1px solid #D1D1D6;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+    padding: 9px;
+    border-radius: 4px;
+    display: inline-block;
+    top: 3px;
+    left: 0;
+    position: absolute;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-right: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+
+.form-group input:checked+label:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    width: 5px;
+    height: 12px;
+    border: solid #D1D1D6;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.form-group input:checked+label:before {
+    background: #1dc9a0;
+    border-color: #1dc9a0;
+}
+
+@media (max-width: 767px) {
+    .form-group {
+        max-width: 243px;
+        margin: 0 auto;
+    }
+}

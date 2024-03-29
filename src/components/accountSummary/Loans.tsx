@@ -174,9 +174,9 @@ const Loans = () => {
 
             {repayModal && (
                 <div className="modal fixed top-0 left-0 w-full h-full bg-[#000000bf] z-40"
-                     onClick={() => setRepayModal(!repayModal)}>
+                     >
                     <div
-                        className={"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-10 rounded-lg border border-solid border-blue-400 bg-gray-900 shadow-inner max-w-[650px] w-full"}>
+                        className={"absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 p-10 rounded-lg border border-solid border-blue-400 bg-gray-900 shadow-inner max-w-[650px] w-full"} >
                         <div className="modal_title pb-[54px] text-center">
                             <h2 className={"text-[22px] lg:text-[27px] font-bold text-white"}>
                                 REPAY NFT
@@ -291,6 +291,7 @@ const Loans = () => {
                         </label>
 
                         <button
+                        onClick={() => setRepayModal(!repayModal)}
                             className={"bg-gradient-to-r from-blue-500 to-purple-600 w-full py-[18px] rounded-[4px]"}>
                             Repay
                         </button>

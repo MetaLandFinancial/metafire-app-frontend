@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import "slick-carousel/slick/slick.css";
+@import "slick-carousel/slick/slick-theme.css";
+
+/* styles/globals.css */
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* body {
+    font-family: "Barlow", sans-serif;
+}
+
+@layer components {
+    .main_container {
+        @apply max-w-[1440px] w-full mx-auto px-5
+    }
+
+
+} */
+
+.hero_section {
+    background-image: url("../../public/assets/hero_bg.svg");
+}
+
+.hero_img {
+    background-image: url("/assets/nft_img.svg");
+}
+
+.profile_section {
+    background-image: url("../../public/assets/profile_details_img.svg");
+}
+
+.section_img {
+    background-image: url("../../public/assets/deposit_bg.svg");
+}
+
+.text-gradient {
+    background: linear-gradient(90deg, #4776E6, #8E54E9);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+#send_mail{
+    background-image: url("../../public/assets/send_email.svg");
+}
+
+.border_bottom{
+    position: relative;
+}
+
+.border_bottom::before{
+    content: '';
+    position: absolute;
+    background-image: url(../../public//assets/nav_border.svg);
+    top: 100%;
+    width: 100px;
+    height: 200px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-repeat: no-repeat;
+
+}
+
+.slick-prev {
+    left: unset;
+    top: -58px;
+    right: 61px;
+}
+
+.slick-next {
+    right: 8px;
+    top: -58px;
+}

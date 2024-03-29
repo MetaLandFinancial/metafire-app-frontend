@@ -8,7 +8,7 @@ import "../styles/globals.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { metadata } from "@/app/metadata";
-
+import {Providers} from './rainbowProviders'
 const inter = Inter({ subsets: ["latin"] });
 
 interface RootLayoutProps {
@@ -18,9 +18,12 @@ interface RootLayoutProps {
 const RootLayout: React.FC<RootLayoutProps> = ({ children }) => {
   return (
     <div className={inter.className}>
-      <Navbar />
-      {children}
-      <Footer />
+      <Providers>
+        <Navbar />
+        {children}
+        <Footer />
+      </Providers>
+
     </div>
   );
 }

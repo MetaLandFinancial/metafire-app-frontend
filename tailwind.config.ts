@@ -7,7 +7,7 @@ const config: Config = {
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
-        container: {
+    container: {
       center: true,
       padding: '1rem',
       screens: {
@@ -32,7 +32,7 @@ const config: Config = {
         'custom-shadow': '0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset',
       },
 
-      backgroundImage:{
+      backgroundImage: {
         'deporitsImg': 'url(../../public/assets/deposit_summery_bg.svg)',
         'deporitsImgTwo': 'url(../../public/assets/deposit_respon.svg)'
       }
