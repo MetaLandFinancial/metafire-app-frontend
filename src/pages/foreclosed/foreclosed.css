@@ -1,0 +1,277 @@
+/* first section title */
+.main_title_FCHero {
+    @apply font-bold text-white text-[53px] md:text-6xl xl:text-[100px] md:leading-normal lg:leading-normal xl:leading-normal leading-normal tracking-normal;
+    text-shadow: 0px 4px 70px #8E54E9;
+    -webkit-text-stroke-width: 5px;
+    -webkit-text-stroke-color: #FFF;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Barlow", sans-serif;
+}
+
+/* ********************************************** */
+/* ___________ assets sale card background _______________ */
+.Sale_BG {
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.05) 0%, rgba(142, 84, 233, 0.05) 100%);
+}
+
+.Sale_BG::after {
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: linear-gradient(180deg, rgba(68, 123, 255, 0.00) 0%, rgba(68, 123, 255, 0.14) 100%);
+}
+
+.Sale_Card_BG {
+    @apply rounded-[15px] border-[1px] border-[#bbcfff66] p-5 md:p-3;
+    background: linear-gradient(90deg, #4776e60a 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.Text_gradient {
+    background: repeating-linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Text_gradient_bg_text {
+    @apply text-center md:text-sm xl:text-base font-semibold;
+    background: repeating-linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Sale_Btn_Bg {
+    @apply w-full p-[7px] md:p-[10px] rounded-[4px] md:rounded-[7px] border-[1px] border-[#4777e640] hover:border-[1px] hover:border-transparent;
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.15) 0%, rgba(142, 84, 233, 0.15) 100%);
+}
+
+.Sale_Btn_Bg:hover .Text_gradient_bg_text {
+    background: white;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Sale_Btn_Bg:hover {
+    @apply duration-500 border-[1px] border-transparent;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+}
+
+/* ********************************************** */
+/* ____________ loaned page small screen left and right arrow  _________________*/
+.Arrow_Bg {
+    border-radius: 7.303px;
+    border: 0.487px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 14.605px 3.408px rgba(142, 84, 233, 0.20) inset;
+}
+
+.Arrow_Bg:hover {
+    border-radius: 7.303px;
+    border: 0.487px solid #4776E6;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    box-shadow: 0px 0px 14.605px 3.408px rgba(142, 84, 233, 0.20) inset;
+}
+
+/* ********************************************** */
+/* _____________ loaned heart hover change svg _______ */
+
+.svg2 {
+    display: none !important;
+}
+
+.Loned_Heart:hover .svg1 {
+    display: none !important;
+
+}
+
+.Loned_Heart:hover .svg2 {
+    display: block !important;
+}
+
+/* _____________ loaned heart  over _______ */
+/* ********************************************** */
+/* _____________ pagination arrow btn hover css ____________ */
+.Left_Svg_2 {
+    display: none !important;
+}
+
+.Pagination_Btn:hover .Left_Svg_1 {
+    display: none !important;
+}
+
+.Pagination_Btn:hover .Left_Svg_2 {
+    display: block !important;
+}
+
+/* ********************************************** */
+/* _____________ slider css _______ */
+
+.slick-arrow.slick-prev svg {
+    opacity: 0.4;
+}
+
+.slick-arrow.slick-next svg {
+    opacity: 0.4;
+}
+
+.slick-arrow.slick-prev:hover svg path {
+    fill: white;
+    color: white;
+    opacity: 1;
+}
+
+.slick-arrow.slick-next:hover svg path {
+    fill: white;
+    color: white;
+    opacity: 1;
+}
+
+.slick-arrow {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    padding: 15px;
+    border-radius: 15px;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+    position: absolute;
+    max-width: 64px;
+    height: 64px;
+    width: 100%;
+    top: 100%;
+    left: 50%;
+
+}
+
+.slick-arrow.slick-next {
+    transform: translate(20%, 120%);
+    -webkit-transform: translate(20%, 120%);
+    -moz-transform: translate(20%, 120%);
+    -ms-transform: translate(20%, 120%);
+    -o-transform: translate(20%, 120%);
+}
+
+.slick-arrow.slick-prev {
+    transform: translate(-120%, 120%);
+    -webkit-transform: translate(-120%, 120%);
+    -moz-transform: translate(-120%, 120%);
+    -ms-transform: translate(-120%, 120%);
+    -o-transform: translate(-120%, 120%);
+}
+
+.slick-prev::before,
+.slick-next::before {
+    display: none;
+}
+
+.custom_slider {
+    margin: 0 -12px;
+}
+
+.custom_slider .slick-slide>div {
+    padding: 0 12px;
+}
+
+/* _____________ slider css over _______ */
+/* ********************************************** */
+@media (min-width: 576px) and (max-width:767px) {
+    .slick-arrow {
+        top: -9% !important;
+    }
+}
+
+@media (max-width: 767px) {
+    .custom_slider .slick-list {
+        padding: 0 40% 0 0 !important;
+    }
+
+    .custom_slider .slick-slide>div {
+        margin: 0 0px 0 0;
+    }
+
+    .main_title_FCHero {
+        line-height: 1.3em;
+        text-shadow: 0px 2.399px 41.983px #8E54E9;
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: #FFF;
+    }
+
+    .slick-arrow {
+        display: flex !important;
+        align-items: center;
+        justify-content: center;
+        border-radius: 7px !important;
+        padding: 10px;
+        max-width: 32px;
+        height: 32px;
+        width: 100%;
+        top: -12%;
+        left: 85%;
+        -webkit-border-radius: 7px !important;
+        -moz-border-radius: 7px !important;
+        -ms-border-radius: 7px !important;
+        -o-border-radius: 7px !important;
+    }
+
+    .slick-arrow svg {
+        height: 16px;
+        width: 16px;
+    }
+
+    .slick-arrow.slick-next {
+        transform: translate(20%, -10%);
+        -webkit-transform: translate(20%, -10%);
+        -moz-transform: translate(20%, -10%);
+        -ms-transform: translate(20%, -10%);
+        -o-transform: translate(20%, -10%);
+    }
+
+    .slick-arrow.slick-prev {
+        transform: translate(-120%, -10%);
+        -webkit-transform: translate(-120%, -10%);
+        -moz-transform: translate(-120%, -10%);
+        -ms-transform: translate(-120%, -10%);
+        -o-transform: translate(-120%, -10%);
+    }
+
+    .Text_gradient_bg_text {
+        font-size: 10px;
+        line-height: 10px;
+        background: white;
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .Sale_Btn_Bg {
+        line-height: 0px;
+    }
+
+}
+
+@media (min-width: 768px) and (max-width:992px) {
+    .slick-arrow {
+        height: 50px;
+        width: 50px;
+    }
+}
+
+@media (min-width: 768px) and (max-width:1279px) {
+    .main_title_FCHero {
+        -webkit-text-stroke-width: 2px;
+    }
+}
