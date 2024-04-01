@@ -4,8 +4,8 @@ import Image from "next/image";
 import eth from "../../../../../public/img/eth.svg";
 import wocolor from "../../../../../public/img/wocolor.svg";
 import wicolor from "../../../../../public/img/wicolor.svg";
-import SampleNextArrow from "@/pages/foreclosed/Components/SalePage/Next";
-import SamplePrevArrow from "@/pages/foreclosed/Components/SalePage/Prev";
+import SampleNextArrow from "@/pages/foreclosed-nfts/Components/SalePage/Next";
+import SamplePrevArrow from "@/pages/foreclosed-nfts/Components/SalePage/Prev";
 const ForeClosedSlider = () => {
   const settings = {
     dots: false,
