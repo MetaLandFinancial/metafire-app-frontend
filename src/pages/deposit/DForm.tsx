@@ -2,9 +2,10 @@ import { useState } from "react";
 import CustomListbox from "./Form/CustomListbox ";
 import Connect from "./Form/ConnectBtn";
 import StakeBtn from "./Form/StakeBtn";
-import { useWriteContract } from 'wagmi'
+import { useWriteContract, useAccount } from 'wagmi'
 
-import WETHGateway from "../../contracts/WETHGateway.json";
+import WETHGateway from "../../contracts/wethGateway.json";
+import { ethers } from "ethers";
 
 interface DFormProps {
   connectButton: JSX.Element; // Type for the connectButton prop
@@ -12,14 +13,14 @@ interface DFormProps {
 
 const people = [
   { id: 1, name: "5 Stars", unavailable: false },
-  { id: 2, name: "4 Stars", unavailable: false },
-  { id: 3, name: "3 Stars", unavailable: false },
-  { id: 4, name: "2 Stars", unavailable: true },
-  { id: 5, name: "1 Stars", unavailable: false },
+  // { id: 2, name: "4 Stars", unavailable: false },
+  // { id: 3, name: "3 Stars", unavailable: false },
+  // { id: 4, name: "2 Stars", unavailable: true },
+  // { id: 5, name: "1 Stars", unavailable: false },
 ];
 const depositPeriodOptions = [
-  { id: 1, name: "Anytime", unavailable: false },
-  { id: 2, name: "120 Days", unavailable: false },
+  { id: 1, name: "Anytime",  unavailable: false },
+  { id: 2, name: "120 Days",  unavailable: false },
   { id: 3, name: "210 Days", unavailable: false },
   { id: 4, name: "300 Days", unavailable: true }
 ];
@@ -32,22 +33,63 @@ const stakeOptions = [
 ];
 
 const DForm: React.FC<DFormProps> = ({ connectButton }) => {
-  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS;
+  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
 
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
   const [selectedDepositPeriod, setSelectedDepositPeriod] = useState(depositPeriodOptions[0]);
   const [selectedStake, setSelectedStake] = useState(stakeOptions[0]);
+  const [depositAmountInput, setDepositAmountInput] = useState('');
 
-
-  //add callDeposit function
-  // const { writeContract } = useWriteContract(WETHGateway.abi, WETHGATEWAY_ADDRESS);
+  const { address, connector, isConnected } = useAccount();
+  // const { data: hash, error, isPending, writeContract } = useWriteContract() 
 
 
   const callDeposit = async () => {
-    console.log("Deposit button clicked");
-    const depositAmount = 0.05;
-    const depositPeriod = 120;
-    const stake = "0x"
+  
+    let periodCode;
+    switch(selectedDepositPeriod.id) {
+      case 1:
+        periodCode = "0";
+        break;
+      case 2:
+        periodCode = "1";
+        break;
+      case 3:
+        periodCode = "2";
+        break;
+      case 4:
+        periodCode = "3";
+        break;
+      default:
+        periodCode = "-1";
+    }
+    // console.log(" depositPeriodOptions: ", periodCode);
+    // console.log(" depositAmountInput: ", depositAmountInput);
+
+    try {
+      const { ethereum } = window as any;
+      const provider = new ethers.BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+
+      const contract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
+      const txResponse = await contract.depositETH(address, periodCode, 0, {
+        value: ethers.parseEther(depositAmountInput)
+      });
+      // console.log("Transaction Receipt: ", txResponse);
+      // const txResponse = await writeContract({ 
+      //   address: WETHGATEWAY_ADDRESS as `0x${string}`, // Type assertion
+      //   abi: WETHGateway.abi, 
+      //   functionName: 'depositETH', 
+      //   args: [address, 0, 0],
+      //   value: ethers.parseEther("0.1"),
+      // }) 
+  
+      // console.log("Transaction Receipt: ", txResponse)
+    } catch (error) {
+      console.error("Error depositing ETH: ", error);
+    }
+
+    
   }
 
   return (
@@ -108,14 +150,15 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
                   </div>
                   <div className="flex flex-col">
                     <div className="mb-4 flex justify-between">
-                      <label className="text-white/[0.8]">Enter amount</label>
+                      <label className="text-white/[0.8]">Enter ETH amount</label>
                       {/* <label className="text-white/[0.8]">Balance: 0.00 </label> */}
                     </div>
                     <div>
                       <input
+                        onChange={e => setDepositAmountInput(e.target.value)} 
                         type="text"
                         className="Select_BG_Form Text_gradient"
-                        placeholder="0.05"
+                        placeholder="0"
                       />
                     </div>
                   </div>
