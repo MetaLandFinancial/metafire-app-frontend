@@ -29,6 +29,8 @@ const Deposit = () => {
     const [totalMTokenBalance, setTotalMTokenBalance] = useState(0);
     const [totalAvailableMTokenBalance, setTotalAvailableMTokenBalance] = useState(0);
 
+    const [testState, setTestState] = useState();
+
     const [depositSubgraphData, setDepositSubgraphData] = useState([]);
     const { address, connector, isConnected } = useAccount();
     const { data: walletClient, isError, isLoading } = useWalletClient()
@@ -193,6 +195,7 @@ const Deposit = () => {
         cache: new InMemoryCache(),
       });
 
+
     useEffect(() => {
         // console.log(depositQuery);
         // query from subgraph
@@ -201,21 +204,20 @@ const Deposit = () => {
             query: gql(depositQuery),
           })
           .then((data) => {
-            // setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
-            console.log("Data fetched: ", data.data);
-            console.log(data.data.deposit0[0].blockTimestamp)
             setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
+            
             setDepositDates([
-              data.data.deposit0[0].blockTimestamp,
-              data.data.deposit1[0].blockTimestamp,
-              data.data.deposit2[0].blockTimestamp,
-              data.data.deposit3[0].blockTimestamp,
+                data.data.deposit0.length === 0 ? -1 : data.data.deposit0[0]?.blockTimestamp,
+                data.data.deposit1.length === 0 ? -1 : data.data.deposit1[0]?.blockTimestamp,
+                data.data.deposit2.length === 0 ? -1 : data.data.deposit2[0]?.blockTimestamp,
+                data.data.deposit3.length === 0 ? -1 : data.data.deposit3[0]?.blockTimestamp,
             ]);
+              
             setUnlockDates([
-              (data.data.deposit0[0].blockTimestamp * 1000 + lockDays[0] * 86400 *1000)/1000,
-              (data.data.deposit1[0].blockTimestamp * 1000 + lockDays[1] * 86400 *1000)/1000,
-              (data.data.deposit0[0].blockTimestamp * 1000 + lockDays[2] * 86400 *1000)/1000,
-              (data.data.deposit1[0].blockTimestamp * 1000 + lockDays[3] * 86400 *1000)/1000
+              ( data.data.deposit0.length === 0 ? -1 : (data.data.deposit0[0].blockTimestamp * 1000 + lockDays[0] * 86400 *1000)/1000),
+              ( data.data.deposit1.length === 0 ? -1 : (data.data.deposit1[0].blockTimestamp * 1000 + lockDays[1] * 86400 *1000)/1000),
+              ( data.data.deposit2.length === 0 ? -1 : (data.data.deposit2[0].blockTimestamp * 1000 + lockDays[2] * 86400 *1000)/1000),
+              ( data.data.deposit3.length === 0 ? -1 : (data.data.deposit3[0].blockTimestamp * 1000 + lockDays[3] * 86400 *1000)/1000)
             ]);
           
    
@@ -317,8 +319,11 @@ const Deposit = () => {
                                                          {/* {
                                                             tbodyData.depositedDate
                                                         }  */}
-                                                        {new Date(depositDates[index]*1000).toDateString()}
-                                                 
+                                                        {
+                                                            depositDates[index] === -1
+                                                                ? 'N/A'     
+                                                                : new Date(Number(depositDates[index]) * 1000).toDateString()
+                                                        }
                                                     </p>
 
                                                 </td>
@@ -328,16 +333,16 @@ const Deposit = () => {
                                                         {/* {
                                                             tbodyData.unlockDate
                                                         } */}
-                                                         {new Date(unlockDates[index]*1000).toDateString()}
-                                           
+                                                         { unlockDates[index] === -1
+                                                                ? 'N/A'     
+                                                                : new Date(unlockDates[index]*1000).toDateString()
+                                                        }
                                                         {/* {unlockDates[index]} */}
                                                     </p>
                                                 </td>
                                                 <td className="px-6 py-4">
                                                     <p className={"text-base font-bold text-white"}>
-                                                        {/* {
-                                                            tbodyData.totalStaked
-                                                        } */}
+                                                
                                                         {parseFloat(mTokenBalance[index]).toFixed(4)} ETH
                                                     </p>
 
