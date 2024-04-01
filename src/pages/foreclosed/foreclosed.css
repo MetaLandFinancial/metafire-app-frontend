@@ -123,13 +123,13 @@
     opacity: 0.4;
 }
 
-.slick-arrow.slick-prev:hover svg path {
+.slick-arrow.slick-prev:hover svg {
     fill: white;
     color: white;
     opacity: 1;
 }
 
-.slick-arrow.slick-next:hover svg path {
+.slick-arrow.slick-next:hover svg {
     fill: white;
     color: white;
     opacity: 1;
@@ -219,7 +219,7 @@
         max-width: 32px;
         height: 32px;
         width: 100%;
-        top: -12%;
+        top: -11.5%;
         left: 85%;
         -webkit-border-radius: 7px !important;
         -moz-border-radius: 7px !important;
