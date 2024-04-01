@@ -107,12 +107,12 @@ const LoanedCard = () => {
   ];
   return (
     <>
-      {/* <div className="flex flex-row max-md:overflow-x-scroll md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-6"> */}
-      <div className="grid justify-center md:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-6">
+      <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-6">
+        {/* <div className="flex flex-row max-md:overflow-x-scroll md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-6"> */}
         {lonedData.map((item, index) => (
           <div
             key={index}
-            className="Sale_Card_BG w-full max-w-full md:max-w-full xl:max-w-[391px]"
+            className="Sale_Card_BG w-full md:justify-center md:max-w-full xl:max-w-[391px]"
           >
             <div className="rounded-[15px] overflow-hidden w-full xl:max-w-[367px]">
               <Image
