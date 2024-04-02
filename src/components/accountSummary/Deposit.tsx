@@ -20,8 +20,7 @@ const lockDays = [0, 120, 210, 300];
 const Deposit = () => {
   const MTOKEN_I_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_I_ADDRESS as string;
   const MTOKEN_II_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_II_ADDRESS as string;
-  const MTOKEN_III_ADDRESS = process.env
-    .NEXT_PUBLIC_MTOKEN_III_ADDRESS as string;
+  const MTOKEN_III_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_III_ADDRESS as string;
   const MTOKEN_IV_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_IV_ADDRESS as string;
 
   const SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
@@ -210,30 +209,23 @@ const Deposit = () => {
         query: gql(depositQuery),
       })
       .then((data) => {
-        // setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
-        console.log("Data fetched: ", data.data);
-        console.log(data.data.deposit0[0].blockTimestamp);
         setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
+        
         setDepositDates([
-          data.data.deposit0[0].blockTimestamp,
-          data.data.deposit1[0].blockTimestamp,
-          data.data.deposit2[0].blockTimestamp,
-          data.data.deposit3[0].blockTimestamp,
+            data.data.deposit0.length === 0 ? -1 : data.data.deposit0[0]?.blockTimestamp,
+            data.data.deposit1.length === 0 ? -1 : data.data.deposit1[0]?.blockTimestamp,
+            data.data.deposit2.length === 0 ? -1 : data.data.deposit2[0]?.blockTimestamp,
+            data.data.deposit3.length === 0 ? -1 : data.data.deposit3[0]?.blockTimestamp,
         ]);
+          
         setUnlockDates([
-          (data.data.deposit0[0].blockTimestamp * 1000 +
-            lockDays[0] * 86400 * 1000) /
-            1000,
-          (data.data.deposit1[0].blockTimestamp * 1000 +
-            lockDays[1] * 86400 * 1000) /
-            1000,
-          (data.data.deposit0[0].blockTimestamp * 1000 +
-            lockDays[2] * 86400 * 1000) /
-            1000,
-          (data.data.deposit1[0].blockTimestamp * 1000 +
-            lockDays[3] * 86400 * 1000) /
-            1000,
+          ( data.data.deposit0.length === 0 ? -1 : (data.data.deposit0[0].blockTimestamp * 1000 + lockDays[0] * 86400 *1000)/1000),
+          ( data.data.deposit1.length === 0 ? -1 : (data.data.deposit1[0].blockTimestamp * 1000 + lockDays[1] * 86400 *1000)/1000),
+          ( data.data.deposit2.length === 0 ? -1 : (data.data.deposit2[0].blockTimestamp * 1000 + lockDays[2] * 86400 *1000)/1000),
+          ( data.data.deposit3.length === 0 ? -1 : (data.data.deposit3[0].blockTimestamp * 1000 + lockDays[3] * 86400 *1000)/1000)
         ]);
+      
+
       })
       .catch((err) => {
         console.log("Error fetching data: ", err);
@@ -347,20 +339,25 @@ const Deposit = () => {
                         <td className="px-6 py-4">
                           <p className={"text-base font-bold text-white"}>
                             {/* {
-                                                            tbodyData.depositedDate
-                                                        }  */}
-                            {new Date(
-                              depositDates[index] * 1000
-                            ).toDateString()}
+                                  tbodyData.depositedDate
+                              }  */}
+                               {
+                                  depositDates[index] === -1
+                                      ? 'N/A'     
+                                      : new Date(Number(depositDates[index]) * 1000).toDateString()
+                                }
                           </p>
                         </td>
 
                         <td className="px-6 py-4">
                           <p className={"text-base font-bold text-white"}>
                             {/* {
-                                                            tbodyData.unlockDate
-                                                        } */}
-                            {new Date(unlockDates[index] * 1000).toDateString()}
+                                tbodyData.unlockDate
+                            } */}
+                              { unlockDates[index] === -1
+                                    ? 'N/A'     
+                                    : new Date(unlockDates[index]*1000).toDateString()
+                            }
 
                             {/* {unlockDates[index]} */}
                           </p>
