@@ -29,8 +29,10 @@ const Deposit = () => {
   const [depositDates, setDepositDates] = useState<number[]>([]);
   const [unlockDates, setUnlockDates] = useState<number[]>([]);
   const [totalMTokenBalance, setTotalMTokenBalance] = useState(0);
-  const [totalAvailableMTokenBalance, setTotalAvailableMTokenBalance] =
-    useState(0);
+  const [isUnlocked, setIsUnlocked] = useState<boolean[]>([true, false, false, false]);
+  const [totalAvailableWithdrawAmount, setTotalAvailableWithdrawAmount] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [withdrawAmountInput, setWithdrawAmountInput] = useState('');
 
   const [depositSubgraphData, setDepositSubgraphData] = useState([]);
   const { address, connector, isConnected } = useAccount();
@@ -38,13 +40,20 @@ const Deposit = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => {
+  const openModal = (index: number) => {
+    setSelectedIndex(index);
     setIsModalOpen(true);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleWithdrawAmountChange = (event: any) => {
+    console.log("Withdraw amount: ", event.target.value);
+    setWithdrawAmountInput(event.target.value);
+  }
+
   const depositQuery = `
     query {
       deposit0: deposits(
@@ -158,10 +167,10 @@ const Deposit = () => {
     const balance2 = await erc20Contract2.balanceOf(address, 1);
     const balance3 = await erc20Contract3.balanceOf(address, 2);
     const balance4 = await erc20Contract4.balanceOf(address, 3);
-    console.log("Balance 1: ", balance1);
-    console.log("Balance 2: ", balance2);
-    console.log("Balance 3: ", balance3);
-    console.log("Balance 4: ", balance4);
+    // console.log("Balance 1: ", balance1);
+    // console.log("Balance 2: ", balance2);
+    // console.log("Balance 3: ", balance3);
+    // console.log("Balance 4: ", balance4);
     const formattedBalance1 = ethers.formatUnits(balance1, 18);
     const formattedBalance2 = ethers.formatUnits(balance2, 18);
     const formattedBalance3 = ethers.formatUnits(balance3, 18);
@@ -185,8 +194,8 @@ const Deposit = () => {
   };
 
   useEffect(() => {
-    console.log("Address: ", address);
-    console.log("type of address: ", typeof address);
+    // console.log("Address: ", address);
+    // console.log("type of address: ", typeof address);
     fetMTokenBalance().catch(console.error); // Catch and log any errors
     // fetMTokenBalance();
   }, [
@@ -209,6 +218,7 @@ const Deposit = () => {
         query: gql(depositQuery),
       })
       .then((data) => {
+        console.log("Data: ", data.data);
         setLiquidityRates(data.data.reserveDataUpdateds[0].liquidityRates);
         
         setDepositDates([
@@ -217,6 +227,8 @@ const Deposit = () => {
             data.data.deposit2.length === 0 ? -1 : data.data.deposit2[0]?.blockTimestamp,
             data.data.deposit3.length === 0 ? -1 : data.data.deposit3[0]?.blockTimestamp,
         ]);
+
+        // console.log()
           
         setUnlockDates([
           ( data.data.deposit0.length === 0 ? -1 : (data.data.deposit0[0].blockTimestamp * 1000 + lockDays[0] * 86400 *1000)/1000),
@@ -224,7 +236,37 @@ const Deposit = () => {
           ( data.data.deposit2.length === 0 ? -1 : (data.data.deposit2[0].blockTimestamp * 1000 + lockDays[2] * 86400 *1000)/1000),
           ( data.data.deposit3.length === 0 ? -1 : (data.data.deposit3[0].blockTimestamp * 1000 + lockDays[3] * 86400 *1000)/1000)
         ]);
+
+
+        const currentTimestamp = Math.floor(Date.now() / 1000);
+
+        console.log("deposit timestamp: ",data.data.deposit0[0]?.blockTimestamp);
       
+        for (let i = 0; i < 4; i++) {
+          const depositKey = `deposit${i}`;
+
+          if (data.data[depositKey].length > 0 ) {
+            const unlockData = (data.data[depositKey][0].blockTimestamp * 1000 + lockDays[i] * 86400 *1000)/1000;
+            console.log("Current ti : ", currentTimestamp);
+            console.log("Unlock data: ", unlockData);
+            if (currentTimestamp >= unlockData) {
+
+              setIsUnlocked((prev) => {
+                prev[i] = true;
+                return prev;
+              });
+            }
+            // console.log("Unlock data: ", unlockData);
+            // console.log("Deposit data: ", data.data[depositKey]);
+            // console.log(data.data[depositKey].length);
+          }else{
+            setIsUnlocked((prev) => {
+              prev[i] = false;
+              return prev;
+            })
+          }
+  
+        }
 
       })
       .catch((err) => {
@@ -288,7 +330,9 @@ const Deposit = () => {
                 </h4>
 
                 <p className={"text-xl md:text-[40px] font-bold text-white"}>
-                  0.107305
+                  {
+                    mTokenBalance.reduce((acc, balance, index) => isUnlocked[index] ? acc + parseFloat(balance) : acc, 0).toFixed(4)
+                  }
                 </p>
               </div>
             </div>
@@ -386,7 +430,7 @@ const Deposit = () => {
                             className={
                               "text-base font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"
                             }
-                            onClick={openModal}
+                            onClick={() => openModal(index)}
                           >
                             Withdraw
                           </button>
@@ -398,6 +442,7 @@ const Deposit = () => {
               </div>
             </div>
 
+            {/* deposit for mobile */}
             <div className="your_deposite_res md:hidden">
               <div
                 className={
@@ -449,7 +494,7 @@ const Deposit = () => {
                                 className={
                                   "text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"
                                 }
-                                onClick={openModal}
+                                onClick={() => openModal(index)}
                               >
                                 Withdraw
                               </button>
@@ -508,7 +553,7 @@ const Deposit = () => {
                                 className={
                                   "text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"
                                 }
-                                onClick={openModal}
+                                onClick={() => openModal(index)}
                               >
                                 Withdraw
                               </button>
@@ -565,7 +610,7 @@ const Deposit = () => {
                                 className={
                                   "text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"
                                 }
-                                onClick={openModal}
+                                onClick={() => openModal(index)}
                               >
                                 Withdraw
                               </button>
@@ -632,7 +677,7 @@ const Deposit = () => {
                       Available to withdraw
                     </p>
                     <span className="text-white text-[20.5px] md:text-2xl lg:text-3xl xl:text-[40px] font-bold">
-                      0.107305 ETH
+                    {isUnlocked[selectedIndex] ? parseFloat(mTokenBalance[selectedIndex]).toFixed(4): '0'}ETH
                     </span>
                   </div>
                   <div className="mt-[47px]">
@@ -643,34 +688,36 @@ const Deposit = () => {
                       >
                         Enter amount
                       </label>
-                      <label
+                      {/* <label
                         className="text-base font-medium text-white/80"
                         htmlFor="Balance"
                       >
                         Balance: 0.107305
-                      </label>
+                      </label> */}
                     </div>
                     <div className="relative w-full">
                       <input
                         type="text"
                         className="input_withdraw w-full max-w-[571px]"
                         placeholder="0.00"
+                        value={withdrawAmountInput}
+                        onChange={handleWithdrawAmountChange}
                       />
                       <div className="absolute top-[50%] translate-y-[-50%] right-5">
-                        <button className="max_btn_bg hover:opacity-[0.7]">
+                        <button onClick={() => setWithdrawAmountInput(parseFloat(mTokenBalance[selectedIndex]).toFixed(4))} className="max_btn_bg hover:opacity-[0.7]">
                           Max
                         </button>
                       </div>
                     </div>
                   </div>
-                  <div className="mt-10 md:mt-[122px] form-group w-full mx-auto">
+                  <div className="mt-10 md:mt-[61px] form-group w-full mx-auto">
                     <input
                       id="default-checkbox"
                       type="checkbox"
                       value=""
                       className="w-5 h-5 Checkbox mr-3"
                     />
-                    <label
+                    {/* <label
                       htmlFor="default-checkbox"
                       className="text-left text-xs md:text-base font-medium text-white p-1"
                     >
@@ -680,15 +727,15 @@ const Deposit = () => {
                           terms and conditions
                         </span>
                       </Link>
-                    </label>
+                    </label> */}
                   </div>
                   <button className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
                     Withdraw
                   </button>
-                  <p className="text-xs md:text-sm text-white/70 font-light mt-6 max-w-[344px] mx-auto">
+                  {/* <p className="text-xs md:text-sm text-white/70 font-light mt-6 max-w-[344px] mx-auto">
                     * This is the amount you can withdraw without a fee. Once
                     the minimun Time period of the deposit has been met.
-                  </p>
+                  </p> */}
                 </div>
               </Transition.Child>
             </div>
