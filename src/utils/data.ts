@@ -37,15 +37,15 @@ export const NavBarData: NavItem[] = [
         name: "Foreclosed NFTs",
         path: "/foreclosed-nfts"
     }, {
-        name: "Deposits",
-        path: "/deposits"
+        name: "Deposit",
+        path: "/deposit"
     }, {
         name: "Metrics",
         path: "/metrics"
     }, {
         name: "Dashboard",
         path: "/dashboard"
-    }, 
+    },
     // {
     //     name: "Company",
     //     path: "/company"
@@ -305,7 +305,7 @@ export const myCollections = [
         auctionEnd: "23 Feb, 2024",
         auctionBtn: "Auction",
         buyNowBtn: "Buy Now"
-    },{
+    }, {
         collectionImg: collectionImgThree,
         collectionName: "MetaFire NFT #23",
         floorTitle: "Floor Price",
@@ -320,7 +320,7 @@ export const myCollections = [
         auctionEnd: "23 Feb, 2024",
         auctionBtn: "Auction",
         buyNowBtn: "Buy Now"
-    },{
+    }, {
         collectionImg: collectionImgFour,
         collectionName: "MetaFire NFT #23",
         floorTitle: "Floor Price",
@@ -335,7 +335,7 @@ export const myCollections = [
         auctionEnd: "23 Feb, 2024",
         auctionBtn: "Auction",
         buyNowBtn: "Buy Now"
-    },{
+    }, {
         collectionImg: collectionImgFive,
         collectionName: "MetaFire NFT #23",
         floorTitle: "Floor Price",
@@ -350,7 +350,7 @@ export const myCollections = [
         auctionEnd: "23 Feb, 2024",
         auctionBtn: "Auction",
         buyNowBtn: "Buy Now"
-    },{
+    }, {
         collectionImg: collectionImgSix,
         collectionName: "MetaFire NFT #23",
         floorTitle: "Floor Price",
@@ -378,10 +378,10 @@ export const loansData = [
         loanTitle: "MetaFire NFT ",
         loanNbr: "#39",
         ethPoints: "0.0025487",
-        balance:  "0.0025487 ETH",
+        balance: "0.0025487 ETH",
         borrowRate: "22.7%",
         loanActiveStatus: 'Active',
-        assetClass :"5 Star",
+        assetClass: "5 Star",
         startOn: "Sep, 17th 2024",
         loanActiveHealth: LoanHealth
     },
@@ -390,10 +390,10 @@ export const loansData = [
         loanTitle: "MetaFire NFT ",
         loanNbr: "#39",
         ethPoints: "0.0025487",
-        balance:  "0.0025487 ETH",
+        balance: "0.0025487 ETH",
         borrowRate: "22.7%",
         loanActiveStatus: 'Inactive',
-        assetClass :"5 Star",
+        assetClass: "5 Star",
         startOn: "Sep, 17th 2024",
         loanActiveHealth: LoanHealth2
     },
@@ -403,10 +403,10 @@ export const loansData = [
         loanTitle: "MetaFire NFT ",
         loanNbr: "#39",
         ethPoints: "0.0025487",
-        balance:  "0.0025487 ETH",
+        balance: "0.0025487 ETH",
         borrowRate: "22.7%",
         loanActiveStatus: 'Paused',
-        assetClass :"5 Star",
+        assetClass: "5 Star",
         startOn: "Sep, 17th 2024",
         loanActiveHealth: LoanHealth
     },

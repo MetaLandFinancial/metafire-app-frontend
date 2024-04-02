@@ -1,0 +1,95 @@
+.Withdraw_BG {
+    @apply rounded-[15px] p-[35px] md:p-10;
+    border-radius: 15px;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: #0F1029;
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+    -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+    -ms-border-radius: 15px;
+    -o-border-radius: 15px;
+}
+
+.input_withdraw {
+    @apply text-xs md:text-base text-white/80 p-4 md:p-5 rounded-xl md:rounded-2xl lg:rounded-[20px] focus:outline-none;
+    padding-right: 120px !important;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    /* card shadow */
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.max_btn_bg {
+    @apply rounded-md capitalize text-xs md:text-base font-medium text-white px-5 md:px-[26px] py-2 md:py-[10px];
+    border: 1px solid #4777e698;
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.link_bg {
+    @apply hover:text-blue-600 w-full;
+    text-decoration: underline !important;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.form-group {
+    display: block;
+    /* margin-bottom: 15px; */
+}
+
+.form-group input {
+    padding: 0;
+    height: initial;
+    width: initial;
+    margin-bottom: 0;
+    display: none;
+    cursor: pointer;
+}
+
+.form-group label {
+    position: relative;
+    padding-left: 30px;
+    cursor: pointer;
+}
+
+.form-group label:before {
+    content: '';
+    -webkit-appearance: none;
+    background-color: transparent;
+    border: 1px solid #D1D1D6;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), inset 0px -15px 10px -12px rgba(0, 0, 0, 0.05);
+    padding: 9px;
+    border-radius: 4px;
+    display: inline-block;
+    top: 3px;
+    left: 0;
+    position: absolute;
+    vertical-align: middle;
+    cursor: pointer;
+    margin-right: 10px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -ms-border-radius: 4px;
+    -o-border-radius: 4px;
+}
+
+.form-group input:checked+label:after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    width: 5px;
+    height: 12px;
+    border: solid #D1D1D6;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.form-group input:checked+label:before {
+    background: #1dc9a0;
+    border-color: #1dc9a0;
+}

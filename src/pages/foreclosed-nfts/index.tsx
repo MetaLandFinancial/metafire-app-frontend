@@ -1,8 +1,8 @@
 import React from "react";
 import "./foreclosed.css";
-import FCHero from "@/pages/foreclosed/FCHero";
-import Sale from "@/pages/foreclosed/Sale";
-import Loaned from "@/pages/foreclosed/Loaned";
+import FCHero from "@/pages/foreclosed-nfts/FCHero";
+import Sale from "@/pages/foreclosed-nfts/Sale";
+import Loaned from "@/pages/foreclosed-nfts/Loaned";
 const index = () => {
   return (
     <>
