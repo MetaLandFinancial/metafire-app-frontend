@@ -411,24 +411,16 @@ const Loans = () => {
             </div>
 
             <div className="modal_amount py-10">
-              <p
-                className={
-                  "rounded-2xl border border-solid border-blue-400 bg-gray-900 shadow-inner p-5 w-full flex justify-between"
-                }
-              >
-                <span
-                  className={"text-[10px] lg:text-base font-medium text-white"}
-                >
-                  Amount
-                </span>
-                <span
-                  className={
-                    "text-[10px] lg:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text flex items-center gap-2"
-                  }
-                >
-                  0.05
-                </span>
-              </p>
+              <div className="Amount_Bg relative flex items-center">
+                <p className="text-[10px] lg:text-base font-medium relative top-0 left-0 text-white">
+                  Amount:
+                </p>
+                <input
+                  type="text"
+                  className="text-end font-semibold text-[10px] lg:text-base Text_gradient w-full outline-none focus:outline-none border-none pl-4 md:pl-[20px]"
+                  placeholder="0.05"
+                />
+              </div>
             </div>
 
             <label

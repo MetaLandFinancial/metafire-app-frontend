@@ -42,15 +42,29 @@
     color: transparent;
 }
 
-#send_mail{
+.Text_gradient {
+    background: repeating-linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.Amount_Bg {
+    @apply rounded-[8px] md:rounded-[12px] py-[13px] px-[15px] lg:p-5;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+#send_mail {
     background-image: url("../../public/assets/send_email.svg");
 }
 
-.border_bottom{
+.border_bottom {
     position: relative;
 }
 
-.border_bottom::before{
+.border_bottom::before {
     content: '';
     position: absolute;
     background-image: url(../../public//assets/nav_border.svg);
