@@ -83,10 +83,6 @@ const Deposit = () => {
       // Check allowance
       const allowance = await mTokenContract.allowance(signer.address, WETHGATEWAY_ADDRESS);
 
-      console.log("Allowance: ", allowance);
-      console.log("Amount to withdraw: ", amountToWithdraw);
-      console.log("mtoken address: ", selectedMTokenAddress);
-
       if (allowance < amountToWithdraw) {
         console.log("Approving...");
         const approveTx = await mTokenContract.approve(WETHGATEWAY_ADDRESS, amountToWithdraw);
