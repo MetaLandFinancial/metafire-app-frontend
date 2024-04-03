@@ -1,6 +1,6 @@
 import React from "react";
 import "./financing.css";
-import HeroF from "@/pages/financing/HeroF";
+import HeroF from "@/pages/nft-equity/HeroF";
 import Pagenv from "./Pagenv";
 import FinanceMain from "./FinanceMain";
 
