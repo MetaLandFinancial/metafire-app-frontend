@@ -19,19 +19,41 @@
     @apply max-w-[1440px] w-full mx-auto px-5;
   }
 
-  .tabBtn{
+  .tabBtn {
     @apply py-[10px] md:py-5 px-[10px] md:px-9 text-sm md:text-xl font-bold text-white
   }
 
   .activeBtn {
-      @apply rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-blue-500 to-purple-600
+    @apply rounded-tl-xl rounded-tr-xl bg-gradient-to-r from-blue-500 to-purple-600
   }
 
   .InActiveBtn {
-      @apply bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button rounded-tl-xl rounded-tr-xl
+    @apply bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button rounded-tl-xl rounded-tr-xl
   }
 }
 
+/* *********************************************** */
+/* ********************************************** */
+/* __________ border-bottom sign css _____________ */
+.border_bottom {
+  position: relative;
+}
+
+.border_bottom::before {
+  content: '';
+  position: absolute;
+  background-image: url(../../public//assets/nav_border.svg);
+  top: 100%;
+  width: 100px;
+  height: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-repeat: no-repeat;
+}
+
+/* __________ border-bottom sign css over _____________ */
+/* *********************************************** */
+/* ********************************************** */
 /* slick slider only css */
 .slick-arrow:hover {
   opacity: 1;
@@ -75,6 +97,7 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: #FFF;
+    font-family: "Barlow", sans-serif;
   }
 
   .main-title-span {
@@ -86,6 +109,7 @@
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-family: "Barlow", sans-serif;
   }
 
   .financeCard {
