@@ -13,7 +13,7 @@ const Hero = () => {
           className="absolute w-full h-full z-[-1]"
         />
         <div className="container">
-          <div className="pt-[161px] md:pt-[238px] pb-8 md:pb-10 ">
+          <div className="pt-[161px] md:pt-[136px] pb-8 md:pb-10 ">
             <div className="relative flex flex-col justify-center items-center ">
               <div className="text-center">
                 <h1 className="main-title">
