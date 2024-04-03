@@ -9,6 +9,7 @@ import Pagination from "@/components/shared/Pagination";
 import { Dialog, Transition } from "@headlessui/react";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 import WETHGateway from "../../contracts/wethGateway.json";
+import MToken from '../../contracts/mToken.json';
 import { ethers } from "ethers";
 import "./withdrawmodal.css";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
@@ -18,12 +19,15 @@ import Image from "next/image";
 const lockDays = [0, 120, 210, 300];
 
 const Deposit = () => {
+  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
   const MTOKEN_I_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_I_ADDRESS as string;
   const MTOKEN_II_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_II_ADDRESS as string;
   const MTOKEN_III_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_III_ADDRESS as string;
   const MTOKEN_IV_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_IV_ADDRESS as string;
+  const mTokenAddresses = [ MTOKEN_I_ADDRESS, MTOKEN_II_ADDRESS, MTOKEN_III_ADDRESS, MTOKEN_IV_ADDRESS];
 
   const SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+
 
   const [mTokenBalance, setMTokenBalance] = useState<string[]>([]);
   const [depositDates, setDepositDates] = useState<number[]>([]);
@@ -31,14 +35,21 @@ const Deposit = () => {
   const [totalMTokenBalance, setTotalMTokenBalance] = useState(0);
   const [isUnlocked, setIsUnlocked] = useState<boolean[]>([true, false, false, false]);
   const [totalAvailableWithdrawAmount, setTotalAvailableWithdrawAmount] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const [withdrawAmountInput, setWithdrawAmountInput] = useState('');
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [withdrawAmountInput, setWithdrawAmountInput] = useState('0');
+  const [liquidityRates, setLiquidityRates] = React.useState([]);
 
   const [depositSubgraphData, setDepositSubgraphData] = useState([]);
   const { address, connector, isConnected } = useAccount();
   const { data: walletClient, isError, isLoading } = useWalletClient();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Transaction state management
+  const [isApproving, setIsApproving] = useState(false);
+  const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [txError, setTxError] = useState('');
+
 
   const openModal = (index: number) => {
     setSelectedIndex(index);
@@ -52,6 +63,72 @@ const Deposit = () => {
   const handleWithdrawAmountChange = (event: any) => {
     console.log("Withdraw amount: ", event.target.value);
     setWithdrawAmountInput(event.target.value);
+  }
+
+  const callWithdrawETH = async (event: any) => {
+    console.log("Withdraw amount: ");
+
+    try {
+      const { ethereum } = window as any;
+      const provider = new ethers.BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+
+      
+      const selectedMTokenAddress = mTokenAddresses[selectedIndex];
+      const amountToWithdraw = ethers.parseUnits(withdrawAmountInput.toString(), 18);
+
+      const mTokenContract = new ethers.Contract(selectedMTokenAddress, MToken.abi, signer);
+      const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
+
+      // Check allowance
+      const allowance = await mTokenContract.allowance(signer.address, WETHGATEWAY_ADDRESS);
+
+      if (allowance < amountToWithdraw) {
+        console.log("Approving...");
+        const approveTx = await mTokenContract.approve(WETHGATEWAY_ADDRESS, amountToWithdraw);
+        // if transaction is sent, set the isApproving state to true
+        if (approveTx && approveTx.hash) {
+          setIsApproving(true);
+        }
+
+        const approveReceipt = await approveTx.wait();
+        if (approveReceipt.status === 0) {
+          console.log("Approval failed");
+   
+          setIsApproving(false);
+          alert("Approval failed");
+          return;
+        } else {
+          setIsApproving(false);
+        }
+
+        console.log("Approval successful");
+      }
+
+      // Withdraw
+      console.log("Withdrawing...");
+      const withdrawTx = await wethGatewaycontract.withdrawETH(amountToWithdraw, signer.address, 0);
+      if (withdrawTx && withdrawTx.hash) {
+        setIsWithdrawing(true);
+      }
+
+      const withdrawReceipt = await withdrawTx.wait();
+      if (withdrawReceipt.status === 0) {
+        console.log("Withdrawal failed");
+        alert("Withdrawal failed");
+        return;
+      }else{
+        setIsModalOpen(false);
+        alert("Withdrawal successful");
+      }
+      setIsWithdrawing(false);
+
+
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+
+
   }
 
   const depositQuery = `
@@ -203,7 +280,7 @@ const Deposit = () => {
     isLoading, // use to reload singer
   ]);
 
-  const [liquidityRates, setLiquidityRates] = React.useState([]);
+  
 
   const apolloClient = new ApolloClient({
     uri: SUBGRAPH_URL,
@@ -286,6 +363,7 @@ const Deposit = () => {
             <h2 className={"text-3xl md:text-5xl font-medium text-white"}>
               Deposit Summary
             </h2>
+            <button onClick={callWithdrawETH} style={{color:"white"}}>withdraw</button>
           </div>
 
           <div className="deposit_summery grid grid-cols-12 bg-deporitsImgTwo sm:bg-deporitsImg bg-no-repeat pb-[80px]">
@@ -670,7 +748,7 @@ const Deposit = () => {
                     />
                   </div>
                   <h1 className="text-white text-center font-bold text-[22px] md:text-xl lg:text-[27px]">
-                    WITHFRAW DEPOSIT
+                    WITHDRAW DEPOSIT
                   </h1>
                   <div className="mt-[54px] text-start md:mr-auto">
                     <p className="text-white text-sm md:text-base lg:text-xl xl:text-2xl font-medium mb-3 md:mb-[14px]">
@@ -729,8 +807,8 @@ const Deposit = () => {
                       </Link>
                     </label> */}
                   </div>
-                  <button className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
-                    Withdraw
+                  <button onClick={callWithdrawETH} disabled={isApproving || isWithdrawing} className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
+                    {isApproving ? 'Approving...' : isWithdrawing ? 'Withdrawing...' : 'Withdraw'}
                   </button>
                   {/* <p className="text-xs md:text-sm text-white/70 font-light mt-6 max-w-[344px] mx-auto">
                     * This is the amount you can withdraw without a fee. Once
