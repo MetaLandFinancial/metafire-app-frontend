@@ -24,8 +24,10 @@ const Deposit = () => {
   const MTOKEN_II_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_II_ADDRESS as string;
   const MTOKEN_III_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_III_ADDRESS as string;
   const MTOKEN_IV_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_IV_ADDRESS as string;
+  const mTokenAddresses = [ MTOKEN_I_ADDRESS, MTOKEN_II_ADDRESS, MTOKEN_III_ADDRESS, MTOKEN_IV_ADDRESS];
 
   const SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+
 
   const [mTokenBalance, setMTokenBalance] = useState<string[]>([]);
   const [depositDates, setDepositDates] = useState<number[]>([]);
@@ -34,7 +36,7 @@ const Deposit = () => {
   const [isUnlocked, setIsUnlocked] = useState<boolean[]>([true, false, false, false]);
   const [totalAvailableWithdrawAmount, setTotalAvailableWithdrawAmount] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
-  const [withdrawAmountInput, setWithdrawAmountInput] = useState('');
+  const [withdrawAmountInput, setWithdrawAmountInput] = useState('0');
   const [liquidityRates, setLiquidityRates] = React.useState([]);
 
   const [depositSubgraphData, setDepositSubgraphData] = useState([]);
@@ -42,6 +44,12 @@ const Deposit = () => {
   const { data: walletClient, isError, isLoading } = useWalletClient();
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Transaction state management
+  const [isApproving, setIsApproving] = useState(false);
+  const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [txError, setTxError] = useState('');
+
 
   const openModal = (index: number) => {
     setSelectedIndex(index);
@@ -65,29 +73,59 @@ const Deposit = () => {
       const provider = new ethers.BrowserProvider(ethereum);
       const signer = await provider.getSigner();
 
-      // Parse the amount considering the token's decimals, assuming 18 here
-      const amount = '0.01';
-      const amountToWithdraw = ethers.parseUnits(amount.toString(), 18);
+      
+      const selectedMTokenAddress = mTokenAddresses[selectedIndex];
+      const amountToWithdraw = ethers.parseUnits(withdrawAmountInput.toString(), 18);
 
-      const mTokenContract = new ethers.Contract(MTOKEN_I_ADDRESS, MToken.abi, signer);
+      const mTokenContract = new ethers.Contract(selectedMTokenAddress, MToken.abi, signer);
       const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
-       // Check allowance
-       const allowance = await mTokenContract.allowance(signer.address, WETHGATEWAY_ADDRESS);
 
-       console.log("Allowance: ", allowance);
-       console.log("Amount to withdraw: ", amountToWithdraw);
+      // Check allowance
+      const allowance = await mTokenContract.allowance(signer.address, WETHGATEWAY_ADDRESS);
 
-       if (allowance < amountToWithdraw) {
+      console.log("Allowance: ", allowance);
+      console.log("Amount to withdraw: ", amountToWithdraw);
+      console.log("mtoken address: ", selectedMTokenAddress);
+
+      if (allowance < amountToWithdraw) {
         console.log("Approving...");
         const approveTx = await mTokenContract.approve(WETHGATEWAY_ADDRESS, amountToWithdraw);
-        await approveTx.wait();
+        // if transaction is sent, set the isApproving state to true
+        if (approveTx && approveTx.hash) {
+          setIsApproving(true);
+        }
+
+        const approveReceipt = await approveTx.wait();
+        if (approveReceipt.status === 0) {
+          console.log("Approval failed");
+   
+          setIsApproving(false);
+          alert("Approval failed");
+          return;
+        } else {
+          setIsApproving(false);
+        }
+
         console.log("Approval successful");
       }
 
       // Withdraw
       console.log("Withdrawing...");
       const withdrawTx = await wethGatewaycontract.withdrawETH(amountToWithdraw, signer.address, 0);
-      await withdrawTx.wait();
+      if (withdrawTx && withdrawTx.hash) {
+        setIsWithdrawing(true);
+      }
+
+      const withdrawReceipt = await withdrawTx.wait();
+      if (withdrawReceipt.status === 0) {
+        console.log("Withdrawal failed");
+        alert("Withdrawal failed");
+        return;
+      }else{
+        setIsModalOpen(false);
+        alert("Withdrawal successful");
+      }
+      setIsWithdrawing(false);
 
 
     } catch (error) {
@@ -773,8 +811,8 @@ const Deposit = () => {
                       </Link>
                     </label> */}
                   </div>
-                  <button className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
-                    Withdraw
+                  <button onClick={callWithdrawETH} disabled={isApproving || isWithdrawing} className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
+                    {isApproving ? 'Approving...' : isWithdrawing ? 'Withdrawing...' : 'Withdraw'}
                   </button>
                   {/* <p className="text-xs md:text-sm text-white/70 font-light mt-6 max-w-[344px] mx-auto">
                     * This is the amount you can withdraw without a fee. Once
