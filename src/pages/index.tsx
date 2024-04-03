@@ -5,9 +5,9 @@ import '../styles/globals.css';
 export default function Home() {
   const router = useRouter();
 
-  // useEffect(() => {
-  //   router.push('/nft-financing');
-  // }, [router]); // The empty array ensures this effect runs once on mount
+  useEffect(() => {
+    router.push('/nft-financing');
+  }, [router]); // The empty array ensures this effect runs once on mount
 
   return (
     <div>
