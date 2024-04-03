@@ -29,7 +29,7 @@ interface NavItem {
 export const NavBarData: NavItem[] = [
     {
         name: "NFT Financing",
-        path: "/accountSummary"
+        path: "/nft-financing"
     }, {
         name: "NFT Equity",
         path: "/nft-equity"

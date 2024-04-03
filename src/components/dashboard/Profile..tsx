@@ -3,12 +3,12 @@ import {useState} from 'react';
 import profileAvatar from "../../../public/assets/profile_avatar.svg"
 import Link from "next/link";
 import {profileSocialInfo} from "@/utils/data";
-import Deposit from "@/components/accountSummary/Deposit";
-import MyNfts from "@/components/accountSummary/MyNfts";
+import Deposit from "@/components/dashboard/Deposit";
+import MyNfts from "@/components/dashboard/MyNfts";
 import SettingsIcon from "@/../public/assets/settings_Icon.svg";
-import MyFavorites from "@/components/accountSummary/MyFavorites";
-import Loans from "@/components/accountSummary/Loans";
-import Auctions from "@/components/accountSummary/Auctions";
+import MyFavorites from "@/components/dashboard/MyFavorites";
+import Loans from "@/components/dashboard/Loans";
+import Auctions from "@/components/dashboard/Auctions";
 
 const Profile = () => {
     const [teb, setTab] = useState('Deposits')
