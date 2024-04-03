@@ -9,6 +9,7 @@ import Pagination from "@/components/shared/Pagination";
 import { Dialog, Transition } from "@headlessui/react";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 import WETHGateway from "../../contracts/wethGateway.json";
+import MToken from '../../contracts/mToken.json';
 import { ethers } from "ethers";
 import "./withdrawmodal.css";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
@@ -18,6 +19,7 @@ import Image from "next/image";
 const lockDays = [0, 120, 210, 300];
 
 const Deposit = () => {
+  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
   const MTOKEN_I_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_I_ADDRESS as string;
   const MTOKEN_II_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_II_ADDRESS as string;
   const MTOKEN_III_ADDRESS = process.env.NEXT_PUBLIC_MTOKEN_III_ADDRESS as string;
@@ -31,8 +33,9 @@ const Deposit = () => {
   const [totalMTokenBalance, setTotalMTokenBalance] = useState(0);
   const [isUnlocked, setIsUnlocked] = useState<boolean[]>([true, false, false, false]);
   const [totalAvailableWithdrawAmount, setTotalAvailableWithdrawAmount] = useState(0);
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [withdrawAmountInput, setWithdrawAmountInput] = useState('');
+  const [liquidityRates, setLiquidityRates] = React.useState([]);
 
   const [depositSubgraphData, setDepositSubgraphData] = useState([]);
   const { address, connector, isConnected } = useAccount();
@@ -52,6 +55,46 @@ const Deposit = () => {
   const handleWithdrawAmountChange = (event: any) => {
     console.log("Withdraw amount: ", event.target.value);
     setWithdrawAmountInput(event.target.value);
+  }
+
+  const callWithdrawETH = async (event: any) => {
+    console.log("Withdraw amount: ");
+
+    try {
+      const { ethereum } = window as any;
+      const provider = new ethers.BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+
+      // Parse the amount considering the token's decimals, assuming 18 here
+      const amount = '0.01';
+      const amountToWithdraw = ethers.parseUnits(amount.toString(), 18);
+
+      const mTokenContract = new ethers.Contract(MTOKEN_I_ADDRESS, MToken.abi, signer);
+      const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
+       // Check allowance
+       const allowance = await mTokenContract.allowance(signer.address, WETHGATEWAY_ADDRESS);
+
+       console.log("Allowance: ", allowance);
+       console.log("Amount to withdraw: ", amountToWithdraw);
+
+       if (allowance < amountToWithdraw) {
+        console.log("Approving...");
+        const approveTx = await mTokenContract.approve(WETHGATEWAY_ADDRESS, amountToWithdraw);
+        await approveTx.wait();
+        console.log("Approval successful");
+      }
+
+      // Withdraw
+      console.log("Withdrawing...");
+      const withdrawTx = await wethGatewaycontract.withdrawETH(amountToWithdraw, signer.address, 0);
+      await withdrawTx.wait();
+
+
+    } catch (error) {
+      console.log("Error: ", error);
+    }
+
+
   }
 
   const depositQuery = `
@@ -203,7 +246,7 @@ const Deposit = () => {
     isLoading, // use to reload singer
   ]);
 
-  const [liquidityRates, setLiquidityRates] = React.useState([]);
+  
 
   const apolloClient = new ApolloClient({
     uri: SUBGRAPH_URL,
@@ -286,6 +329,7 @@ const Deposit = () => {
             <h2 className={"text-3xl md:text-5xl font-medium text-white"}>
               Deposit Summary
             </h2>
+            <button onClick={callWithdrawETH} style={{color:"white"}}>withdraw</button>
           </div>
 
           <div className="deposit_summery grid grid-cols-12 bg-deporitsImgTwo sm:bg-deporitsImg bg-no-repeat pb-[80px]">
@@ -670,7 +714,7 @@ const Deposit = () => {
                     />
                   </div>
                   <h1 className="text-white text-center font-bold text-[22px] md:text-xl lg:text-[27px]">
-                    WITHFRAW DEPOSIT
+                    WITHDRAW DEPOSIT
                   </h1>
                   <div className="mt-[54px] text-start md:mr-auto">
                     <p className="text-white text-sm md:text-base lg:text-xl xl:text-2xl font-medium mb-3 md:mb-[14px]">
