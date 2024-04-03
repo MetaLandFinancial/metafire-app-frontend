@@ -42,7 +42,7 @@
 .border_bottom::before {
   content: '';
   position: absolute;
-  background-image: url(../../public//assets/nav_border.svg);
+  background-image: url(../../public/assets/nav_border.svg);
   top: 100%;
   width: 100px;
   height: 200px;
