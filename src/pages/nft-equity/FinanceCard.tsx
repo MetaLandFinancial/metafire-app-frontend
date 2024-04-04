@@ -9,7 +9,7 @@ import close1 from "../../../public/img/close1.svg";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 
-const FinanceCard = () => {
+const FinanceCard = ({ nftData }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
@@ -21,13 +21,13 @@ const FinanceCard = () => {
   };
   return (
     <>
-      <div className="grid gap-[19px] md:gap-6 grid-cols-2 lg:grid-cols-2 xl:grid-cols-4">
-        {Financecard.map((item, index) => (
+      <div className="grid gap-[19px] md:gap-6 grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+        {nftData.map((item, index) => (
           <div className="Finance_Card_BG" key={index}>
             <div className="w-full flex flex-col p-[10px] md:p-5">
-              <div className="h-full w-full xl:max-w-[247px] rounded Finance_img_shadow overflow-hidden">
+              <div  style={{ width: '247px', height: '234px', overflow: 'hidden' }} className="h-full w-full xl:max-w-[247px] rounded Finance_img_shadow overflow-hidden">
                 <Image
-                  src={item.imageSrc}
+                  src={(item.metadata && JSON.parse(item.metadata)?.image) || ""}
                   alt="robo"
                   height={234}
                   width={247}
@@ -36,8 +36,8 @@ const FinanceCard = () => {
               </div>
               <div className="flex flex-row justify-between items-center mt-[13px]">
                 <h3 className="text-xs md:text-sm font-bold text-white">
-                  {item.title}
-                  <span className="ml-[10px]">{item.subTitle}</span>
+                  {item.name} title
+                  <span className="ml-[10px]">#{item.token_id}</span>
                 </h3>
                 <Link href="/">
                   <div className="w-fit relative md:mr-2">

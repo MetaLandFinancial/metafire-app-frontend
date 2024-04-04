@@ -1,10 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./financing.css";
 import HeroF from "@/pages/nft-equity/HeroF";
 import Pagenv from "./Pagenv";
 import FinanceMain from "./FinanceMain";
 
 const index = () => {
+
+    const [nftData, setNftData] = useState<any[]>([]);
+    const [test, setTest] = useState("");
 
     useEffect(() => {
         
@@ -20,6 +23,17 @@ const index = () => {
         const response = await fetch(url);
         const data = await response.json();
         console.log(data);
+        console.log(data.result);
+        const metadata = data.result[0].metadata;
+        const ojbMetadata = JSON.parse(metadata);
+        console.log(ojbMetadata.image)
+        console.log(JSON.parse(data.result[0].metadata).image)
+        // const array = [22, 33, 44];
+        if(data && data.result) {
+            // Store the fetched data in state
+            setTest(data.result[0].name);
+            setNftData(data.result);
+        }
     };
 
 
@@ -28,9 +42,10 @@ const index = () => {
 
     return (
         <div className="relative">
+            {/* <div style={{color:"white"}} >sadas  {test}  </div> */}
         <HeroF />
         <Pagenv />
-        <FinanceMain />
+        <FinanceMain nftData={nftData} />
         </div>
     );
 };

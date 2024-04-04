@@ -31,9 +31,18 @@ export default async function handler(
           }
       }
       const response = await fetch(url, options);
+      if (!response.ok) {
+        // If there's an error with the request to the external API, return the status and error message
+        return res.status(response.status).json({ message: 'Failed to fetch NFT data' });
+      }
+    
       const data = await response.json();
+    
+      // Log the data for debugging purposes
       console.log(data);
-        res.status(200).send('OK');
+    
+      // Return the fetched data as JSON
+      res.status(200).json(data);
     } catch (e) {
         console.error(e);
     }
