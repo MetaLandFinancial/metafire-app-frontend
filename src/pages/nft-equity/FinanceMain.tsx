@@ -8,7 +8,7 @@ const FinanceMain = () => {
     <div className="relative mt-[79px] mb-[69px]">
       <div className="container mx-auto">
         <div className="flex gap-6">
-          <Sidebar />
+          {/* <Sidebar /> */}
           <div className="w-full">
             <FinInput />
             <FinanceCard />
