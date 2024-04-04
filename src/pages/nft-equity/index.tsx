@@ -18,16 +18,14 @@ const index = () => {
     // fetch nft fcuntion with moralis api
     const fetchNFT = async () => {
         const url = "/api/getNft?address=0x25793C48C6C8C6C591B0BB01594543d3C3dc8a84";
-
         
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
-        console.log(data.result);
-        const metadata = data.result[0].metadata;
-        const ojbMetadata = JSON.parse(metadata);
-        console.log(ojbMetadata.image)
-        console.log(JSON.parse(data.result[0].metadata).image)
+        // console.log(data);
+        // console.log(data.result);
+        // const metadata = data.result[0].metadata;
+        // const ojbMetadata = JSON.parse(metadata);
+
         // const array = [22, 33, 44];
         if(data && data.result) {
             // Store the fetched data in state
