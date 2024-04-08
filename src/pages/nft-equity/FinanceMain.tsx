@@ -4,11 +4,8 @@ import FinanceCard from "./FinanceCard";
 import FinInput from "./FinInput";
 
 
-interface FinanceMainProps {
-  nftData: any; // Explicitly setting the type of nftData to 'any'
-}
-// const FinanceCard: React.FC<FinanceCardProps> = ({ nftData }) 
-const FinanceMain: React.FC<FinanceMainProps>  = ({ nftData }) => {
+
+const FinanceMain = ({ nftData }: { nftData: any }) => {
   return (
     <div className="relative mt-[79px] mb-[69px]">
       <div className="container mx-auto">
