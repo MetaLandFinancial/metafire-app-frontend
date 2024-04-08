@@ -23,7 +23,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
   return (
     <>
       <div className="grid gap-[19px] md:gap-6 grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
-        {nftData.map(({item}:{item:any}, {index}: {index:number}) => (
+        {Array.isArray(nftData) && nftData.map((item, index) => (
           <div className="Finance_Card_BG" key={index}>
             <div className="w-full flex flex-col p-[10px] md:p-5">
               <div  style={{ width: '247px', height: '234px', overflow: 'hidden' }} className="h-full w-full xl:max-w-[247px] rounded Finance_img_shadow overflow-hidden">
