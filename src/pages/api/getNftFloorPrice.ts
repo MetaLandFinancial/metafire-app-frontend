@@ -1,7 +1,9 @@
 // pages/api/opensea/stats.ts
 import type { NextApiRequest, NextApiResponse } from 'next';
 import {HttpsProxyAgent} from 'https-proxy-agent';
-// import fetch from 'node-fetch';
+// const HttpsProxyAgent = require('https-proxy-agent');
+import fetch from 'node-fetch';
+const axios = require('axios');
 var request = require('request')
 
 export default async function handler(
@@ -13,7 +15,7 @@ export default async function handler(
 
 
     try {
-      // const proxyAgent = new HttpsProxyAgent('http://127.0.0.1:7890');
+      const proxyAgent = new HttpsProxyAgent('http://127.0.0.1:7890');
       // const response = await fetch(`https://api.opensea.io/api/v2/collections/boredapeyachtclub/stats`, {
       //   method: 'GET',
       //   headers: {
@@ -23,18 +25,38 @@ export default async function handler(
       //   agent: 'http://127.0.0.1:7890'
 
       // });
-      request({
-        url: `https://api.opensea.io/api/v2/collections/boredapeyachtclub/stats`,
+
+
+      // Example of setting up a proxy with a port number
+      // const proxyAgent = new HttpsProxyAgent({
+      //   host: '127.0.0.1',
+      //   port: '7890' // Ensure the port is a string
+      // });
+      const response = await axios.get('https://api.opensea.io/api/v2/collections/boredapeyachtclub/stats', {
+        httpsAgent: proxyAgent,
         headers: {
           'Accept': 'application/json',
-          'X-API-KEY': '94e2fcc99ba841e8abaf09eed154e8ed' 
+          'X-API-KEY': '94e2fcc99ba841e8abaf09eed154e8ed',
         },
-        host: '127.0.0.1', //我电脑上启动的ss代理地址
-        port: 7890 //代理端口
-      }, function(err:any, resp:any, body:any) {
-        console.log(body)
-      })
-      // console.log('response', response);
+      });
+  
+      // Log or process the response data
+      console.log('NFT stats', response.data);
+      
+      // let nft;
+      // request({
+      //   url: `https://api.opensea.io/api/v2/collections/boredapeyachtclub/stats`,
+      //   headers: {
+      //     'Accept': 'application/json',
+      //     'X-API-KEY': '94e2fcc99ba841e8abaf09eed154e8ed' 
+      //   },
+      //   host: '127.0.0.1', //我电脑上启动的ss代理地址
+      //   port: 7890 //代理端口
+      // }, function(err:any, resp:any, body:any) {
+      //   // console.log(body)
+      //   nft = body;
+      // })
+      // console.log('response', nft);
 
       // if (response.ok) {
       //   const data = await response.json();
