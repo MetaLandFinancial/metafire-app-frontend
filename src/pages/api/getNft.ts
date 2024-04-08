@@ -17,7 +17,7 @@ export default async function handler(
   console.log(address);
 
  
-    console.log("storyKey");
+    console.log("getting nfts");
     try {
 
       const url = `https://deep-index.moralis.io/api/v2.2/${address}/nft?chain=${CHAIN}&format=decimal&media_items=false`;
@@ -39,7 +39,7 @@ export default async function handler(
       const data = await response.json();
     
       // Log the data for debugging purposes
-      console.log(data);
+      // console.log(data);
     
       // Return the fetched data as JSON
       res.status(200).json(data);

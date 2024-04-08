@@ -12,9 +12,33 @@ import { Dialog, Transition } from "@headlessui/react";
 
 const FinanceCard = ({ nftData }: { nftData: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [loanImageUrl, setLoanImageUrl] = useState("");
+  const [loanNftName, setLoanNftName] = useState("");
+  const [loanNftId, setLoanNftId] = useState("");
 
-  const openModal = () => {
+  useEffect(() => {
+    getFloorPrice('boredapeyachtclub');
+  }, []);
+
+  const getFloorPrice = async (collectionSlug: string) => {
+    try {
+      const response = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch NFT stats');
+      }
+      const data = await response.json();
+      console.log('NFT stats', data);
+
+    } catch (error) {
+      console.log('Failed to fetch NFT stats', error);
+    }
+  }
+
+  const openModal = (item: any) => {
     setIsModalOpen(true);
+    setLoanImageUrl(item.metadata && JSON.parse(item.metadata)?.image);
+    setLoanNftName(item.name);
+    setLoanNftId(item.token_id);
   };
 
   const closeModal = () => {
@@ -60,7 +84,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                 </Link>
               </div>
               <div className="flex flex-col border-[0.318px] border-[rgba(71,119,230,0.31)] rounded-[10px] overflow-hidden mt-4">
-                <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.31)]">
+                {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.31)]">
                   <div className="flex flex-row justify-between items-center">
                     <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                       Floor Price
@@ -93,10 +117,10 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                       {item.listingprice}
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
-              <button className="FinanceCard_Btn" onClick={openModal}>
-                Buy now pay later
+              <button className="FinanceCard_Btn" onClick={() => openModal(item)}>
+                  Loan Detail
               </button>
             </div>
           </div>
@@ -131,11 +155,11 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                   <div className="container">
                     <div className="Detailed_Bg relative w-full max-w-[651px]">
                       <h1 className="text-white text-[22px] md:text-2xl xl:text-[27px] font-bold text-center">
-                        BUY NOW PAY LATER
+                        Get the Loan
                       </h1>
-                      <p className="mt-[10px] text-white text-sm md:text-lg font-medium text-center">
+                      {/* <p className="mt-[10px] text-white text-sm md:text-lg font-medium text-center">
                         Finance the NFT of Your Dreams
-                      </p>
+                      </p> */}
                       <div
                         className="absolute top-5 right-[30px] text-white cursor-pointer"
                         onClick={closeModal}
@@ -150,9 +174,9 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                       </div>
                       <div className="flex gap-4 mt-[54px]">
                         <div className="w-full">
-                          <div className="w-full max-w-[261px] rounded-[3px]">
+                          <div style={{ width: '247px', height: '234px', overflow: 'hidden' }} className="w-full max-w-[261px] rounded-[3px]">
                             <Image
-                              src="/img/robo.png"
+                              src={loanImageUrl}
                               alt="bgImg"
                               className="w-full h-full object-cover rounded-[3px]"
                               width={105}
@@ -161,10 +185,10 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                           </div>
                           <div className="flex md:hidden justify-between mt-[9px]">
                             <h2 className="text-[10px] lg:text-xl text-white font-bold">
-                              MetaFire NFT
+                              sss
                             </h2>
                             <p className="text-[10px] lg:text-xl text-white font-bold">
-                              #39
+                              #3922
                             </p>
                           </div>
                           <div className="flex md:hidden justify-between mt-[6px]">
@@ -204,14 +228,14 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                         <div className="relative w-full">
                           <div className="hidden md:flex justify-between mb-3">
                             <h2 className="text-[10px] lg:text-xl text-white font-bold">
-                              MetaFire NFT
+                              {loanNftName}
                             </h2>
                             <p className="text-[10px] lg:text-xl text-white font-bold">
-                              #39
+                              #{loanNftId}
                             </p>
                           </div>
                           <div className="hidden md:flex justify-between mb-[19px]">
-                            <p className="Text_gradient font-bold flex items-center justify-center text-[8px] md:text-sm lg:text-[17px]">
+                            {/* <p className="Text_gradient font-bold flex items-center justify-center text-[8px] md:text-sm lg:text-[17px]">
                               <span>
                                 <Image
                                   src={eth}
@@ -220,8 +244,8 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                                 />
                               </span>
                               0.0025487 ETH
-                            </p>
-                            <div className="w-fit relative md:mr-2">
+                            </p> */}
+                            {/* <div className="w-fit relative md:mr-2">
                               <Image
                                 src={ring}
                                 alt="icons"
@@ -238,7 +262,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                                   className="w-[11px] md:w-[15px] absolute top-0 bottom-0 left-0 right-0 m-auto"
                                 />
                               </Link>
-                            </div>
+                            </div> */}
                           </div>
                           <div className="flex flex-col border-[0.4px] border-[rgba(71,119,230,0.28)] rounded-[10px] overflow-hidden">
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
