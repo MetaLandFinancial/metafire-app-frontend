@@ -26,12 +26,6 @@ export default async function handler(
 
       // });
 
-
-      // Example of setting up a proxy with a port number
-      // const proxyAgent = new HttpsProxyAgent({
-      //   host: '127.0.0.1',
-      //   port: '7890' // Ensure the port is a string
-      // });
       const response = await axios.get('https://api.opensea.io/api/v2/collections/boredapeyachtclub/stats', {
         httpsAgent: proxyAgent,
         headers: {
@@ -41,7 +35,7 @@ export default async function handler(
       });
   
       // Log or process the response data
-      console.log('NFT stats', response.data);
+      console.log('NFT stats', response.status);
       
       // let nft;
       // request({
@@ -58,13 +52,13 @@ export default async function handler(
       // })
       // console.log('response', nft);
 
-      // if (response.ok) {
-      //   const data = await response.json();
-      //   console.log('nft stat data', data);
-      //   res.status(200).json(data);
-      // } else {
-      //   throw new Error(`Failed to fetch data from OpenSea, status: ${response.status}`);
-      // }
+      if (response.status === 200) {
+        const data = await response.data;
+        console.log('nft stat data', data);
+        res.status(200).json(data);
+      } else {
+        throw new Error(`Failed to fetch data from OpenSea, status: ${response.status}`);
+      }
     } catch (error) {
       console.log('error', error);
       res.status(500).json({ error: error instanceof Error ? error.message : 'An error occurred' });
