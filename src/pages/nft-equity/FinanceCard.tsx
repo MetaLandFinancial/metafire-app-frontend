@@ -15,6 +15,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
   const [loanImageUrl, setLoanImageUrl] = useState("");
   const [loanNftName, setLoanNftName] = useState("");
   const [loanNftId, setLoanNftId] = useState("");
+  const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
 
   useEffect(() => {
     getFloorPrice('boredapeyachtclub');
@@ -28,7 +29,8 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
       }
       const data = await response.json();
       console.log('NFT stats', data);
-
+      console.log('nft floor price', data?.total?.floor_price);
+      setSelectedNftFloorPrice(data?.total?.floor_price);
     } catch (error) {
       console.log('Failed to fetch NFT stats', error);
     }
@@ -278,7 +280,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                                       className="w-3 h-3 md:h-[18px] mr-1"
                                     />
                                   </span>
-                                  1.2 ETH
+                                  {selectedNftFloorPrice} ETH
                                 </p>
                               </div>
                             </div>
