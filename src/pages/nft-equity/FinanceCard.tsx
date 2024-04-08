@@ -9,7 +9,10 @@ import close1 from "../../../public/img/close1.svg";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 
-const FinanceCard = ({ nftData }) => {
+interface FinanceCardProps {
+  nftData: any; // Explicitly setting the type of nftData to 'any'
+}
+const FinanceCard: React.FC<FinanceCardProps> = ({ nftData }) =>{
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
