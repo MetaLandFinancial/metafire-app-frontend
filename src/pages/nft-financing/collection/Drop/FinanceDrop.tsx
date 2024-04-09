@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Listbox } from "@headlessui/react";
 import Image from "next/image";
-import arrowD from "../../../../public/img/arrowD.svg";
+import arrowD from "../../../../../public/img/arrowD.svg";
 
 interface Option {
   id: number;
