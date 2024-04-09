@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { useState, useEffect } from "react";
 import "./financing.css";
-import HeroF from "@/pages/nft-financing/collection/HeroF";
+import HeroF from "./HeroF";
 import Pagenv from "./Pagenv";
 import FinanceMain from "./FinanceMain";
 

@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import { useRouter } from "next/router";
 import Slider from "react-slick";
 import Image from "next/image";
 import eth from "../../../public/img/eth.svg";
@@ -8,6 +9,8 @@ import { SamplePrevArrow } from "./Prev";
 import { SampleNextArrow } from "./Next";
 
 const SliderItem = () => {
+  const router = useRouter();
+
   const settings = {
     className: "center",
     centerMode: true,
@@ -51,11 +54,25 @@ const SliderItem = () => {
       },
     ],
   };
+
+  const handleItemClick = (id: any) => {
+    router.push(`/nft-financing/collectionDetail/${id}`);
+  };
+
+
   return (
     <Slider {...settings}>
       {SliderData.map((item) => (
         <>
-          <div key={item.id} className="BoxItem mb-6">
+          <div 
+            key={item.id} 
+            onClick={() => handleItemClick(item.id)} 
+            style={{
+              cursor: 'pointer', // Change cursor to pointer on hover
+              
+            }}
+            className="BoxItem mb-6"
+          >
             <div className="flex items-center">
               <div className="h-[68px] min-w-16 md:min-h-20 md:min-w-20 lg:h-[85px] lg:min-w-[85px] xl:h-[106px] xl:min-w-[97px] mr-[18px]">
                 <Image

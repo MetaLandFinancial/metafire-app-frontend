@@ -4,7 +4,7 @@ import bgGredient from "../../../public/img/bgGredient.png";
 import Image from "next/image";
 import SliderItem from "@/components/Slider/SliderItem";
 
-const Collaction = () => {
+const Collection = () => {
   return (
     <>
       <div
@@ -38,4 +38,4 @@ const Collaction = () => {
   );
 };
 
-export default Collaction;
+export default Collection;
