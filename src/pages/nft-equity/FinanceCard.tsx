@@ -287,14 +287,14 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Liquidation Factor
+                                  Borrow Rate
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                                   100%
                                 </p>
                               </div>
                             </div>
-                            <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
+                            {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                                   Current Auction Price
@@ -303,24 +303,24 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                                   N/A
                                 </p>
                               </div>
-                            </div>
+                            </div> */}
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Bidder
+                                  Asset Class
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                                  N/A
+                                  5 star
                                 </p>
                               </div>
                             </div>
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Auction End
+                                  Max Borrow Amount
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                                  23 Feb, 2024
+                                 {  0.5 * selectedNftFloorPrice} ETH
                                 </p>
                               </div>
                             </div>
@@ -328,110 +328,27 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                         </div>
                       </div>
                       {/* inputs */}
+                      
                       <div className="mt-[47px]">
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 gap-4">
+                  
                           <div>
+                            <p className="text-[10px] md:text-sm xl:text-base font-medium text-white mb-2">
+                                  Borrow Amount
+                            </p>
+                        
                             <label
                               htmlFor="amount"
                               className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
                             >
-                              Enter amount:
+                              inputeqweqw
                             </label>
                             <div className="Amount_Bg relative flex items-center">
                               <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
                                 Amount:
                               </p>
                               <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              input
-                            </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              imput
-                            </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              input
-                            </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              input
-                            </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              input
-                            </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
+                                style={{ caretColor: 'white' }}
                                 type="text"
                                 className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
                                 placeholder="0.0"
@@ -456,11 +373,11 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                             >
                               yes I am ready to get my NFT and agree to
                               MetaFire&nbsp;
-                              <Link href="/" className="inline">
+                              {/* <Link href="/" className="inline"> */}
                                 <span className="link_bg underline w-full font-medium border-b-[1px] border-[#8E54E9]">
                                   terms and conditions
                                 </span>
-                              </Link>
+                            
                             </label>
                           </div>
                         </div>
