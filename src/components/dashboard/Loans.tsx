@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Pagination from "@/components/shared/Pagination";
 import filerBTn from "@/../public/assets/filter_btn.svg";
 import EthIcon from "@/../public/assets/etm_icon.svg";
@@ -11,11 +11,101 @@ import FavouriteImgOne from "../../../public/assets/heartSvg.svg";
 import Link from "next/link";
 import close1 from "@/../public/img/close1.svg";
 import Image from "next/image";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { useWriteContract, useAccount, useWalletClient } from "wagmi";
+import {ethers} from "ethers";
+
 const Loans = () => {
+
+  const SUBGRAPH_URL = process.env.NEXT_PUBLIC_LOAN_SUBGRAPH_URL;
+  const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+
   const [repayModal, setRepayModal] = useState(false);
+  const { address, connector, isConnected } = useAccount();
+
+  const [loanList, setLoanList] = useState<any[]>([]);
+  const [first, setfirst] = useState(10);
+  const [skip, setskip] = useState(0);
+
+  const LOAN_QUERY = `
+  {
+    currentLoanInfos(
+      where:{
+        and:[
+          {onBehalfOf:  "${address}"},
+          {or:[
+            {loanState: 1},
+            {loanState: 2}
+          ]}
+        ]
+      },
+      first: ${first}, skip: ${skip}){
+      id
+      loanId
+      onBehalfOf
+      nftAsset
+      nftTokenId
+      loanAmount
+      loanState
+      borrowIndex
+      blockTimestamp
+    }
+  }
+  `;
+
+  const RESERVE_QUERY = `
+  {
+    reserveDataUpdateds(
+      where:{
+        asset:"${process.env.NEXT_PUBLIC_WETH_ADDRESS}"
+      }
+      orderBy: blockTimestamp, 
+      orderDirection: desc, 
+      first: 1) {
+        id
+        asset
+        liquidityRates
+        variableBorrowRate
+        liquidityIndices
+        variableBorrowIndex
+        blockNumber
+        blockTimestamp
+        transactionHash
+    }
+  }
+  `;
+
+  const apolloClient = new ApolloClient({
+    uri: SUBGRAPH_URL,
+    cache: new InMemoryCache(),
+  });
+
+  const reserveApolloClient = new ApolloClient({
+    uri: RESERVE_SUBGRAPH_URL,
+    cache: new InMemoryCache(),
+  });
+
+
   const closeModal = () => {
     setRepayModal(false);
   };
+
+  useEffect(() => {
+    //query loan data from subgraph
+    apolloClient
+      .query({
+        query: gql(LOAN_QUERY),
+      })
+      .then((data) => {
+        console.log(data.data.currentLoanInfos);
+        setLoanList([...data.data.currentLoanInfos]);
+      })
+      .catch((err) => {
+        console.log("Error fetching data: ", err);
+      });
+  }, []);
+
+
   return (
     <section
       className={
@@ -36,7 +126,7 @@ const Loans = () => {
                   "bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text ml-2"
                 }
               >
-                2 Loans
+                {loanList.length} Loans
               </span>
             </h2>
             <button>
@@ -44,7 +134,7 @@ const Loans = () => {
             </button>
           </div>
           <div className="card_wrapper">
-            {loansData.map((loansDataItems, index) => (
+            {loanList.map((loansDataItems, index) => (
               <div
                 className="card_item bg-gradient-to-t from-rgba-blue-500 to-rgba-purple-600 shadow-button border border-gray-600 rounded-[15px] p-3 flex gap-5 md:gap-[113px] mb-4"
                 key={index}
@@ -53,7 +143,7 @@ const Loans = () => {
                   <div className="card_img md:flex-shrink-0">
                     <img
                       className={"md:flex-shrink-0"}
-                      src={loansDataItems.loanCarImg.src}
+                      src="{loansDataItems.loanCarImg.src}"
                       alt="card-img"
                     />
                   </div>
@@ -65,14 +155,14 @@ const Loans = () => {
                           "text-[10px] md:text-2xl font-bold text-white"
                         }
                       >
-                        {loansDataItems.loanTitle}
+                        {loansDataItems.loanTitle}{}
                       </h2>
                       <span
                         className={
                           "text-[10px] md:text-2xl font-bold text-white"
                         }
                       >
-                        {loansDataItems.loanNbr}
+                        #{loansDataItems.nftTokenId}
                       </span>
                     </div>
 
@@ -83,7 +173,7 @@ const Loans = () => {
                         }
                       >
                         <img src={EthIcon.src} alt="icon" />
-                        {loansDataItems.ethPoints} ETH
+                        {loansDataItems.ethPoints}111 ETH
                       </p>
 
                       <button
@@ -114,7 +204,8 @@ const Loans = () => {
                         }
                       >
                         <img src={EthIcon.src} alt="icon" />
-                        0.0025487 ETH
+                          {ethers.formatEther(loansDataItems.loanAmount)} ETH
+                          {/* {loansDataItems.loanAmount} */}
                       </p>
                     </div>
                     <div className="card_middle w-full flex md:flex-col justify-between pb-5 md:pb-0">
@@ -234,7 +325,7 @@ const Loans = () => {
                       </h2>
 
                       <div className={"ml-8"}>
-                        <img src={loansDataItems.loanActiveHealth.src} alt="" />
+                        <img src="{loansDataItems.loanActiveHealth.src}" alt="" />
                       </div>
                     </div>
                   </div>
