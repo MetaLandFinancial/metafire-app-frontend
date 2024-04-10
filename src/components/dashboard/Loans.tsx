@@ -129,16 +129,15 @@ const Loans = () => {
       return nftStatData?.total?.floor_price || 0; // Use null or a suitable fallback for missing floor prices
     }));
 
-    // Fet NFT image urls
-    const nftImageUrls = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
-        console.log("nftasset", loan.nftAsset, "nftTokenId", loan.nftTokenId);
-      const nftMetaDataResponse = await fetch(`/api/getNftMetaData?nftAsset=${loan.nftAsset}&tokenId=${loan.nftTokenId}`);
-
-      const nftMetaData = await nftMetaDataResponse.json();
-      console.log('nft image url', nftMetaData);
-
-      // return nftMetaData?.image_url || ""; // Use null or a suitable fallback for missing floor prices
+    const tokens = data.currentLoanInfos.map((loan: any) => ({
+      "token_address": loan.nftAsset,
+      "token_id": loan.nftTokenId
     }));
+    fetchNfts(tokens);
+
+    // loan.nftAsset loan.nftTokenId
+    // Fet NFT image urls
+
 
     console.log('All floor prices:', floorPrices);
     setFloorPriceList(floorPrices);
@@ -193,13 +192,14 @@ const Loans = () => {
     });
   
     if (!response.ok) {
-      throw new Error('Failed to fetch NFTs');
+      // throw new Error('Failed to fetch NFTs');
+      console.log("Failed to fetch NFTs");
     }
 
     const data = await response.json();
     console.log(data);
-    console.log(data[0].media.media_collection.medium.url);
-    const urls = data.map(item => item.media.media_collection.medium.url);
+    console.log(data[0].media?.media_collection?.medium.url);
+    const urls = data.map(item => item.media?.media_collection?.medium.url);
     setNftImageUrlList(urls);
   
   }
@@ -209,7 +209,7 @@ const Loans = () => {
     console.log("loans use effect")
     fetchLoanData();
     fetchReserveData();
-    fetchNfts();
+    // fetchNfts();
 
   }, [address]);
 
