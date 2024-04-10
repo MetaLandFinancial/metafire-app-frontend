@@ -15,6 +15,20 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 import {ethers} from "ethers";
 
+
+type CollectionSlugsType = {
+  [key: string]: string;
+};
+
+// Use the defined type for your object
+const collectionSlugs: CollectionSlugsType = {
+  "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d": "boredapeyachtclub"
+};
+
+function getCollectionSlug(address: string): string {
+  return collectionSlugs[address.toLowerCase()];
+}
+
 const Loans = () => {
 
   const SUBGRAPH_URL = process.env.NEXT_PUBLIC_LOAN_SUBGRAPH_URL;
@@ -22,8 +36,10 @@ const Loans = () => {
 
   const [repayModal, setRepayModal] = useState(false);
   const { address, connector, isConnected } = useAccount();
+  const [floorPriceList, setFloorPriceList] = useState([]);
 
   const [loanList, setLoanList] = useState<any[]>([]);
+  const [reserveData, setReserveData] = useState<any>();
   const [first, setfirst] = useState(10);
   const [skip, setskip] = useState(0);
 
@@ -99,10 +115,30 @@ const Loans = () => {
       .then((data) => {
         console.log(data.data.currentLoanInfos);
         setLoanList([...data.data.currentLoanInfos]);
+        const floorPriceList = data.data.currentLoanInfos.map((item: any) => {
+          const collectionSlug = getCollectionSlug("0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d");
+          console.log("collectionSlug", collectionSlug);
+          // const floorPrice = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`);
+
+          return item.loanAmount;
+        });
       })
       .catch((err) => {
         console.log("Error fetching data: ", err);
       });
+
+      reserveApolloClient
+      .query({
+        query: gql(RESERVE_QUERY),
+      })
+      .then((data) => {
+        console.log(data.data.reserveDataUpdateds[0]);
+        setReserveData(data.data.reserveDataUpdateds[0]);
+      })
+      .catch((err) => {
+        console.log("Error fetching data: ", err);
+      });
+
   }, []);
 
 
@@ -204,7 +240,9 @@ const Loans = () => {
                         }
                       >
                         <img src={EthIcon.src} alt="icon" />
-                          {ethers.formatEther(loansDataItems.loanAmount)} ETH
+                          {/* {ethers.formatEther(loansDataItems.loanAmount)} */}
+                          {(parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27)).toFixed(4) } ETH
+                          
                           {/* {loansDataItems.loanAmount} */}
                       </p>
                     </div>
@@ -292,7 +330,7 @@ const Loans = () => {
                           "text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text flex items-center gap-2"
                         }
                       >
-                        <img src={Star.src} alt="icon" />
+                        5 <img src={Star.src} alt="icon" />
                         {loansDataItems.assetClass}
                       </p>
                     </div>
@@ -312,6 +350,7 @@ const Loans = () => {
                         }
                       >
                         {loansDataItems.startOn}
+                        {new Date(loansDataItems.blockTimestamp * 1000).toDateString()}
                       </p>
                     </div>
 

@@ -17,6 +17,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
   const [loanNftId, setLoanNftId] = useState("");
   const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
 
+
   useEffect(() => {
     getFloorPrice('boredapeyachtclub');
   }, []);
