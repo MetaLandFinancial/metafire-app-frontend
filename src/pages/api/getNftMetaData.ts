@@ -14,13 +14,14 @@ export default async function handler(
 
   const CHAIN = 'eth';
   const nftAsset = req.query.nftAsset;
+  const tokenId = req.query.tokenId;
   console.log(nftAsset);
 
  
     console.log("getting nfts");
     try {
 
-      const url = `https://deep-index.moralis.io/api/v2.2/${nftAsset}/nft?chain=${CHAIN}&format=decimal&media_items=false`;
+      const url = `https://deep-index.moralis.io/api/v2.2/nft/${nftAsset}/${tokenId}?chain=${CHAIN}&format=decimal&normalizeMetadata=true&media_items=false`;
       const options = {
           method: "GET",
           headers: {

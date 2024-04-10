@@ -38,6 +38,7 @@ const Loans = () => {
   const [repayModal, setRepayModal] = useState(false);
   const { address, connector, isConnected } = useAccount();
   const [floorPriceList, setFloorPriceList] = useState<any[]>([]);
+  const [nftImageUrlList, setNftImageUrlList] = useState<any[]>([]);
 
   const [loanList, setLoanList] = useState<any[]>([]);
   const [reserveData, setReserveData] = useState<any>();
@@ -126,6 +127,17 @@ const Loans = () => {
       console.log('nft floor price', nftStatData?.total?.floor_price);
 
       return nftStatData?.total?.floor_price || 0; // Use null or a suitable fallback for missing floor prices
+    }));
+
+    // Fet NFT image urls
+    const nftImageUrls = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
+        
+      const nftMetaDataResponse = await fetch(`/api/getNft?address=${loan.nftAsset}&tokenId=${loan.nftTokenId}`);
+
+      const nftMetaData = await nftMetaDataResponse.json();
+      console.log('nft image url', nftMetaData);
+
+      // return nftMetaData?.image_url || ""; // Use null or a suitable fallback for missing floor prices
     }));
 
     console.log('All floor prices:', floorPrices);
