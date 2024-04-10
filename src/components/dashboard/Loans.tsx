@@ -168,10 +168,48 @@ const Loans = () => {
   
   }
 
+  type Token = {
+    token_address: string;
+    token_id: string | number; // Depending on whether you use numeric IDs or string representations
+  };
+
+  
+  async function fetchNfts(tokens: Token[]) {
+    console.log("fetch multple nfts");
+    const response = await fetch('/api/getMultipleNfts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        tokens,
+        // tokens: [
+        //   { "token_address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d", "token_id": "12" },
+        //   { "token_address": "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258", "token_id": "7734" }
+        // ],
+        normalizeMetadata: false,
+        media_items: true
+      }),
+    });
+  
+    if (!response.ok) {
+      throw new Error('Failed to fetch NFTs');
+    }
+
+    const data = await response.json();
+    console.log(data);
+    console.log(data[0].media.media_collection.medium.url);
+    const urls = data.map(item => item.media.media_collection.medium.url);
+    setNftImageUrlList(urls);
+  
+  }
+  
+
   useEffect(() => {
     console.log("loans use effect")
     fetchLoanData();
     fetchReserveData();
+    fetchNfts();
 
   }, [address]);
 
@@ -213,7 +251,7 @@ const Loans = () => {
                   <div className="card_img md:flex-shrink-0">
                     <img
                       className={"md:flex-shrink-0"}
-                      src="{loansDataItems.loanCarImg.src}"
+                      src={nftImageUrlList?.[index]}
                       alt="card-img"
                     />
                   </div>
