@@ -213,7 +213,8 @@ const Loans = () => {
                           "text-[10px] md:text-2xl font-bold text-white"
                         }
                       >
-                        {loansDataItems.loanTitle}{}
+                        {/* {loansDataItems.loanTitle} */}
+                        {getCollectionSlug(loansDataItems?.nftAsset)}
                       </h2>
                       <span
                         className={
@@ -254,7 +255,7 @@ const Loans = () => {
                           "text-[10px] md:text-base font-medium text-white pb-0 md:pb-3"
                         }
                       >
-                        Balance
+                        Loan Amount
                       </h2>
                       <p
                         className={
@@ -293,7 +294,7 @@ const Loans = () => {
                         Loan status
                       </h2>
 
-                      {loansDataItems.loanActiveStatus === "Active" && (
+                      {loansDataItems.loanState === 1 && (
                         <div
                           className={
                             "text-[10px] md:text-sm font-medium bg-[#54e96c26] py-[5px] px-[13px] inline-flex items-center gap-4 rounded-[7px] text-[#54E96C]"
@@ -302,7 +303,8 @@ const Loans = () => {
                           <div
                             className={"w-2 h-2 rounded-full bg-[#54E96C]"}
                           ></div>
-                          {loansDataItems.loanActiveStatus}
+                          Active
+                          {/* {loansDataItems.loanActiveStatus} */}
                         </div>
                       )}
 
@@ -319,7 +321,7 @@ const Loans = () => {
                         </div>
                       )}
 
-                      {loansDataItems.loanActiveStatus === "Paused" && (
+                      { loansDataItems.loanState === 5 && (
                         <div
                           className={
                             "text-[10px] md:text-sm font-medium bg-[#e6404052] py-[5px] px-[13px] inline-flex items-center gap-4 rounded-[7px] text-[#E64040]"
@@ -328,6 +330,7 @@ const Loans = () => {
                           <div
                             className={"w-2 h-2 rounded-full bg-[#E64040]"}
                           ></div>
+                          Default"\
                           {loansDataItems.loanActiveStatus}
                         </div>
                       )}
@@ -386,7 +389,17 @@ const Loans = () => {
                       </h2>
 
                       <div className={"ml-8"}>
-                        <img src="{loansDataItems.loanActiveHealth.src}" alt="" />
+                        {/* <img src="{loansDataItems.loanActiveHealth.src}" alt="" /> */}
+                        <p
+                        className={
+                          "text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text"
+                        }
+                      >
+                      
+                        {/* (parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27)).toFixed(4) */}
+                        {  ((parseFloat(reserveData?.variableBorrowIndex)  / 10**25 * parseFloat(ethers.formatEther(loansDataItems.loanAmount))) / floorPriceList[index] / 0.8).toFixed(4)}
+                        %
+                      </p>
                       </div>
                     </div>
                   </div>
