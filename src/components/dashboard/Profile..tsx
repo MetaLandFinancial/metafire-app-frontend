@@ -11,7 +11,7 @@ import Loans from "@/components/dashboard/Loans";
 import Auctions from "@/components/dashboard/Auctions";
 
 const Profile = () => {
-    const [teb, setTab] = useState('Deposits')
+    const [teb, setTab] = useState('Loans')
 
     return (
         <>

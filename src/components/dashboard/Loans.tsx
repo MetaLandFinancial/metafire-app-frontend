@@ -22,7 +22,8 @@ type CollectionSlugsType = {
 
 // Use the defined type for your object
 const collectionSlugs: CollectionSlugsType = {
-  "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d": "boredapeyachtclub"
+  "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d" : "boredapeyachtclub",
+  "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258" : "otherdeed"
 };
 
 function getCollectionSlug(address: string): string {
@@ -36,7 +37,7 @@ const Loans = () => {
 
   const [repayModal, setRepayModal] = useState(false);
   const { address, connector, isConnected } = useAccount();
-  const [floorPriceList, setFloorPriceList] = useState([]);
+  const [floorPriceList, setFloorPriceList] = useState<any[]>([]);
 
   const [loanList, setLoanList] = useState<any[]>([]);
   const [reserveData, setReserveData] = useState<any>();
@@ -106,40 +107,61 @@ const Loans = () => {
     setRepayModal(false);
   };
 
-  useEffect(() => {
-    //query loan data from subgraph
-    apolloClient
-      .query({
+  async function fetchLoanData() {
+    try {
+      console.log("address", address);
+      // Query loan data from the subgraph
+      const { data } = await apolloClient.query({
         query: gql(LOAN_QUERY),
-      })
-      .then((data) => {
-        console.log(data.data.currentLoanInfos);
-        setLoanList([...data.data.currentLoanInfos]);
-        const floorPriceList = data.data.currentLoanInfos.map((item: any) => {
-          const collectionSlug = getCollectionSlug("0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d");
-          console.log("collectionSlug", collectionSlug);
-          // const floorPrice = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`);
-
-          return item.loanAmount;
-        });
-      })
-      .catch((err) => {
-        console.log("Error fetching data: ", err);
       });
+      console.log(data.currentLoanInfos);
+      setLoanList([...data.currentLoanInfos]);
 
-      reserveApolloClient
-      .query({
+    // Fetch floor prices and map them back to currentLoanInfos
+    const floorPrices = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
+      const collectionSlug = getCollectionSlug(loan.nftAsset);
+      console.log("collectionSlug", collectionSlug);
+      const nftStatDataResponse = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`)
+      const nftStatData = await nftStatDataResponse.json();
+      console.log('nft floor price', nftStatData?.total?.floor_price);
+
+      return nftStatData?.total?.floor_price || 0; // Use null or a suitable fallback for missing floor prices
+    }));
+
+    console.log('All floor prices:', floorPrices);
+    setFloorPriceList(floorPrices);
+      // setFloorPriceList([...floorPriceList, nftStatData?.total?.floor_price]);
+      // const collectionSlug = getCollectionSlug("0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d");
+      // console.log("collectionSlug", collectionSlug);
+      // const nftStatDataResponse = await fetch(`/api/getNftFloorPrice?collectionSlug=${collectionSlug}`)
+      // const nftStatData = await nftStatDataResponse.json();
+      // console.log('nft floor price', nftStatData?.total?.floor_price);
+    } catch (error) {
+      console.log("Error fetching data: ", error);
+    }
+  }
+  // async function fetchFloorPriceList() {}
+
+  async function fetchReserveData() {
+    try {
+      // Query loan data from the subgraph
+      const { data } = await reserveApolloClient.query({
         query: gql(RESERVE_QUERY),
-      })
-      .then((data) => {
-        console.log(data.data.reserveDataUpdateds[0]);
-        setReserveData(data.data.reserveDataUpdateds[0]);
-      })
-      .catch((err) => {
-        console.log("Error fetching data: ", err);
       });
+      console.log(data.reserveDataUpdateds[0]);
+      setReserveData(data.reserveDataUpdateds[0]);
+    } catch (error) {
+      console.log("Error fetching data: ", error);
+    }
+  
+  }
 
-  }, []);
+  useEffect(() => {
+    console.log("loans use effect")
+    fetchLoanData();
+    fetchReserveData();
+
+  }, [address]);
 
 
   return (
@@ -209,7 +231,7 @@ const Loans = () => {
                         }
                       >
                         <img src={EthIcon.src} alt="icon" />
-                        {loansDataItems.ethPoints}111 ETH
+                        {floorPriceList[index]?.toFixed(4)} ETH
                       </p>
 
                       <button

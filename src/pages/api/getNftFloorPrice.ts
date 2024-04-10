@@ -26,7 +26,7 @@ export default async function handler(
 
       // });
 
-      const response = await axios.get('https://api.opensea.io/api/v2/collections/boredapeyachtclub/stats', {
+      const response = await axios.get(`https://api.opensea.io/api/v2/collections/${collectionSlug}/stats`, {
         httpsAgent: proxyAgent,
         headers: {
           'Accept': 'application/json',
