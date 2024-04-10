@@ -131,8 +131,8 @@ const Loans = () => {
 
     // Fet NFT image urls
     const nftImageUrls = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
-        
-      const nftMetaDataResponse = await fetch(`/api/getNft?address=${loan.nftAsset}&tokenId=${loan.nftTokenId}`);
+        console.log("nftasset", loan.nftAsset, "nftTokenId", loan.nftTokenId);
+      const nftMetaDataResponse = await fetch(`/api/getNftMetaData?nftAsset=${loan.nftAsset}&tokenId=${loan.nftTokenId}`);
 
       const nftMetaData = await nftMetaDataResponse.json();
       console.log('nft image url', nftMetaData);
