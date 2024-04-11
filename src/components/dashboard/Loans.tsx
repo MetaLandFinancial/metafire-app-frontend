@@ -457,7 +457,7 @@ const Loans = () => {
               </div>
             ))}
           </div>
-          <Pagination />
+          {/* <Pagination /> */}
         </div>
       </div>
 
