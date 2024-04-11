@@ -4,6 +4,18 @@ import HeroF from "@/pages/nft-equity/HeroF";
 import Pagenv from "./Pagenv";
 import FinanceMain from "./FinanceMain";
 
+type CollectionSlugsType = {
+    [key: string]: string;
+};
+
+
+// Use the defined type for your object
+const collectionSlugs: CollectionSlugsType = {
+    "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d" : "boredapeyachtclub",
+    "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258" : "otherdeed",
+    "0x306b1ea3ecdf94aB739F1910bbda052Ed4A9f949" : "beanzofficial"
+  };
+
 const index = () => {
 
     const [nftData, setNftData] = useState<any[]>([]);
@@ -22,6 +34,7 @@ const index = () => {
         const response = await fetch(url);
         const data = await response.json();
         console.log(data);
+        
         // console.log(data.result);
         // const metadata = data.result[0].metadata;
         // const ojbMetadata = JSON.parse(metadata);
@@ -29,8 +42,15 @@ const index = () => {
         // const array = [22, 33, 44];
         if(data && data.result) {
             // Store the fetched data in state
+            // token_address: data.result[0].token_address,
+            const filteredData = data.result.filter(item => {
+                console.log(item.token_address.toLowerCase());
+                Object.keys(collectionSlugs).includes(item.token_address.toLowerCase())
+            }
+            );
+            console.log(filteredData);
             setTest(data.result[0].name);
-            setNftData(data.result);
+            setNftData(filteredData);
         }
     };
 
