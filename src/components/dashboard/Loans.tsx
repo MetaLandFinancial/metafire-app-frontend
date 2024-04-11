@@ -14,7 +14,7 @@ import Image from "next/image";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 import {ethers} from "ethers";
-
+import WETHGateway from "../../contracts/wethGateway.json";
 
 type CollectionSlugsType = {
   [key: string]: string;
@@ -31,7 +31,7 @@ function getCollectionSlug(address: string): string {
 }
 
 const Loans = () => {
-
+  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
   const SUBGRAPH_URL = process.env.NEXT_PUBLIC_LOAN_SUBGRAPH_URL;
   const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
 
@@ -44,6 +44,7 @@ const Loans = () => {
   const [reserveData, setReserveData] = useState<any>();
   const [first, setfirst] = useState(10);
   const [skip, setskip] = useState(0);
+
 
   const LOAN_QUERY = `
   {
@@ -118,13 +119,13 @@ const Loans = () => {
       console.log(data.currentLoanInfos);
       setLoanList([...data.currentLoanInfos]);
 
-    // Fetch floor prices and map them back to currentLoanInfos
-    const floorPrices = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
+      // Fetch floor prices and map them back to currentLoanInfos
+      const floorPrices = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
       const collectionSlug = getCollectionSlug(loan.nftAsset);
-      console.log("collectionSlug", collectionSlug);
+      // console.log("collectionSlug", collectionSlug);
       const nftStatDataResponse = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`)
       const nftStatData = await nftStatDataResponse.json();
-      console.log('nft floor price', nftStatData?.total?.floor_price);
+      // console.log('nft floor price', nftStatData?.total?.floor_price);
 
       return nftStatData?.total?.floor_price || 0; // Use null or a suitable fallback for missing floor prices
     }));
@@ -135,18 +136,8 @@ const Loans = () => {
     }));
     fetchNfts(tokens);
 
-    // loan.nftAsset loan.nftTokenId
-    // Fet NFT image urls
-
-
-    console.log('All floor prices:', floorPrices);
+    // console.log('All floor prices:', floorPrices);
     setFloorPriceList(floorPrices);
-      // setFloorPriceList([...floorPriceList, nftStatData?.total?.floor_price]);
-      // const collectionSlug = getCollectionSlug("0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d");
-      // console.log("collectionSlug", collectionSlug);
-      // const nftStatDataResponse = await fetch(`/api/getNftFloorPrice?collectionSlug=${collectionSlug}`)
-      // const nftStatData = await nftStatDataResponse.json();
-      // console.log('nft floor price', nftStatData?.total?.floor_price);
     } catch (error) {
       console.log("Error fetching data: ", error);
     }
@@ -182,10 +173,6 @@ const Loans = () => {
       },
       body: JSON.stringify({
         tokens,
-        // tokens: [
-        //   { "token_address": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d", "token_id": "12" },
-        //   { "token_address": "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258", "token_id": "7734" }
-        // ],
         normalizeMetadata: false,
         media_items: true
       }),
