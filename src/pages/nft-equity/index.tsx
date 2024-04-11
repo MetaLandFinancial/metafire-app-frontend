@@ -43,7 +43,7 @@ const index = () => {
         if(data && data.result) {
             // Store the fetched data in state
             // token_address: data.result[0].token_address,
-            const filteredData = data.result.filter(item => {
+            const filteredData = data.result.filter(( item : any ) => {
                 console.log(item.token_address.toLowerCase());
                 Object.keys(collectionSlugs).includes(item.token_address.toLowerCase())
             }

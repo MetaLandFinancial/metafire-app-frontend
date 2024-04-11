@@ -631,7 +631,7 @@ const Loans = () => {
                         onChange={handleRepayAmountChange}
                       />
                       <div className="absolute top-[50%] translate-y-[-50%] right-5">
-                        <button className="max_btn_bg hover:opacity-[0.7]">
+                        <button onClick={() => setRepayAmountInput((parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27) * 1.001).toFixed(6) )} className="max_btn_bg hover:opacity-[0.7]">
                           Max
                         </button>
                       </div>

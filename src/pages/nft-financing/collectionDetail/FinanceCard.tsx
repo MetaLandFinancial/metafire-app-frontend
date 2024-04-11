@@ -122,7 +122,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                 </div> */}
               </div>
               <button className="FinanceCard_Btn" onClick={() => openModal(item)}>
-                  Loan Detail
+                  Get Loan
               </button>
             </div>
           </div>
