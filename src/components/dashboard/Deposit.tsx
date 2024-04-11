@@ -102,7 +102,7 @@ const Deposit = () => {
           setIsApproving(false);
         }
 
-        console.log("Approval successful");
+        console.log("Approval successfully");
       }
 
       // Withdraw

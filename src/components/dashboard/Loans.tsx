@@ -36,7 +36,7 @@ const Loans = () => {
   const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
 
   const [repayModal, setRepayModal] = useState(false);
-  const { address, connector, isConnected } = useAccount();
+
   const [floorPriceList, setFloorPriceList] = useState<any[]>([]);
   const [nftImageUrlList, setNftImageUrlList] = useState<any[]>([]);
 
@@ -44,6 +44,10 @@ const Loans = () => {
   const [reserveData, setReserveData] = useState<any>();
   const [first, setfirst] = useState(10);
   const [skip, setskip] = useState(0);
+
+  const { address, connector, isConnected } = useAccount();
+  const [repayAmountInput, setRepayAmountInput] = useState("");
+  const [isRepaying, setIsRepaying] = useState(false);
 
 
   const LOAN_QUERY = `
@@ -200,6 +204,46 @@ const Loans = () => {
 
   }, [address]);
 
+  const handleRepayAmountChange = (event: any) => {
+    console.log("repay amount: ", event.target.value);
+    setRepayAmountInput(event.target.value);
+  }
+
+  const callRepayETH = async (nftAsset: string, nftTokenId: string) => {
+    console.log("call repay ");
+    console.log("nft asset: ", nftAsset);
+    console.log("nft token id: ", nftTokenId);
+
+    try {
+      const { ethereum } = window as any;
+      const provider = new ethers.BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+ 
+      const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
+
+      const amountToRepay = ethers.parseUnits(repayAmountInput.toString(), 18);
+      console.log("amount to repay: ", amountToRepay.toString());
+      const repayTx = await wethGatewaycontract.repayETH(nftAsset, nftTokenId, amountToRepay, {value: amountToRepay});
+      if (repayTx && repayTx.hash) {
+        setIsRepaying(true);
+      }
+      const repayReceipt = await repayTx.wait();
+      if(repayReceipt.status === 0) {
+        console.log("Repay failed");
+        setIsRepaying(false);
+        alert("Repay failed");
+        return;
+      }else {
+        setIsRepaying(false);
+      }
+
+      console.log("repay successfully")
+
+
+    } catch (error) {
+      console.log("Error repay data: ", error);
+    }
+  }
 
   return (
     <section
@@ -277,11 +321,12 @@ const Loans = () => {
 
                         <button
                           onClick={() => setRepayModal(!repayModal)}
+                          disabled={ isRepaying} 
                           className={
                             "w-[166px] py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[7px] text-white"
                           }
                         >
-                          Repay
+                          { isRepaying ? 'Repaying...' : 'Repay'}
                         </button>
                       </div>
                     </div>
@@ -581,8 +626,8 @@ const Loans = () => {
                         type="text"
                         className="input_withdraw w-full max-w-[571px]"
                         placeholder="0.00"
-                        value="0"
-                        // onChange={handleWithdrawAmountChange}
+                        value={repayAmountInput}
+                        onChange={handleRepayAmountChange}
                       />
                       <div className="absolute top-[50%] translate-y-[-50%] right-5">
                         <button className="max_btn_bg hover:opacity-[0.7]">
@@ -614,6 +659,7 @@ const Loans = () => {
                       </label> */}
 
                       <button
+                        onClick={() => callRepayETH(loansDataItems?.nftAsset, loansDataItems?.nftTokenId)}
                         className={
                           "bg-gradient-to-r from-blue-500 to-purple-600 w-full py-[18px] rounded-[4px] text-white mt-5"
                         }
