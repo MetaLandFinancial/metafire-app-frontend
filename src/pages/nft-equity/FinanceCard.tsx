@@ -9,18 +9,35 @@ import close1 from "../../../public/img/close1.svg";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 
+type CollectionSlugsType = {
+  [key: string]: string;
+};
+
+// Use the defined type for your object
+const collectionSlugs: CollectionSlugsType = {
+  "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d" : "boredapeyachtclub",
+  "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258" : "otherdeed",
+  "0x306b1ea3ecdf94aB739F1910bbda052Ed4A9f949" : "beanzofficial"
+};
+
+function getCollectionSlug(address: string): string {
+  return collectionSlugs[address.toLowerCase()];
+}
+
 
 const FinanceCard = ({ nftData }: { nftData: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
   const [loanNftName, setLoanNftName] = useState("");
+  const [loanNftAssetClass, setLoanNftAssetClass] = useState("");
   const [loanNftId, setLoanNftId] = useState("");
   const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
 
 
-  useEffect(() => {
-    getFloorPrice('boredapeyachtclub');
-  }, []);
+  // useEffect(() => {
+  //   const collectionSlug = 
+  //   getFloorPrice('boredapeyachtclub');
+  // }, []);
 
   const getFloorPrice = async (collectionSlug: string) => {
     try {
@@ -42,6 +59,9 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
     setLoanImageUrl(item.metadata && JSON.parse(item.metadata)?.image);
     setLoanNftName(item.name);
     setLoanNftId(item.token_id);
+    const collectionSlug = getCollectionSlug(item.token_address);
+    getFloorPrice(collectionSlug);
+    
   };
 
   const closeModal = () => {
@@ -382,7 +402,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                             </label>
                           </div>
                         </div>
-                        <button className="Nft_Bg capitalize">BUY NFT</button>
+                        <button className="Nft_Bg capitalize">Borrow</button>
                       </div>
                     </div>
                   </div>
