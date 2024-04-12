@@ -8,6 +8,8 @@ import ring from "../../../public/img/ring.svg";
 import close1 from "../../../public/img/close1.svg";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
+import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
+import { ethers } from 'ethers';
 
 type CollectionSlugsType = {
   [key: string]: string;
@@ -24,14 +26,68 @@ function getCollectionSlug(address: string): string {
   return collectionSlugs[address.toLowerCase()];
 }
 
+const RESERVE_QUERY = `
+{
+  reserveDataUpdateds(
+    where:{
+      asset:"${process.env.NEXT_PUBLIC_WETH_ADDRESS}"
+    }
+    orderBy: blockTimestamp, 
+    orderDirection: desc, 
+    first: 1) {
+      id
+      asset
+      liquidityRates
+      variableBorrowRate
+      liquidityIndices
+      variableBorrowIndex
+      blockNumber
+      blockTimestamp
+      transactionHash
+  }
+}
+`;
+
 
 const FinanceCard = ({ nftData }: { nftData: any }) => {
+  const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
   const [loanNftName, setLoanNftName] = useState("");
   const [loanNftAssetClass, setLoanNftAssetClass] = useState("");
   const [loanNftId, setLoanNftId] = useState("");
   const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
+  const [borrowRate, setBorrowRate] = useState<any>();
+
+
+
+  const reserveApolloClient = new ApolloClient({
+    uri: RESERVE_SUBGRAPH_URL,
+    cache: new InMemoryCache(),
+  });
+
+  useEffect(() => {
+    // console.log(depositQuery);
+    // query from subgraph
+    reserveApolloClient
+      .query({
+        query: gql(RESERVE_QUERY),
+      })
+      .then((data) => {
+        console.log("Data: ", data.data.reserveDataUpdateds[0]);
+        console.log("Data: ", data.data.reserveDataUpdateds[0].variableBorrowRate);
+        //convert from wei to eth
+        // Assume `bigNumberAmount` is a BigNumber or string that represents the value in the smallest unit with 27 decimals
+        const borrowRateETH = (data.data.reserveDataUpdateds[0].variableBorrowRate / 10**25).toFixed(4);
+        console.log("borrowRateETH: ", borrowRateETH);
+        setBorrowRate(borrowRateETH);
+        // setLiquidityRates(data.data.reserveDataUpdateds[0].variableBorrowRate);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }, []);
 
 
   // useEffect(() => {
@@ -311,7 +367,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                                   Borrow Rate
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                                  100%
+                                  {borrowRate}%
                                 </p>
                               </div>
                             </div>
