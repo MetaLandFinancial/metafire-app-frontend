@@ -84,7 +84,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
               </div>
               <div className="flex flex-row justify-between items-center mt-[13px]">
                 <h3 className="text-xs md:text-sm font-bold text-white">
-                  {item.name} title
+                  {item.name} 
                   <span className="ml-[10px]">#{item.token_id}</span>
                 </h3>
                 <Link href="/">
@@ -338,7 +338,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Max Borrow Amount
+                                  Max Borrow
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                                  {  0.5 * selectedNftFloorPrice} ETH
