@@ -195,7 +195,7 @@ const Loans = () => {
     setNftImageUrlList(urls);
   
   }
-  
+
 
   useEffect(() => {
     console.log("loans use effect")
@@ -203,7 +203,35 @@ const Loans = () => {
     fetchReserveData();
     // fetchNfts();
 
+
+    
+
   }, [address]);
+
+  const [signer, setSigner] = useState<ethers.Signer | null>(null);
+  const { data: walletClient, isError, isLoading } = useWalletClient();
+
+  useEffect(() => {
+    const initializeEthereum = async () => {
+      const { ethereum } = window as any;
+      if (!ethereum) {
+        console.error("Ethereum object doesn't exist!");
+        alert("Please install MetaMask.");
+        return;
+      }
+    
+      try {
+        await ethereum.request({ method: 'eth_requestAccounts' });
+        const provider = new ethers.BrowserProvider(ethereum);
+        const signer = await provider.getSigner();
+        setSigner(signer);
+      } catch (error) {
+        console.error("Error initializing ethereum:", error);
+      }
+    };
+
+    initializeEthereum();
+  }, [address, isLoading]);
 
   const handleRepayAmountChange = (event: any) => {
     console.log("repay amount: ", event.target.value);
@@ -216,15 +244,13 @@ const Loans = () => {
     console.log("nft token id: ", nftTokenId);
 
     try {
-      const { ethereum } = window as any;
-      const provider = new ethers.BrowserProvider(ethereum);
-      const signer = await provider.getSigner();
- 
+      
       const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
 
-      const amountToRepay = ethers.parseUnits(repayAmountInput.toString(), 18);
-      console.log("amount to repay: ", amountToRepay.toString());
-      const repayTx = await wethGatewaycontract.repayETH(nftAsset, nftTokenId, amountToRepay, {value: amountToRepay});
+      const amountToRepay = ethers.parseUnits(repayAmountInput, 18);
+      console.log("amount to repay: ");
+      console.log("signer: ", signer);
+      const repayTx = await wethGatewaycontract.repayETH(nftAsset, parseInt(nftTokenId), amountToRepay, {value: amountToRepay});
       if (repayTx && repayTx.hash) {
         setIsRepaying(true);
       }
@@ -275,10 +301,10 @@ const Loans = () => {
           </div>
           <div className="card_wrapper">
             {loanList.map((loansDataItems, index) => (
-              <>
+              <div key={index}>
                 <div
                   className="card_item bg-gradient-to-t from-rgba-blue-500 to-rgba-purple-600 shadow-button border border-gray-600 rounded-[15px] p-3 flex gap-5 md:gap-[113px] mb-4"
-                  key={index}
+                  
                 >
                   <div className="card_left md:flex gap-4 md:gap-8">
                     <div style={{maxHeight:"200px"}} className="card_img md:flex-shrink-0">
@@ -670,7 +696,7 @@ const Loans = () => {
                     </div>
                   </div>
                 )}
-              </>
+              </div>
             ))}
           </div>
           {/* <Pagination /> */}
