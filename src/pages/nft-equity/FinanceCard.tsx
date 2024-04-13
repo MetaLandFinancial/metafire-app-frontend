@@ -170,7 +170,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
 
       if( borrowAllowance < amountToBorrow ){
         console.log("start approving ERC721");
-        const approveDelegationTx = await debtTokenContract.approveDelegation(WETHGATEWAY_ADDRESS, borrowAllowance);
+        const approveDelegationTx = await debtTokenContract.approveDelegation(WETHGATEWAY_ADDRESS, amountToBorrow);
         if (approveDelegationTx && approveDelegationTx.hash) {
           setIsApproving(true);
         }
@@ -216,7 +216,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
       const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
 
     
-      const borrowTx = await wethGatewaycontract.borrowETH(amountToBorrow, loanNftAsset, parseInt(loanNftId), signer.address, 0, {value: amountToBorrow});
+      const borrowTx = await wethGatewaycontract.borrowETH(amountToBorrow, loanNftAsset, parseInt(loanNftId), signer.address, 0);
       if (borrowTx && borrowTx.hash) {
         setIsBorrowing(true);
       }
