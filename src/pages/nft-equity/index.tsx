@@ -44,8 +44,6 @@ const index = () => {
           await ethereum.request({ method: 'eth_requestAccounts' });
           const provider = new ethers.BrowserProvider(ethereum);
           const signer = await provider.getSigner();
-          const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
-          setWethGatewayContract(wethGatewaycontract);
           setSigner(signer);
         } catch (error) {
           console.error("Error initializing ethereum:", error);
