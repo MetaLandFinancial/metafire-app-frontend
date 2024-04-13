@@ -146,33 +146,6 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
     setBorrowAmountInput(event.target.value);
   }
 
-  // const [signer, setSigner] = useState<ethers.Signer | null>(null);
-  // const { data: walletClient, isError, isLoading } = useWalletClient();
-  // const { address, connector, isConnected } = useAccount();
-
-
-
-// useEffect(() => {
-//   async function initializeWeb3() {
-//     if (window.ethereum) {
-//       try {
-//         const { ethers } = require("ethers")
-//         await window.ethereum.request({ method: 'eth_requestAccounts' });
-//         const provider = new ethers.BrowserProvider(window.ethereum);
-//         const signer = provider.getSigner();
-//         console.log("Signer:", signer);
-//       } catch (error) {
-//         console.error("Error initializing web3:", error);
-//       }
-//     } else {
-//       console.error("Please install MetaMask!");
-//     }
-//   }
-
-//   initializeWeb3();
-// }, []);
-
-  
 
   const callBorrowETH = async () => {
     console.log('borrowing ETH');
