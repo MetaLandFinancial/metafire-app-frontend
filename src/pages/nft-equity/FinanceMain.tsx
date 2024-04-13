@@ -5,7 +5,7 @@ import FinInput from "./FinInput";
 
 
 
-const FinanceMain = ({ nftData, signer,  wethGatewaycontract}: { nftData: any, signer:any, wethGatewaycontract: any }) => {
+const FinanceMain = ({ nftData, signer}: { nftData: any, signer: any }) => {
   return (
     <div className="relative mt-[79px] mb-[69px]">
       <div className="container mx-auto">
@@ -14,7 +14,7 @@ const FinanceMain = ({ nftData, signer,  wethGatewaycontract}: { nftData: any, s
           {/* <div style={{color:"white"}} >sadas2 {nftData?.[0]?.name} </div> */}
           <div className="w-full">
             <FinInput />
-            <FinanceCard nftData={nftData} signer={signer} wethGatewaycontract={wethGatewaycontract} />
+            <FinanceCard nftData={nftData} signer={signer} />
           </div>
         </div>
       </div>

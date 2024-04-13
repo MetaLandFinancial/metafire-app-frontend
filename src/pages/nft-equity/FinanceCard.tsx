@@ -56,7 +56,7 @@ const RESERVE_QUERY = `
 `;
 
 
-const FinanceCard = ({ nftData, signer, wethGatewaycontract}: { nftData: any, signer: any, wethGatewaycontract:any }) => {
+const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
 
   useEffect(() => {
     console.log("Apollo Client:", ApolloClient);

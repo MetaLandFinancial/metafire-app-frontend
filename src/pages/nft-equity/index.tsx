@@ -28,7 +28,6 @@ const index = () => {
     const { address, connector, isConnected } = useAccount();
 
     const [signer, setSigner] = useState<ethers.Signer | null>(null);
-    const [wethGatewaycontract, setWethGatewayContract] = useState<ethers.Contract | null>(null);
     
     const { data: walletClient, isError, isLoading } = useWalletClient();
   
@@ -99,7 +98,7 @@ const index = () => {
             {/* <div style={{color:"white"}} >sadas  {test}  </div> */}
         <HeroF />
         <Pagenv />
-        <FinanceMain nftData={nftData} signer={signer} wethGatewaycontract={wethGatewaycontract} />
+        <FinanceMain nftData={nftData} signer={signer} />
         </div>
     );
 };
