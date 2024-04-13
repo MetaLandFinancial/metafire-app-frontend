@@ -12,6 +12,7 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 
 import WETHGateway from "../../contracts/wethGateway.json";
 import ERC721 from "../../contracts/erc721.json";
+import DebtToken from "../../contracts/debtToken.json";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 
 
@@ -68,6 +69,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
 
   const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
   const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
+  const DEBT_TOKEN_ADDRESS = process.env.NEXT_PUBLIC_DEBT_TOKEN_ADDRESS as string;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
@@ -156,11 +158,39 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
       const provider = new ethers.BrowserProvider(ethereum);
       const signer = await provider.getSigner();
       
+      const amountToBorrow = ethers.parseUnits(borrowAmountInput.toString(), 18);
 
+      const debtTokenContract = new ethers.Contract(DEBT_TOKEN_ADDRESS, DebtToken.abi, signer);
       const erc721Contract = new ethers.Contract(loanNftAsset, ERC721.abi, signer);
-      //check erc721 approval to wethgateway
-      const approvedAddress = await erc721Contract.getApproved(parseInt(loanNftId));
+ 
+      //detect borrow allowance
+      const borrowAllowance = await debtTokenContract.borrowAllowance(signer.address, WETHGATEWAY_ADDRESS);
+      console.log(typeof(borrowAllowance), borrowAllowance.toString());
+      console.log(typeof(amountToBorrow), amountToBorrow);
 
+      if( borrowAllowance < amountToBorrow ){
+        console.log("start approving ERC721");
+        const approveDelegationTx = await debtTokenContract.approveDelegation(WETHGATEWAY_ADDRESS, borrowAllowance);
+        if (approveDelegationTx && approveDelegationTx.hash) {
+          setIsApproving(true);
+        }
+
+        const approveDelegationReceipt = await approveDelegationTx.wait();
+        if (approveDelegationReceipt.status === 0) {
+          console.log("Approval failed");
+   
+          setIsApproving(false);
+          alert("Approval failed");
+          return;
+        } else {
+          setIsApproving(false);
+        }
+      }else{
+        console.log("stoppppp approving ERC721");
+      }
+      setIsApproving(false);
+
+      const approvedAddress = await erc721Contract.getApproved(parseInt(loanNftId));
       if(approvedAddress !== WETHGATEWAY_ADDRESS) {
         console.log("start approving ERC721");
         const approveTx = await erc721Contract.approve(WETHGATEWAY_ADDRESS, parseInt(loanNftId));
@@ -185,7 +215,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
       console.log("isApproved: ", approvedAddress);
       const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
 
-      const amountToBorrow = ethers.parseUnits(borrowAmountInput.toString(), 18);
+    
       const borrowTx = await wethGatewaycontract.borrowETH(amountToBorrow, loanNftAsset, parseInt(loanNftId), signer.address, 0, {value: amountToBorrow});
       if (borrowTx && borrowTx.hash) {
         setIsBorrowing(true);
