@@ -4,6 +4,8 @@ import HeroF from "@/pages/nft-equity/HeroF";
 import Pagenv from "./Pagenv";
 import FinanceMain from "./FinanceMain";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
+import {ethers} from "ethers";
+import WETHGateway from "../../contracts/wethGateway.json";
 
 type CollectionSlugsType = {
     [key: string]: string;
@@ -19,13 +21,44 @@ const collectionSlugs: CollectionSlugsType = {
   };
 
 const index = () => {
+    const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
 
     const [nftData, setNftData] = useState<any[]>([]);
     const [test, setTest] = useState("");
     const { address, connector, isConnected } = useAccount();
 
+    const [signer, setSigner] = useState<ethers.Signer | null>(null);
+    const [wethGatewaycontract, setWethGatewayContract] = useState<ethers.Contract | null>(null);
+    
+    const { data: walletClient, isError, isLoading } = useWalletClient();
+  
     useEffect(() => {
-        
+      const initializeEthereum = async () => {
+        const { ethereum } = window as any;
+        if (!ethereum) {
+          console.error("Ethereum object doesn't exist!");
+          alert("Please install MetaMask.");
+          return;
+        }
+      
+        try {
+          await ethereum.request({ method: 'eth_requestAccounts' });
+          const provider = new ethers.BrowserProvider(ethereum);
+          const signer = await provider.getSigner();
+          const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
+          setWethGatewayContract(wethGatewaycontract);
+          setSigner(signer);
+        } catch (error) {
+          console.error("Error initializing ethereum:", error);
+        }
+      };
+  
+      initializeEthereum();
+    }, [address, isLoading]);
+
+    useEffect(() => {
+              // const { ethereum } = window as any;
+      // const provider = new ethers.BrowserProvider(ethereum);
         console.log("NFT Equity Page");
         fetchNFT();
     }, [address]);
@@ -66,7 +99,7 @@ const index = () => {
             {/* <div style={{color:"white"}} >sadas  {test}  </div> */}
         <HeroF />
         <Pagenv />
-        <FinanceMain nftData={nftData} />
+        <FinanceMain nftData={nftData} signer={signer} wethGatewaycontract={wethGatewaycontract} />
         </div>
     );
 };

@@ -1,4 +1,3 @@
-import { Financecard } from "@/components/constant/Financecard";
 import { Fragment, useState } from "react";
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
@@ -9,11 +8,19 @@ import close1 from "../../../public/img/close1.svg";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
-import { ethers } from 'ethers';
+// import { ethers } from 'ethers';
+
+import WETHGateway from "../../contracts/wethGateway.json";
+import ERC721 from "../../contracts/erc721.json";
+import { useWriteContract, useAccount, useWalletClient } from "wagmi";
+
 
 type CollectionSlugsType = {
   [key: string]: string;
 };
+
+
+
 
 // Use the defined type for your object
 const collectionSlugs: CollectionSlugsType = {
@@ -49,18 +56,31 @@ const RESERVE_QUERY = `
 `;
 
 
-const FinanceCard = ({ nftData }: { nftData: any }) => {
+const FinanceCard = ({ nftData, signer, wethGatewaycontract}: { nftData: any, signer: any, wethGatewaycontract:any }) => {
+
+  useEffect(() => {
+    console.log("Apollo Client:", ApolloClient);
+    console.log("Dialog:", Dialog);
+    console.log("Transition:", Transition);
+    console.log("Image:", Image);
+    // console.log("Ethers Provider:", new ethers.BrowserProvider(ethereum));
+  }, []);
+
   const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
+  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
   const [loanNftName, setLoanNftName] = useState("");
-  const [loanNftAssetClass, setLoanNftAssetClass] = useState("");
+  const [loanNftAsset, setLoanNftAsset] = useState("");
+  const [borrowAmountInput, setBorrowAmountInput] = useState("");
   const [loanNftId, setLoanNftId] = useState("");
   const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
   const [borrowRate, setBorrowRate] = useState<any>();
 
-
+  // Transaction state management
+  const [isApproving, setIsApproving] = useState(false);
+  const [isBorrowing, setIsBorrowing] = useState(false);
 
   const reserveApolloClient = new ApolloClient({
     uri: RESERVE_SUBGRAPH_URL,
@@ -90,11 +110,6 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
     }, []);
 
 
-  // useEffect(() => {
-  //   const collectionSlug = 
-  //   getFloorPrice('boredapeyachtclub');
-  // }, []);
-
   const getFloorPrice = async (collectionSlug: string) => {
     try {
       const response = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`);
@@ -111,9 +126,11 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
   }
 
   const openModal = (item: any) => {
+    console.log("item: ", item);
     setIsModalOpen(true);
     setLoanImageUrl(item.metadata && JSON.parse(item.metadata)?.image);
     setLoanNftName(item.name);
+    setLoanNftAsset(item.token_address);
     setLoanNftId(item.token_id);
     const collectionSlug = getCollectionSlug(item.token_address);
     getFloorPrice(collectionSlug);
@@ -123,6 +140,72 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleBorrowAmountChange = (event: any) => {
+    console.log("borrow amount: ", event.target.value);
+    setBorrowAmountInput(event.target.value);
+  }
+
+  // const [signer, setSigner] = useState<ethers.Signer | null>(null);
+  // const { data: walletClient, isError, isLoading } = useWalletClient();
+  // const { address, connector, isConnected } = useAccount();
+
+
+
+// useEffect(() => {
+//   async function initializeWeb3() {
+//     if (window.ethereum) {
+//       try {
+//         const { ethers } = require("ethers")
+//         await window.ethereum.request({ method: 'eth_requestAccounts' });
+//         const provider = new ethers.BrowserProvider(window.ethereum);
+//         const signer = provider.getSigner();
+//         console.log("Signer:", signer);
+//       } catch (error) {
+//         console.error("Error initializing web3:", error);
+//       }
+//     } else {
+//       console.error("Please install MetaMask!");
+//     }
+//   }
+
+//   initializeWeb3();
+// }, []);
+
+  
+
+  const callBorrowETH = async () => {
+    console.log('borrowing ETH');
+   
+    try {
+      const { ethers } = require("ethers")
+      const { ethereum } = window as any;
+      const provider = new ethers.BrowserProvider(ethereum);
+      const signer = await provider.getSigner();
+      
+
+      const erc721Contract = new ethers.Contract(loanNftAsset, ERC721.abi, signer);
+      //check erc721 approval to wethgateway
+      const approvedAddress = await erc721Contract.getApproved(parseInt(loanNftId));
+
+      if(approvedAddress !== WETHGATEWAY_ADDRESS) {
+        const approveTx = await erc721Contract.approve(WETHGATEWAY_ADDRESS, parseInt(loanNftId));
+        setIsApproving(true);
+        console.log("start approving ERC721");
+      }
+      console.log("isApproved: ", approvedAddress);
+      const wethGatewaycontract2 = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
+
+      // const amountToBorrow = ethers.parseUnits(repayAmountInput, 18);
+      // const repayTx = await wethGatewaycontract.borrowETH("100000", "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258", 78227, signer.address,0, {value: "100000"});
+      console.log("signer", signer);
+    } catch (error) {
+      console.log('Failed to borrow ETH', error);
+    }
+  };
+
+
+
   return (
     <>
       <div className="grid gap-[19px] md:gap-6 grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
@@ -429,6 +512,8 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                                 type="text"
                                 className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
                                 placeholder="0.0"
+                                value={borrowAmountInput}
+                                onChange={handleBorrowAmountChange}
                               />
                             </div>
                           </div>
@@ -458,7 +543,10 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                             </label>
                           </div>
                         </div>
-                        <button className="Nft_Bg capitalize">Borrow</button>
+                        <button
+                          onClick={() => callBorrowETH()}
+                         className="Nft_Bg capitalize"
+                        >Borrow</button>
                       </div>
                     </div>
                   </div>
