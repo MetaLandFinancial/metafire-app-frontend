@@ -563,18 +563,18 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
                               value=""
                               className="w-5 h-5 Checkbox mr-3"
                             />
-                            <label
+                            {/* <label
                               htmlFor="default-checkbox"
                               className="block text-left md:text-center text-xs md:text-base font-medium text-white"
                             >
                               yes I am ready to get my NFT and agree to
                               MetaFire&nbsp;
-                              {/* <Link href="/" className="inline"> */}
+                             
                                 <span className="link_bg underline w-full font-medium border-b-[1px] border-[#8E54E9]">
                                   terms and conditions
                                 </span>
                             
-                            </label>
+                            </label> */}
                           </div>
                         </div>
                         <button
