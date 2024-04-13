@@ -183,11 +183,26 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
 
       }
       console.log("isApproved: ", approvedAddress);
-      const wethGatewaycontract2 = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
+      const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
 
-      // const amountToBorrow = ethers.parseUnits(repayAmountInput, 18);
-      // const repayTx = await wethGatewaycontract.borrowETH("100000", "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258", 78227, signer.address,0, {value: "100000"});
-      console.log("signer", signer);
+      const amountToBorrow = ethers.parseUnits(borrowAmountInput.toString(), 18);
+      const borrowTx = await wethGatewaycontract.borrowETH(amountToBorrow, loanNftAsset, parseInt(loanNftId), signer.address, 0, {value: amountToBorrow});
+      if (borrowTx && borrowTx.hash) {
+        setIsBorrowing(true);
+      }
+
+      const borrowReceipt = await borrowTx.wait();
+      if (borrowReceipt.status === 0) {
+        console.log("Borrow failed");
+        alert("Borrow failed");
+        return;
+      }else{
+        setIsModalOpen(false);
+        alert("Borrow successful");
+      }
+      setIsBorrowing(false);
+
+
     } catch (error) {
       console.log('Failed to borrow ETH', error);
     }
