@@ -189,9 +189,25 @@ const FinanceCard = ({ nftData, signer, wethGatewaycontract}: { nftData: any, si
       const approvedAddress = await erc721Contract.getApproved(parseInt(loanNftId));
 
       if(approvedAddress !== WETHGATEWAY_ADDRESS) {
-        const approveTx = await erc721Contract.approve(WETHGATEWAY_ADDRESS, parseInt(loanNftId));
-        setIsApproving(true);
         console.log("start approving ERC721");
+        const approveTx = await erc721Contract.approve(WETHGATEWAY_ADDRESS, parseInt(loanNftId));
+        if (approveTx && approveTx.hash) {
+          setIsApproving(true);
+        }
+
+        const approveReceipt = await approveTx.wait();
+        if (approveReceipt.status === 0) {
+          console.log("Approval failed");
+   
+          setIsApproving(false);
+          alert("Approval failed");
+          return;
+        } else {
+          setIsApproving(false);
+        }
+
+        console.log("Approval successfully");
+
       }
       console.log("isApproved: ", approvedAddress);
       const wethGatewaycontract2 = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
@@ -545,8 +561,11 @@ const FinanceCard = ({ nftData, signer, wethGatewaycontract}: { nftData: any, si
                         </div>
                         <button
                           onClick={() => callBorrowETH()}
-                         className="Nft_Bg capitalize"
-                        >Borrow</button>
+                          className="Nft_Bg capitalize"
+                          disabled={isApproving || isBorrowing}
+                        >
+                          {isApproving ? 'Approving...' : isBorrowing ? 'Borrowing...' : 'Borrow'}
+                        </button>
                       </div>
                     </div>
                   </div>
