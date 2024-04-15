@@ -6,7 +6,8 @@ import wocolor from "../../../../../public/img/wocolor.svg";
 import wicolor from "../../../../../public/img/wicolor.svg";
 import SampleNextArrow from "@/pages/foreclosed-nfts/Components/SalePage/Next";
 import SamplePrevArrow from "@/pages/foreclosed-nfts/Components/SalePage/Prev";
-const ForeClosedSlider = () => {
+
+const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: any, saleNftImageUrlList: any}) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -80,14 +81,14 @@ const ForeClosedSlider = () => {
   return (
     <div className="custom_slider">
       <Slider {...settings}>
-        {assetdata.map((item, index) => (
+        {saleNftData.map((item, index) => (
           <div
             key={index}
             className="Sale_Card_BG w-full md:max-w-full xl:max-w-[391px] "
           >
             <div className="rounded-[15px] overflow-hidden w-full xl:max-w-[367px]">
-              <Image
-                src={item.image}
+              <img
+                src={saleNftImageUrlList?.[index]}
                 alt={item.title}
                 className="rounded-[15px] w-full"
                 width={367}
@@ -98,10 +99,10 @@ const ForeClosedSlider = () => {
               <div className="mt-3 flex justify-between items-center">
                 <div className="flex justify-between md:flex-start w-full md:w-fit">
                   <h1 className="text-[10px] md:text-base lg:text-xl xl:text-2xl font-bold text-white">
-                    {item.title}&nbsp;
+                    title &nbsp;
                   </h1>
                   <span className="text-[10px] md:text-base lg:text-xl xl:text-2xl font-bold text-white">
-                    {item.number}
+                    {item.nftTokenId}
                   </span>
                 </div>
                 <div className="hidden Loned_Heart md:flex md:w-[37px] md:h-[37px] border-[1px] border-[#4777e623] rounded-full items-center justify-center cursor-pointer">
@@ -169,10 +170,10 @@ const ForeClosedSlider = () => {
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                   <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                    Liquidation Factor
+                    HealthFactor Factor
                   </p>
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                    {item.liquidationFactor}
+                    {(item.healthFactor * 100).toFixed(2)}%
                   </p>
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">

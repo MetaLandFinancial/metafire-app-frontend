@@ -2,7 +2,8 @@ import Image from "next/image";
 import React from "react";
 import eth from "../../../public/img/eth.svg";
 import ForeClosedSlider from "./Components/SalePage/ForeClosedSlider";
-const Sale = () => {
+
+const Sale = ({ saleNftData, saleNftImageUrlList}: { saleNftData: any, saleNftImageUrlList: any}) => {
   return (
     <>
       <div className="relative pt-[48px] pb-[26px] md:pt-14 md:pb-[190px] lg:pt-20 lg:pb-[220px] xl:pt-[101px] xl:pb-[165px] bg-[url('/img/assetbg.png')] bg-no-repeat bg-cover border-y-[1px] md:border-y-[4px] border-[#4776E6]">
@@ -17,7 +18,7 @@ const Sale = () => {
           </div>
           <div className="mt-6 md:mt-14 lg:mt-16 xl:my-20">
             {/* card */}
-            <ForeClosedSlider />
+            <ForeClosedSlider saleNftData={saleNftData} saleNftImageUrlList={saleNftImageUrlList}/>
           </div>
         </div>
       </div>
