@@ -3,7 +3,23 @@ import Image from "next/image";
 import eth from "../../../../../public/img/eth.svg";
 import wocolor from "../../../../../public/img/wocolor.svg";
 import wicolor from "../../../../../public/img/wicolor.svg";
-const LoanedCard = () => {
+
+type CollectionSlugsType = {
+  [key: string]: string;
+};
+
+// Use the defined type for your object
+const collectionSlugs: CollectionSlugsType = {
+  "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d" : "boredapeyachtclub",
+  "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258" : "otherdeed",
+  "0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949" : "beanzofficial"
+};
+
+function getCollectionSlug(address: string): string {
+  return collectionSlugs[address.toLowerCase()];
+}
+
+const LoanedCard = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: any, loanedNftImageUrlList: any}) => {
   const lonedData = [
     {
       image: "/img/sl1.jpg",
@@ -109,14 +125,14 @@ const LoanedCard = () => {
     <>
       <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-6">
         {/* <div className="flex flex-row max-md:overflow-x-scroll md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-6"> */}
-        {lonedData.map((item, index) => (
+        {loanedNftData.map((item:any, index:any) => (
           <div
             key={index}
             className="Sale_Card_BG w-full md:justify-center md:max-w-full xl:max-w-[391px]"
           >
             <div className="rounded-[15px] overflow-hidden w-full xl:max-w-[367px]">
-              <Image
-                src={item.image}
+              <img
+                src={loanedNftImageUrlList[index]}
                 alt={item.title}
                 className="rounded-[15px] w-full"
                 width={367}
@@ -127,10 +143,10 @@ const LoanedCard = () => {
               <div className="mt-3 flex justify-between items-center">
                 <div className="flex justify-between md:flex-start w-full md:w-fit">
                   <h1 className="text-[10px] md:text-base lg:text-xl xl:text-2xl font-bold text-white">
-                    {item.title}&nbsp;
+                    {getCollectionSlug(item?.nftAsset)}&nbsp;
                   </h1>
                   <span className="text-[10px] md:text-base lg:text-xl xl:text-2xl font-bold text-white">
-                    {item.number}
+                    #{item.nftTokenId}
                   </span>
                 </div>
                 <div className="hidden Loned_Heart cursor-pointer md:flex w-6 h-6 md:w-[37px] md:h-[37px] border-[1px] border-[#4777e623] rounded-full items-center justify-center Heart">
@@ -198,21 +214,21 @@ const LoanedCard = () => {
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                   <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                    Liquidation Factor
+                    HealthFactor Factor
                   </p>
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                    {item.liquidationFactor}
+                    {(item.healthFactor * 100).toFixed(2)}%
                   </p>
                 </div>
-                <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
+                {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                   <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                     Current Auction Price
                   </p>
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                     {item.currentauctionprice}
                   </p>
-                </div>
-                <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
+                </div> */}
+                {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                   <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                     Bidder
                   </p>
@@ -227,7 +243,7 @@ const LoanedCard = () => {
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                     {item.auctionEnd}
                   </p>
-                </div>
+                </div> */}
               </div>
               <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
                 <button className="Sale_Btn_Bg">

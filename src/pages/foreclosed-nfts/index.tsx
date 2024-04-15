@@ -102,7 +102,7 @@ const index = () => {
       <div className="bg-[#1C1424] ">
         <FCHero />
         <Sale saleNftData={saleNftData} saleNftImageUrlList={saleNftImageUrlList} />
-        <Loaned />
+        <Loaned loanedNftData={loanedNftData} loanedNftImageUrlList={loanedNftImageUrlList} />
       </div>
     </>
   );

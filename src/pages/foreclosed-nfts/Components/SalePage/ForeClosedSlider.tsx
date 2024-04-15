@@ -7,6 +7,21 @@ import wicolor from "../../../../../public/img/wicolor.svg";
 import SampleNextArrow from "@/pages/foreclosed-nfts/Components/SalePage/Next";
 import SamplePrevArrow from "@/pages/foreclosed-nfts/Components/SalePage/Prev";
 
+type CollectionSlugsType = {
+  [key: string]: string;
+};
+
+// Use the defined type for your object
+const collectionSlugs: CollectionSlugsType = {
+  "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d" : "boredapeyachtclub",
+  "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258" : "otherdeed",
+  "0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949" : "beanzofficial"
+};
+
+function getCollectionSlug(address: string): string {
+  return collectionSlugs[address.toLowerCase()];
+}
+
 const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: any, saleNftImageUrlList: any}) => {
   const settings = {
     dots: false,
@@ -81,7 +96,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
   return (
     <div className="custom_slider">
       <Slider {...settings}>
-        {saleNftData.map((item, index) => (
+        {saleNftData.map((item:any, index: any) => (
           <div
             key={index}
             className="Sale_Card_BG w-full md:max-w-full xl:max-w-[391px] "
@@ -99,10 +114,10 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
               <div className="mt-3 flex justify-between items-center">
                 <div className="flex justify-between md:flex-start w-full md:w-fit">
                   <h1 className="text-[10px] md:text-base lg:text-xl xl:text-2xl font-bold text-white">
-                    title &nbsp;
+                    {getCollectionSlug(item?.nftAsset)}&nbsp;
                   </h1>
                   <span className="text-[10px] md:text-base lg:text-xl xl:text-2xl font-bold text-white">
-                    {item.nftTokenId}
+                    #{item.nftTokenId}
                   </span>
                 </div>
                 <div className="hidden Loned_Heart md:flex md:w-[37px] md:h-[37px] border-[1px] border-[#4777e623] rounded-full items-center justify-center cursor-pointer">

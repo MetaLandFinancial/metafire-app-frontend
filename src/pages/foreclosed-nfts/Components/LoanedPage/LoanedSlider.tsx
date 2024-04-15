@@ -6,7 +6,7 @@ import wocolor from "../../../../../public/img/wocolor.svg";
 import wicolor from "../../../../../public/img/wicolor.svg";
 import SampleNextArrow from "@/pages/foreclosed-nfts/Components/LoanedPage/Next";
 import SamplePrevArrow from "@/pages/foreclosed-nfts/Components/LoanedPage/Prev";
-const LoanedSlider = () => {
+const LoanedSlider = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: any, loanedNftImageUrlList: any}) => {
   const settings = {
     dots: false,
     infinite: true,
@@ -132,7 +132,7 @@ const LoanedSlider = () => {
     <>
       <div className="custom_slider">
         <Slider {...settings}>
-          {lonedData.map((item, index) => (
+          {loanedNftData.map((item: any, index: any) => (
             <div
               key={index}
               className="Sale_Card_BG w-full md:max-w-full xl:max-w-[391px] "
@@ -153,7 +153,7 @@ const LoanedSlider = () => {
                       {item.title}&nbsp;
                     </h1>
                     <span className="text-[10px] md:text-base lg:text-xl xl:text-2xl font-bold text-white">
-                      {item.number}
+                      #{item.nftTokenId}
                     </span>
                   </div>
                   <div className="hidden Loned_Heart md:flex md:w-[37px] md:h-[37px] border-[1px] border-[#4777e623] rounded-full items-center justify-center cursor-pointer">
