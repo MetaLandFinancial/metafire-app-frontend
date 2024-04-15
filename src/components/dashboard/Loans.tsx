@@ -376,8 +376,18 @@ const Loans = () => {
                         >
                           <img src={EthIcon.src} alt="icon" />
                             {/* {ethers.formatEther(loansDataItems.loanAmount)} */}
-                            {(parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27)).toFixed(4) } ETH
-                            
+                            {
+                              ( parseFloat(ethers.formatEther(loansDataItems.loanAmount))
+                                /
+                                (parseFloat(loansDataItems?.borrowIndex)/(10**27))
+                                *
+                                parseFloat(reserveData?.variableBorrowIndex)
+                                / 
+                                (10**27)
+                              )
+                              .toFixed(4) 
+                            } ETH
+                            {/* {parseFloat(loansDataItems?.borrowIndex)/(10**27)} */}
                             {/* {loansDataItems.loanAmount} */}
                         </p>
                       </div>
