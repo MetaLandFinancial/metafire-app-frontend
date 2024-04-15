@@ -1,4 +1,5 @@
 import React from "react";
+import { Fragment, useState, useEffect } from "react";
 import Slider from "react-slick";
 import Image from "next/image";
 import eth from "../../../../../public/img/eth.svg";
@@ -6,6 +7,8 @@ import wocolor from "../../../../../public/img/wocolor.svg";
 import wicolor from "../../../../../public/img/wicolor.svg";
 import SampleNextArrow from "@/pages/foreclosed-nfts/Components/SalePage/Next";
 import SamplePrevArrow from "@/pages/foreclosed-nfts/Components/SalePage/Prev";
+import { Dialog, Transition } from "@headlessui/react";
+import close1 from "../../../../../public/img/close1.svg";
 
 type CollectionSlugsType = {
   [key: string]: string;
@@ -93,6 +96,34 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
       auctionEnd: "23 Feb, 2024",
     },
   ];
+
+  const [withdrawAmountInput, setWithdrawAmountInput] = useState('0');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  
+  // Transaction state management
+  const [isApproving, setIsApproving] = useState(false);
+  const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [txError, setTxError] = useState('');
+
+
+  const openModal = (index: number) => {
+    // setSelectedIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleWithdrawAmountChange = (event: any) => {
+    console.log("Withdraw amount: ", event.target.value);
+    setWithdrawAmountInput(event.target.value);
+  }
+
+  const callWithdrawETH = async (event: any) => {
+    console.log("Withdraw amount: ");
+  }
+
   return (
     <div className="custom_slider">
       <Slider {...settings}>
@@ -217,7 +248,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                 </div>
               </div>
               <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
-                <button className="Sale_Btn_Bg">
+                <button onClick={() => openModal(index)} className="Sale_Btn_Bg">
                   <span className="Text_gradient_bg_text">Auction</span>
                 </button>
                 <button className="Sale_Btn_Bg">
@@ -228,6 +259,116 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
           </div>
         ))}
       </Slider>
+      <Transition show={isModalOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-10" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black/50" />
+          </Transition.Child>
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <div className="Withdraw_BG w-full max-w-[651px] relative">
+                  <div
+                    className="absolute top-10 max-[350px]:right-[20px] right-[35px] md:right-10 text-white cursor-pointer"
+                    onClick={closeModal}
+                  >
+                    <Image
+                      src={close1}
+                      alt="close"
+                      className="text-white"
+                      width={20}
+                      height={20}
+                    />
+                  </div>
+                  <h1 className="text-white text-center font-bold text-[22px] md:text-xl lg:text-[27px]">
+                    WITHDRAW DEPOSIT
+                  </h1>
+                  <div className="mt-[54px] text-start md:mr-auto">
+                    <p className="text-white text-sm md:text-base lg:text-xl xl:text-2xl font-medium mb-3 md:mb-[14px]">
+                      Available to withdraw
+                    </p>
+                    <span className="text-white text-[20.5px] md:text-2xl lg:text-3xl xl:text-[40px] font-bold">
+                    {/* {isUnlocked[selectedIndex] ? parseFloat(mTokenBalance[selectedIndex]).toFixed(4): '0'}ETH */}
+                    </span>
+                  </div>
+                  <div className="mt-[47px]">
+                    <div className="flex justify-between mb-3">
+                      <label
+                        className="text-base font-medium text-white/80"
+                        htmlFor="Enter amount"
+                      >
+                        Enter amount
+                      </label>
+                      {/* <label
+                        className="text-base font-medium text-white/80"
+                        htmlFor="Balance"
+                      >
+                        Balance: 0.107305
+                      </label> */}
+                    </div>
+                    <div className="relative w-full">
+                      <input
+                        type="text"
+                        className="input_withdraw w-full max-w-[571px]"
+                        placeholder="0.00"
+                        value={withdrawAmountInput}
+                        onChange={handleWithdrawAmountChange}
+                      />
+                      <div className="absolute top-[50%] translate-y-[-50%] right-5">
+                        {/* <button onClick={() => setWithdrawAmountInput(parseFloat(mTokenBalance[selectedIndex]).toFixed(4))} className="max_btn_bg hover:opacity-[0.7]">
+                          Max
+                        </button> */}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mt-10 md:mt-[61px] form-group w-full mx-auto">
+                    <input
+                      id="default-checkbox"
+                      type="checkbox"
+                      value=""
+                      className="w-5 h-5 Checkbox mr-3"
+                    />
+                    {/* <label
+                      htmlFor="default-checkbox"
+                      className="text-left text-xs md:text-base font-medium text-white p-1"
+                    >
+                      I agree to MetaFire&nbsp;
+                      <Link href="/" className="inline">
+                        <span className="link_bg underline w-full font-medium border-b-[1px] border-[#8E54E9]">
+                          terms and conditions
+                        </span>
+                      </Link>
+                    </label> */}
+                  </div>
+                  <button onClick={callWithdrawETH} disabled={isApproving || isWithdrawing} className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
+                    {isApproving ? 'Approving...' : isWithdrawing ? 'Withdrawing...' : 'Withdraw'}
+                  </button>
+                  {/* <p className="text-xs md:text-sm text-white/70 font-light mt-6 max-w-[344px] mx-auto">
+                    * This is the amount you can withdraw without a fee. Once
+                    the minimun Time period of the deposit has been met.
+                  </p> */}
+                </div>
+              </Transition.Child>
+            </div>
+          </div>
+        </Dialog>
+      </Transition>
     </div>
   );
 };

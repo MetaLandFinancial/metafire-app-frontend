@@ -1,8 +1,10 @@
 import React from "react";
+import { Fragment, useState, useEffect } from "react";
 import Image from "next/image";
 import eth from "../../../../../public/img/eth.svg";
 import wocolor from "../../../../../public/img/wocolor.svg";
 import wicolor from "../../../../../public/img/wicolor.svg";
+
 
 type CollectionSlugsType = {
   [key: string]: string;
@@ -121,6 +123,9 @@ const LoanedCard = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: an
       auctionEnd: "23 Feb, 2024",
     },
   ];
+
+
+
   return (
     <>
       <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-6">
@@ -214,7 +219,7 @@ const LoanedCard = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: an
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                   <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                    HealthFactor Factor
+                    Health Factor
                   </p>
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                     {(item.healthFactor * 100).toFixed(2)}%
@@ -245,18 +250,20 @@ const LoanedCard = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: an
                   </p>
                 </div> */}
               </div>
-              <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
+              {/* <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
                 <button className="Sale_Btn_Bg">
                   <span className="Text_gradient_bg_text">Auction</span>
                 </button>
                 <button className="Sale_Btn_Bg">
                   <span className="Text_gradient_bg_text">Buy Now</span>
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         ))}
       </div>
+
+
     </>
   );
 };
