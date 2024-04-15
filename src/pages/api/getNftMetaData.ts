@@ -28,7 +28,7 @@ export default async function handler(
               //set header  application/json'
               'accept': 'application/json',
 
-              "X-API-Key": "dF5uzb8ne8xx6k3v4bCbAnoS0rOAseWz50uvO53qO1lReWsCTs8QAqEBeq1CzkXP"
+              "X-API-Key": process.env.MORALIS_API_KEY as string
           }
       }
       const response = await fetch(url, options);

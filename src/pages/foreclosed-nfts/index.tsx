@@ -19,32 +19,34 @@ const index = () => {
     fetchLoanedNFT();
   }, [address]);
 
-      // fetch nft fcuntion with moralis api
-      const fetchLoanedNFT = async () => {
-        const url = `/api/getNft?address=${address}`;
-        
-        const response = await fetch(url);
-        const data = await response.json();
-        console.log(data);
-        
-        // console.log(data.result);
-        // const metadata = data.result[0].metadata;
-        // const ojbMetadata = JSON.parse(metadata);
+  // fetch nft fcuntion with moralis api
+  const fetchLoanedNFT = async () => {
+      const url =`/api/getLoanedNfts`;
+      
+      const response = await fetch(url, {
+        method: "GET",
+      });
+      const data = await response.json();
+      console.log(data);
+      
+      console.log(data.result);
+      // const metadata = data.result[0].metadata;
+      // const ojbMetadata = JSON.parse(metadata);
 
-        // const array = [22, 33, 44];
-        if(data && data.result) {
-            // Store the fetched data in state
-            // token_address: data.result[0].token_address,
-            console.log(data.result);
-            // const filteredData = data.result.filter(( item : any ) => {
-            //     console.log(item.token_address.toLowerCase());
-            //     return Object.keys(collectionSlugs).includes(item.token_address.toLowerCase());
-            // });
-            console.log(data.result);
-            // setTest(data.result[0].name);
-            setLoanedNftData(data.result);
-        }
-    };
+      // const array = [22, 33, 44];
+      if(data && data.result) {
+          // Store the fetched data in state
+          // token_address: data.result[0].token_address,
+          console.log(data.result);
+          // const filteredData = data.result.filter(( item : any ) => {
+          //     console.log(item.token_address.toLowerCase());
+          //     return Object.keys(collectionSlugs).includes(item.token_address.toLowerCase());
+          // });
+          console.log(data.result);
+          // setTest(data.result[0].name);
+          setLoanedNftData(data.result);
+      }
+  };
 
   return (
     <>

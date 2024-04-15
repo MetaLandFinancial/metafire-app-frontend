@@ -62,6 +62,7 @@ const index = () => {
 
     // fetch nft fcuntion with moralis api
     const fetchNFT = async () => {
+      try {
         const url = `/api/getNft?address=${address}`;
         
         const response = await fetch(url);
@@ -85,10 +86,10 @@ const index = () => {
             setTest(data.result[0].name);
             setNftData(filteredData);
         }
+      } catch (error) {
+        console.error("Error fetching NFT:", error);
+      }
     };
-
-
-    
 
 
     return (

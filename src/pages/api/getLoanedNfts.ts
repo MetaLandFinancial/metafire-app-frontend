@@ -13,18 +13,15 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    console.log("getting multiple nfts")
-    if (req.method === 'POST') {
+    console.log("getting loaned nfts")
+    if (req.method === 'GET') {
       try {
-        const moralisResponse = await fetch('https://deep-index.moralis.io/api/v2.2/nft/getMultipleNFTs?chain=eth', {
-          method: 'POST',
+        const moralisResponse = await fetch('https://prod-api.metafire.financial/auctionList', {
+          method: 'GET',
           headers: {
-            'accept': 'application/json',
-
-            'X-API-Key': process.env.MORALIS_API_KEY as string,
-            'content-type': 'application/json'
+            'content-type': 'application/json',
+            "x-api-key": process.env.METAFIRE_API_KEY as string,
           },
-          body: JSON.stringify(req.body), // Forward the request body received by the Next.js API route to Moralis
         });
   
         if (!moralisResponse.ok) {

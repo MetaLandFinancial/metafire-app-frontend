@@ -18,7 +18,7 @@ export default async function handler(
       const requestOptions: any = {
         headers: {
           'Accept': 'application/json',
-          'X-API-KEY': '94e2fcc99ba841e8abaf09eed154e8ed',
+          'X-API-KEY': process.env.OPENSEA_API_KEY as string,
         },
       };
   
