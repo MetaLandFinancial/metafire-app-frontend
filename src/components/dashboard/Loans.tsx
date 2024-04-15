@@ -300,7 +300,7 @@ const Loans = () => {
             </button>
           </div>
           <div className="card_wrapper">
-            {loanList.map((loansDataItems, index) => (
+            {loanList?.map((loansDataItems, index) => (
               <div key={index}>
                 <div
                   className="card_item bg-gradient-to-t from-rgba-blue-500 to-rgba-purple-600 shadow-button border border-gray-600 rounded-[15px] p-3 flex gap-5 md:gap-[113px] mb-4"

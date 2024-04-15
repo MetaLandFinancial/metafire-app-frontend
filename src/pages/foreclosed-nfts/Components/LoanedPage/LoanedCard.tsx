@@ -125,7 +125,7 @@ const LoanedCard = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: an
     <>
       <div className="hidden md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-6">
         {/* <div className="flex flex-row max-md:overflow-x-scroll md:grid md:grid-cols-2 lg:grid-cols-3 xl:grid-col-3 gap-6"> */}
-        {loanedNftData.map((item:any, index:any) => (
+        {loanedNftData?.map((item:any, index:any) => (
           <div
             key={index}
             className="Sale_Card_BG w-full md:justify-center md:max-w-full xl:max-w-[391px]"

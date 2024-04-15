@@ -96,7 +96,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
   return (
     <div className="custom_slider">
       <Slider {...settings}>
-        {saleNftData.map((item:any, index: any) => (
+        {saleNftData?.map((item:any, index: any) => (
           <div
             key={index}
             className="Sale_Card_BG w-full md:max-w-full xl:max-w-[391px] "
