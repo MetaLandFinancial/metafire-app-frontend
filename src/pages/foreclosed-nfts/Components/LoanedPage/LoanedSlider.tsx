@@ -132,7 +132,7 @@ const LoanedSlider = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: 
     <>
       <div className="custom_slider">
         <Slider {...settings}>
-          {loanedNftData.map((item: any, index: any) => (
+          {lonedData.map((item, index) => (
             <div
               key={index}
               className="Sale_Card_BG w-full md:max-w-full xl:max-w-[391px] "
@@ -153,7 +153,7 @@ const LoanedSlider = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: 
                       {item.title}&nbsp;
                     </h1>
                     <span className="text-[10px] md:text-base lg:text-xl xl:text-2xl font-bold text-white">
-                      #{item.nftTokenId}
+                      {item.number}
                     </span>
                   </div>
                   <div className="hidden Loned_Heart md:flex md:w-[37px] md:h-[37px] border-[1px] border-[#4777e623] rounded-full items-center justify-center cursor-pointer">
