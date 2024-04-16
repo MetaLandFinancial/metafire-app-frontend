@@ -9,7 +9,7 @@ import SampleNextArrow from "@/pages/foreclosed-nfts/Components/SalePage/Next";
 import SamplePrevArrow from "@/pages/foreclosed-nfts/Components/SalePage/Prev";
 import { Dialog, Transition } from "@headlessui/react";
 import close1 from "../../../../../public/img/close1.svg";
-import { useWriteContract, useAccount, useWalletClient } from "wagmi";
+// import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 import {ethers} from "ethers";
 import WETHGateway from "../../../../contracts/wethGateway.json";
 
@@ -104,7 +104,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
   const [isModalOpen, setIsModalOpen] = useState(false);
   
 
-  const { address, connector, isConnected } = useAccount();
+  
   const [repayAmountInput, setRepayAmountInput] = useState("");
 
   // Transaction state management

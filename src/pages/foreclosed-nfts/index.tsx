@@ -4,12 +4,12 @@ import FCHero from "@/pages/foreclosed-nfts/FCHero";
 import Sale from "@/pages/foreclosed-nfts/Sale";
 import Loaned from "@/pages/foreclosed-nfts/Loaned";
 
-import { useWriteContract, useAccount, useWalletClient } from "wagmi";
+
 
 const index = () => {
 
   
-  const { address, connector, isConnected } = useAccount();
+  
   const [saleNftData, setSaleNftData] = useState<any[]>([]);
   const [saleNftImageUrlList, setSaleNftImageUrlList] = useState<any[]>([]);
   const [loanedNftData, setLoanedNftData] = useState<any[]>([]);
