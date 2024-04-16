@@ -137,7 +137,7 @@ const LoanedCard = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: an
           >
             <div className="rounded-[15px] overflow-hidden w-full xl:max-w-[367px]">
               <img
-                src={loanedNftImageUrlList[index]}
+                src={loanedNftImageUrlList?.[index]}
                 alt={item.title}
                 className="rounded-[15px] w-full"
                 width={367}

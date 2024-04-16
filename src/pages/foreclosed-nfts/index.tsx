@@ -84,28 +84,34 @@ const index = () => {
       "token_id": loan.nftTokenId
     }));
 
-    const response = await fetch('/api/getMultipleNfts', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        tokens,
-        normalizeMetadata: false,
-        media_items: true
-      }),
-    });
+    try {
+      const response = await fetch('/api/getMultipleNfts', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          tokens,
+          normalizeMetadata: false,
+          media_items: true
+        }),
+      });
+    
+      if (!response.ok) {
+        // throw new Error('Failed to fetch NFTs');
+        console.log("Failed to fetch NFTs");
+      }
   
-    if (!response.ok) {
-      // throw new Error('Failed to fetch NFTs');
-      console.log("Failed to fetch NFTs");
+      const data = await response.json();
+      console.log(data);
+      console.log(data[0].media?.media_collection?.medium.url);
+      const urls = data.map((item: any) => item.media?.media_collection?.medium.url);
+      return urls;
+    } catch (error) {
+      console.log("Error fetching NFTs:", error);
+      return ;
     }
 
-    const data = await response.json();
-    console.log(data);
-    console.log(data[0].media?.media_collection?.medium.url);
-    const urls = data.map((item: any) => item.media?.media_collection?.medium.url);
-    return urls;
   }
 
   return (

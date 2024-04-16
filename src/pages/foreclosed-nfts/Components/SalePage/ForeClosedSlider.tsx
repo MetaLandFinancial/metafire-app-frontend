@@ -115,8 +115,10 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
   const [txError, setTxError] = useState('');
 
 
-  const openModal = (index: number) => {
+  const openModal = (index: number, nftAsset:string, nftTokenId:string) => {
     // setSelectedIndex(index);
+    setSelectedNftAsset(nftAsset);
+    setSelectedNftId(nftTokenId);
     setIsModalOpen(true);
   };
 
@@ -155,12 +157,12 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
       if (ethereum) {
         const provider = new ethers.BrowserProvider(ethereum);
         const signer = await provider.getSigner();
-              // const amountToBorrow = ethers.parseUnits(auctionAmountInput.toString(), 18);
+        const amountToBorrow = ethers.parseUnits(auctionAmountInput.toString(), 18);
         const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
         console.log("signer: ", signer.address)
         // console.log("amountToBorrow: ", amountToBorrow.toString());
         const auctionTx = await wethGatewaycontract
-        .auctionETH("0x306b1ea3ecdf94aB739F1910bbda052Ed4A9f949", 19431, "0x25793C48C6C8C6C591B0BB01594543d3C3dc8a84", {value: "200000000000000000"});
+        .auctionETH(selectedNftAsset, parseInt(selectedNftId), signer.address, {value: amountToBorrow});
       }
 
 
@@ -301,7 +303,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                 </div>
               </div>
               <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
-                <button onClick={() => openModal(index)} className="Sale_Btn_Bg">
+                <button onClick={() => openModal(index, item.nftAsset, item.nftTokenId)} className="Sale_Btn_Bg">
                   <span className="Text_gradient_bg_text">Auction</span>
                 </button>
                 <button className="Sale_Btn_Bg">
@@ -409,7 +411,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                       </Link>
                     </label> */}
                   </div>
-                  <button onClick={callAuctionETH} disabled={isApproving || isAuctioning} className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
+                  <button onClick={callAuctionETH} disabled={isAuctioning} className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
                     {isAuctioning ? 'Auctioning...' : 'Auction'}
                   </button>
                   {/* <p className="text-xs md:text-sm text-white/70 font-light mt-6 max-w-[344px] mx-auto">
