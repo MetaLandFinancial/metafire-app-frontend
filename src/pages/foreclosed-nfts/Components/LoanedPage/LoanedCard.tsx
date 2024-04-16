@@ -215,6 +215,7 @@ const LoanedCard = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: an
                       />
                     </span>
                     {item.floorPrice}
+                    {item.loanAmount}
                   </p>
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">

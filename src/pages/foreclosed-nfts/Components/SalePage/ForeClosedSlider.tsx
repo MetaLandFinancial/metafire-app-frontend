@@ -211,15 +211,23 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                         className="w-3 h-3 md:h-[18px] mr-1"
                       />
                     </span>
-                    {item.floorPrice}
+                    { (parseFloat(item.loanAmount)/10**18/0.8/item.healthFactor).toFixed(4) }
                   </p>
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                   <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                    HealthFactor Factor
+                    Health Factor
                   </p>
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                     {(item.healthFactor * 100).toFixed(2)}%
+                  </p>
+                </div>
+                <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
+                  <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
+                    Loan Amount
+                  </p>
+                  <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
+                    {(parseFloat(item.loanAmount)/10**18).toFixed(4)}
                   </p>
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">

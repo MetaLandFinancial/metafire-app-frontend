@@ -21,11 +21,18 @@ const index = () => {
     // const { ethereum } = window as any;
     // const provider = new ethers.BrowserProvider(ethereum);
     console.log("NFT Equity Page");
-    fetchForeclosedNFT();
+    try {
+      fetchForeclosedNFT();
+    } catch (error) {
+      console.error("Error fetching foreclosed NFTs:", error);
+    }
+
   }, []);
 
   // fetch nft fcuntion with moralis api
   const fetchForeclosedNFT = async () => {
+
+    try {
       const url =`/api/getLoanedNfts`;
       
       const response = await fetch(url, {
@@ -63,6 +70,10 @@ const index = () => {
             setLoanedNftImageUrlList(urls);
           });
       }
+    } catch (error) {
+      console.error("Error fetching foreclosed NFTs:", error);
+    }
+      
   };
 
   const fetchNftImageUrl = async (foreclosedNftData: any) => {
