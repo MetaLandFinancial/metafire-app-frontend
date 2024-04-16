@@ -9,6 +9,9 @@ import SampleNextArrow from "@/pages/foreclosed-nfts/Components/SalePage/Next";
 import SamplePrevArrow from "@/pages/foreclosed-nfts/Components/SalePage/Prev";
 import { Dialog, Transition } from "@headlessui/react";
 import close1 from "../../../../../public/img/close1.svg";
+import { useWriteContract, useAccount, useWalletClient } from "wagmi";
+import {ethers} from "ethers";
+import WETHGateway from "../../../../contracts/wethGateway.json";
 
 type CollectionSlugsType = {
   [key: string]: string;
@@ -100,9 +103,13 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
   const [withdrawAmountInput, setWithdrawAmountInput] = useState('0');
   const [isModalOpen, setIsModalOpen] = useState(false);
   
+
+  const { address, connector, isConnected } = useAccount();
+  const [repayAmountInput, setRepayAmountInput] = useState("");
+
   // Transaction state management
   const [isApproving, setIsApproving] = useState(false);
-  const [isWithdrawing, setIsWithdrawing] = useState(false);
+  const [isAuctioning, setIsAuctioning] = useState(false);
   const [txError, setTxError] = useState('');
 
 
@@ -235,7 +242,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                     Current Auction Price
                   </p>
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                    {item.currentauctionprice}
+                    {item.currentauctionprice || "N/A"}
                   </p>
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
@@ -243,7 +250,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                     Bidder
                   </p>
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                    {item.bidder}
+                    {item.bidder || "N/A"}
                   </p>
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
@@ -251,7 +258,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                     Auction End
                   </p>
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                    {item.auctionEnd}
+                    {item.auctionEnd || "N/A"}
                   </p>
                 </div>
               </div>
@@ -364,8 +371,8 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                       </Link>
                     </label> */}
                   </div>
-                  <button onClick={callWithdrawETH} disabled={isApproving || isWithdrawing} className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
-                    {isApproving ? 'Approving...' : isWithdrawing ? 'Withdrawing...' : 'Withdraw'}
+                  <button onClick={callWithdrawETH} disabled={isApproving || isAuctioning} className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
+                    {isApproving ? 'Approving...' : isAuctioning ? 'Withdrawing...' : 'Withdraw'}
                   </button>
                   {/* <p className="text-xs md:text-sm text-white/70 font-light mt-6 max-w-[344px] mx-auto">
                     * This is the amount you can withdraw without a fee. Once
