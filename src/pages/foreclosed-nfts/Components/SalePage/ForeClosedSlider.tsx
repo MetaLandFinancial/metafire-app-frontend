@@ -9,8 +9,9 @@ import SampleNextArrow from "@/pages/foreclosed-nfts/Components/SalePage/Next";
 import SamplePrevArrow from "@/pages/foreclosed-nfts/Components/SalePage/Prev";
 import { Dialog, Transition } from "@headlessui/react";
 import close1 from "../../../../../public/img/close1.svg";
+import "./withdrawmodal.css";
 // import { useWriteContract, useAccount, useWalletClient } from "wagmi";
-import {ethers} from "ethers";
+const { ethers } = require("ethers")
 import WETHGateway from "../../../../contracts/wethGateway.json";
 
 type CollectionSlugsType = {
@@ -100,12 +101,13 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
     },
   ];
 
-  const [withdrawAmountInput, setWithdrawAmountInput] = useState('0');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  
+  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
 
-  
-  const [repayAmountInput, setRepayAmountInput] = useState("");
+  const [auctionAmountInput, setAuctionAmountInput] = useState('0');
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedNftAsset, setSelectedNftAsset] = useState('');
+  const [selectedNftId, setSelectedNftId] = useState('');
+
 
   // Transaction state management
   const [isApproving, setIsApproving] = useState(false);
@@ -122,13 +124,49 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
     setIsModalOpen(false);
   };
 
-  const handleWithdrawAmountChange = (event: any) => {
-    console.log("Withdraw amount: ", event.target.value);
-    setWithdrawAmountInput(event.target.value);
+  const handleAuctionAmountChange = (event: any) => {
+    console.log("Auction amount: ", event.target.value);
+    setAuctionAmountInput(event.target.value);
   }
 
-  const callWithdrawETH = async (event: any) => {
+
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    const setup = async () => {
+      const { ethereum } = window as any;
+      if (ethereum) {
+        const provider = new ethers.BrowserProvider(ethereum);
+        const signer = await provider.getSigner();
+        setIsReady(true);
+      }
+    };
+
+    setup();
+  }, []);
+
+
+  const callAuctionETH = async () => {
     console.log("Withdraw amount: ");
+
+    try {
+      
+      const { ethereum } = window as any;
+      if (ethereum) {
+        const provider = new ethers.BrowserProvider(ethereum);
+        const signer = await provider.getSigner();
+              // const amountToBorrow = ethers.parseUnits(auctionAmountInput.toString(), 18);
+        const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
+        console.log("signer: ", signer.address)
+        // console.log("amountToBorrow: ", amountToBorrow.toString());
+        const auctionTx = await wethGatewaycontract
+        .auctionETH("0x306b1ea3ecdf94aB739F1910bbda052Ed4A9f949", 19431, "0x25793C48C6C8C6C591B0BB01594543d3C3dc8a84", {value: "200000000000000000"});
+      }
+
+
+    } catch (error) {
+      console.log("Error initializing ethereum:", error);
+    }
   }
 
   return (
@@ -312,11 +350,11 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                     />
                   </div>
                   <h1 className="text-white text-center font-bold text-[22px] md:text-xl lg:text-[27px]">
-                    WITHDRAW DEPOSIT
+                    Auction
                   </h1>
                   <div className="mt-[54px] text-start md:mr-auto">
                     <p className="text-white text-sm md:text-base lg:text-xl xl:text-2xl font-medium mb-3 md:mb-[14px]">
-                      Available to withdraw
+                      Auction Amount
                     </p>
                     <span className="text-white text-[20.5px] md:text-2xl lg:text-3xl xl:text-[40px] font-bold">
                     {/* {isUnlocked[selectedIndex] ? parseFloat(mTokenBalance[selectedIndex]).toFixed(4): '0'}ETH */}
@@ -342,11 +380,11 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                         type="text"
                         className="input_withdraw w-full max-w-[571px]"
                         placeholder="0.00"
-                        value={withdrawAmountInput}
-                        onChange={handleWithdrawAmountChange}
+                        value={auctionAmountInput}
+                        onChange={handleAuctionAmountChange}
                       />
                       <div className="absolute top-[50%] translate-y-[-50%] right-5">
-                        {/* <button onClick={() => setWithdrawAmountInput(parseFloat(mTokenBalance[selectedIndex]).toFixed(4))} className="max_btn_bg hover:opacity-[0.7]">
+                        {/* <button onClick={() => setAuctionAmountInput(parseFloat(mTokenBalance[selectedIndex]).toFixed(4))} className="max_btn_bg hover:opacity-[0.7]">
                           Max
                         </button> */}
                       </div>
@@ -371,8 +409,8 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                       </Link>
                     </label> */}
                   </div>
-                  <button onClick={callWithdrawETH} disabled={isApproving || isAuctioning} className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
-                    {isApproving ? 'Approving...' : isAuctioning ? 'Withdrawing...' : 'Withdraw'}
+                  <button onClick={callAuctionETH} disabled={isApproving || isAuctioning} className="w-full max-w-[571px] text-base text-white font-semibold rounded-[4px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] py-[14px] md:py-[18px] text-center mt-6 hover:bg-gradient-to-r hover:from-[#8E54E9] hover:to-[#4776E6] duration-1000 transition-all hover:duration-1000">
+                    {isAuctioning ? 'Auctioning...' : 'Auction'}
                   </button>
                   {/* <p className="text-xs md:text-sm text-white/70 font-light mt-6 max-w-[344px] mx-auto">
                     * This is the amount you can withdraw without a fee. Once
