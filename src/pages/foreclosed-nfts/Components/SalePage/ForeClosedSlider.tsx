@@ -112,6 +112,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
   // Transaction state management
   const [isApproving, setIsApproving] = useState(false);
   const [isAuctioning, setIsAuctioning] = useState(false);
+  const [isLiquidating, setIsLiquidating] = useState(false);
   const [txError, setTxError] = useState('');
 
 
@@ -159,8 +160,22 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
         const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
 
         const liquidatingBuyPrice = ethers.parseUnits((parseFloat(saleNftData[0].loanAmount)/10**18).toFixed(4), 18);
-        const auctionTx = await wethGatewaycontract
+        const liquidateBuyTx = await wethGatewaycontract
         .liquidatingBuyETH(nftAsset, parseInt(nftTokenId), signer.address, {value: "200000000000000000"});
+
+        if (liquidateBuyTx && liquidateBuyTx.hash) {
+          setIsLiquidating(true);
+        }
+        const liquidatingBuyReceipt = await liquidateBuyTx.wait();
+        if (liquidatingBuyReceipt.status === 0) {
+          console.log("Liquidateing failed");
+          alert("Liquidateing failed");
+          return;
+        }else{
+          setIsModalOpen(false);
+          alert("Liquidate successful");
+        }
+        setIsLiquidating(false);
       }
 
     } catch (error) {
