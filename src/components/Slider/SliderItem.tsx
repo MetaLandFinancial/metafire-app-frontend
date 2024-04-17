@@ -1,10 +1,11 @@
 "use client";
-import React from "react";
+import React, {useEffect} from "react";
 import { useRouter } from "next/router";
 import Slider from "react-slick";
 import Image from "next/image";
 import eth from "../../../public/img/eth.svg";
 import { SliderData } from "@/components/constant/SliderData";
+import whitelistedNFTList from "@/components/constant/whitelistedNFTList.json";
 import { SamplePrevArrow } from "./Prev";
 import { SampleNextArrow } from "./Next";
 
@@ -59,14 +60,17 @@ const SliderItem = () => {
     router.push(`/nft-financing/collectionDetail/${id}`);
   };
 
+  useEffect(() => {
+    console.log("whitelistedNFTList", whitelistedNFTList);
+  }, []);
 
   return (
     <Slider {...settings}>
-      {SliderData.map((item) => (
+      {whitelistedNFTList.data.map((item, index) => (
         <>
           <div 
-            key={item.id} 
-            onClick={() => handleItemClick(item.id)} 
+            key={index} 
+            onClick={() => handleItemClick(item.contract)} 
             style={{
               cursor: 'pointer', // Change cursor to pointer on hover
               
@@ -75,8 +79,8 @@ const SliderItem = () => {
           >
             <div className="flex items-center">
               <div className="h-[68px] min-w-16 md:min-h-20 md:min-w-20 lg:h-[85px] lg:min-w-[85px] xl:h-[106px] xl:min-w-[97px] mr-[18px]">
-                <Image
-                  src={item.imageSrc}
+                <img
+                  src={item.logoUrl}
                   alt="images"
                   className="w-full h-full"
                   loading="lazy"
@@ -84,11 +88,14 @@ const SliderItem = () => {
               </div>
               <div className="w-full flex flex-col justify-center">
                 <div className="text-white text-sm md:text-base lg:text-lg xl:text-xl font-bold">
-                  <h1>{item.title}</h1>
+                  <h1>{item.name}</h1>
                 </div>
                 <div className="h-[1px] w-full my-2 xl:my-[13px] bg-gradient-to-r from-[#e8d9ff63] to-[#ffffff00]"></div>
                 <div className="flex justify-between">
-                  <div className="w-1/2 flex flex-col gap-1">
+                  <h4 className="text-white text-xs md:text-sm  font-medium">
+                      Buy Now Pay Later
+                  </h4>
+                  {/* <div className="w-1/2 flex flex-col gap-1">
                     <h5 className="text-white text-xs md:text-sm  font-medium">
                       Floor Price
                     </h5>
@@ -109,7 +116,7 @@ const SliderItem = () => {
                       </span>
                       <p className="ETH_text flex">{item.volume}</p>
                     </div>
-                  </div>
+                  </div> */}
                 </div>
               </div>
             </div>

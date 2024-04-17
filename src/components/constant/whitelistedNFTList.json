@@ -1,0 +1,157 @@
+{
+	"data":[
+{
+"name": "Otherdeed for Otherside",
+"slug": "otherdeed",
+"contract": "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258",
+"floor_price_eth": 1.24,
+"downpayment_price_eth": 0.43,
+"logoUrl": "https://i.seadn.io/gae/yIm-M5-BpSDdTEIJRt5D6xphizhIdozXjqSITgK4phWq7MmAU3qE7Nw7POGCiPGyhtJ3ZFP8iJ29TFl-RLcGBWX5qI4-ZcnCPcsY4zI?w=500&auto=format",
+"number_of_sales": 52344,
+"volume_eth": 361190.02,
+"is_test": false
+},
+{
+"name": "Pudgy Penguins",
+"slug": "pudgypenguins",
+"contract": "0xbd3531da5cf5857e7cfaa92426877b022e612cf8",
+"floor_price_eth": 4.25,
+"downpayment_price_eth": 1.91,
+"logoUrl": "https://i.seadn.io/gae/yNi-XdGxsgQCPpqSio4o31ygAV6wURdIdInWRcFIl46UjUQ1eV7BEndGe8L661OoG-clRi7EgInLX4LPu9Jfw4fq0bnVYHqg7RFi?w=500&auto=format",
+"number_of_sales": 39222,
+"volume_eth": 65410.13,
+"is_test": false
+},
+{
+"name": "VeeFriends",
+"slug": "veefriends",
+"contract": "0xa3aee8bce55beea1951ef834b99f3ac60d1abeeb",
+"floor_price_eth": 5.19,
+"downpayment_price_eth": 2.34,
+"logoUrl": "https://i.seadn.io/gae/5y-UCAXiNOFXH551w5bWdZEYOCdHPwbqmcKb-xa3uVQEjQgxvih3HtZWSmzqDqd0uk7kIqFrZhw32Gt6xPBFg4t_n9BKhpou-dwnOg?w=500&auto=format",
+"number_of_sales": 5145,
+"volume_eth": 58964.94,
+"is_test": false
+},
+{
+"name": "World of Women Galaxy",
+"slug": "world-of-women-galaxy",
+"contract": "0xe785e82358879f061bc3dcac6f0444462d4b5330",
+"floor_price_eth": 0.22,
+"downpayment_price_eth": 0.11,
+"logoUrl": "https://i.seadn.io/gae/hP4JJhiY5yXu1mCvNycTke2O_xbtgIFfkLTjfT7C9TNKinkGpP2COikt7cwn0xqzoATRNC21wsiwy_Fe-MQ3PPTgRjkbbCfJf__L?w=500&auto=format",
+"number_of_sales": 21179,
+"volume_eth": 30153.06,
+"is_test": false
+},
+{
+"name": "Moonbirds",
+"slug": "proof-moonbirds",
+"contract": "0x23581767a106ae21c074b2276d25e5c3e136a68b",
+"floor_price_eth": 8.61,
+"downpayment_price_eth": 3.01,
+"logoUrl": "https://i.seadn.io/gae/H-eyNE1MwL5ohL-tCfn_Xa1Sl9M9B4612tLYeUlQubzt4ewhr4huJIR5OLuyO3Z5PpJFSwdm7rq-TikAh7f5eUw338A2cy6HRH75?w=500&auto=format",
+"number_of_sales": 9974,
+"volume_eth": 175557.37,
+"is_test": false
+},
+{
+"name": "Mutant Ape Yacht Club",
+"slug": "mutant-ape-yacht-club",
+"contract": "0x60e4d786628fea6478f785a6d7e704777c86a7c6",
+"floor_price_eth": 14.3,
+"downpayment_price_eth": 5.01,
+"logoUrl": "https://i.seadn.io/gae/lHexKRMpw-aoSyB1WdFBff5yfANLReFxHzt1DOj_sg7mS14yARpuvYcUtsyyx-Nkpk6WTcUPFoG53VnLJezYi8hAs0OxNZwlw6Y-dmI?w=500&auto=format",
+"number_of_sales": 36011,
+"volume_eth": 470384.46,
+"is_test": false
+},
+{
+"name": "Doodles",
+"slug": "doodles-official",
+"contract": "0x8a90cab2b38dba80c64b7734e58ee1db38b8992e",
+"floor_price_eth": 7.3,
+"downpayment_price_eth": 2.55,
+"logoUrl": "https://i.seadn.io/gae/7B0qai02OdHA8P_EOVK672qUliyjQdQDGNrACxs7WnTgZAkJa_wWURnIFKeOh5VTf8cfTqW3wQpozGedaC9mteKphEOtztls02RlWQ?w=500&auto=format",
+"number_of_sales": 24402,
+"volume_eth": 152738.27,
+"is_test": false
+},
+{
+"name": "CryptoPunks",
+"slug": "cryptopunks",
+"contract": "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb",
+"floor_price_eth": 4.92,
+"downpayment_price_eth": 2.71,
+"logoUrl": "https://i.seadn.io/gae/iIo0vm6cqiOaUwFI58-Rz61Watioc0GZ_SdhdcFJqgdYlQJNjjdzJ7-vodNEDJMG0ZJ-dE6yELuQfAJ6FzjpqtovU0bd3pLp1F1grg?w=500&auto=format",
+"number_of_sales": 1822,
+"volume_eth": 21794.3,
+"is_test": false
+},
+{
+"name": "CrypToadz by GREMPLIN",
+"slug": "cryptoadz-by-gremplin",
+"contract": "0x1cb1a5e65610aeff2551a50f76a87a7d3fb649c6",
+"floor_price_eth": 1.33,
+"downpayment_price_eth": 0.53,
+"logoUrl": "https://i.seadn.io/gae/iofetZEyiEIGcNyJKpbOafb_efJyeo7QOYnTog8qcQJhqoBU-Vu9l3lXidZhXOAdu6dj4fzWW6BZDU5vLseC-K03rMMu-_j2LvwcbHo?w=500&auto=format",
+"number_of_sales": 22314,
+"volume_eth": 72001.96,
+"is_test": false
+},
+{
+"name": "Cool Cats NFT",
+"slug": "cool-cats-nft",
+"contract": "0x1a92f7381b9f03921564a437210bb9396471050c",
+"floor_price_eth": 2.1,
+"downpayment_price_eth": 0.84,
+"logoUrl": "https://i.seadn.io/gae/LIov33kogXOK4XZd2ESj29sqm_Hww5JSdO7AFn5wjt8xgnJJ0UpNV9yITqxra3s_LMEW1AnnrgOVB_hDpjJRA1uF4skI5Sdi_9rULi8?w=500&auto=format",
+"number_of_sales": 31083,
+"volume_eth": 115118.35,
+"is_test": false
+},
+{
+"name": "CloneX",
+"slug": "clonex",
+"contract": "0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b",
+"floor_price_eth": 12.3,
+"downpayment_price_eth": 6.15,
+"logoUrl": "https://i.seadn.io/gae/xOw5gYzZzkm83sL8ObO_wv-adMrsw5w9TkPjrJLT3c2dbGIS8DR_Qm_hsth7esBM2l3q_FOmlqzO0dR4BFquFEX5wSx-Suc82669?w=500&auto=format",
+"number_of_sales": 6127,
+"volume_eth": 37490.25,
+"is_test": false
+},
+{
+"name": "BEANZ Official",
+"slug": "beanzofficial",
+"contract": "0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949",
+"floor_price_eth": 0.92,
+"downpayment_price_eth": 0.41,
+"logoUrl": "https://i.seadn.io/gae/_R4fuC4QGYd14-KwX2bD1wf-AWjDF2VMabfqWFJhIgiN2FnAUpnD5PLdJORrhQ8gly7KcjhQZZpuzYVPF7CDSzsqmDh97z84j2On?w=500&auto=format",
+"number_of_sales": 22793,
+"volume_eth": 70029.39,
+"is_test": false
+},
+{
+"name": "Bored Ape Yacht Club",
+"slug": "boredapeyachtclub",
+"contract": "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d",
+"floor_price_eth": 67.46,
+"downpayment_price_eth": 23.61,
+"logoUrl": "https://i.seadn.io/gae/Ju9CkWtV-1Okvf45wo8UctR-M9He2PjILP0oOvxE89AyiPPGtrR3gysu1Zgy0hjd2xKIgjJJtWIc0ybj4Vd7wv8t3pxDGHoJBzDB?w=500&auto=format",
+"number_of_sales": 27492,
+"volume_eth": 695512.38,
+"is_test": false
+},
+{
+        "name": "Azuki",
+        "slug": "azuki",
+        "contract": "0xed5af388653567af2f388e6224dc7c4b3241c544",
+        "floor_price_eth": 13,
+        "downpayment_price_eth": 4.55,
+        "logoUrl": "https://i.seadn.io/gae/H8jOCJuQokNqGBpkBN5wk1oZwO7LM8bNnrHCaekV2nKjnCqw6UB5oaH8XyNeBDj6bA_n1mjejzhFQUP3O1NfjFLHr3FOaeHcTOOT?w=500&auto=format",
+        "number_of_sales": 28089,
+        "volume_eth": 270224.37,
+        "is_test": false
+    }
+	]}
