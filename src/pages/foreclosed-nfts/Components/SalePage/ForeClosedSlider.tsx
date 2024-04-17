@@ -172,7 +172,6 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
           alert("Liquidateing failed");
           return;
         }else{
-          setIsModalOpen(false);
           alert("Liquidate successful");
         }
         setIsLiquidating(false);
@@ -198,6 +197,20 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
         // console.log("amountToBorrow: ", amountToBorrow.toString());
         const auctionTx = await wethGatewaycontract
         .auctionETH(selectedNftAsset, parseInt(selectedNftId), signer.address, {value: amountToBorrow});
+
+        if (auctionTx && auctionTx.hash) {
+          setIsAuctioning(true);
+        }
+        const auctionReceipt = await auctionTx.wait();
+        if (auctionReceipt.status === 0) {
+          console.log("Auction failed");
+          alert("Auction failed");
+          return;
+        }else{
+          setIsModalOpen(false);
+          alert("Auction successful");
+        }
+        setIsAuctioning(false);
       }
 
 
