@@ -148,6 +148,26 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
   }, []);
 
 
+  const callLiquidatingBuy = async (nftAsset:string, nftTokenId: string, loanAmount: string) => {
+    console.log("Buy amount: ");
+    try {
+      
+      const { ethereum } = window as any;
+      if (ethereum) {
+        const provider = new ethers.BrowserProvider(ethereum);
+        const signer = await provider.getSigner();
+        const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
+
+        const liquidatingBuyPrice = ethers.parseUnits((parseFloat(saleNftData[0].loanAmount)/10**18).toFixed(4), 18);
+        const auctionTx = await wethGatewaycontract
+        .liquidatingBuyETH(nftAsset, parseInt(nftTokenId), signer.address, {value: "200000000000000000"});
+      }
+
+    } catch (error) {
+      console.log("Error initializing ethereum:", error);
+    }
+  }
+
   const callAuctionETH = async () => {
     console.log("Withdraw amount: ");
 
@@ -258,7 +278,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                         className="w-3 h-3 md:h-[18px] mr-1"
                       />
                     </span>
-                    { (parseFloat(item.loanAmount)/10**18/0.8/item.healthFactor).toFixed(4) }
+                    { (parseFloat(item.loanAmount)/10**18/0.7/item.healthFactor).toFixed(4) }
                   </p>
                 </div>
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
@@ -303,11 +323,11 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                 </div>
               </div>
               <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
-                <button onClick={() => openModal(index, item.nftAsset, item.nftTokenId)} className="Sale_Btn_Bg">
+                <button onClick={() => openModal(index, item?.nftAsset, item?.nftTokenId)} className="Sale_Btn_Bg">
                   <span className="Text_gradient_bg_text">Auction</span>
                 </button>
-                <button className="Sale_Btn_Bg">
-                  <span className="Text_gradient_bg_text">Buy Now</span>
+                <button onClick={() => callLiquidatingBuy(item?.nftAsset, item?.nftTokenId, item.loanAmount)} className="Sale_Btn_Bg">
+                  <span  className="Text_gradient_bg_text">Buy (10% Off) </span>
                 </button>
               </div>
             </div>
