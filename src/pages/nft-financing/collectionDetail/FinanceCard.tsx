@@ -52,7 +52,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
         {Array.isArray(nftData) && nftData.map((item, index) => (
           <div className="Finance_Card_BG" key={index}>
             <div className="w-full flex flex-col p-[10px] md:p-5">
-              <div  style={{ width: '247px', height: '234px', overflow: 'hidden' }} className="h-full w-full xl:max-w-[247px] rounded Finance_img_shadow overflow-hidden">
+              <div  style={{ width: '100%', height: '214px', overflow: 'hidden' }} className="h-full w-full xl:max-w-[247px] rounded Finance_img_shadow overflow-hidden">
                 <Image
                   src={(item.metadata && JSON.parse(item.metadata)?.image) || ""}
                   alt="robo"
@@ -63,25 +63,25 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
               </div>
               <div className="flex flex-row justify-between items-center mt-[13px]">
                 <h3 className="text-xs md:text-sm font-bold text-white">
-                  {item.name} title
+                  {item.name}
                   <span className="ml-[10px]">#{item.token_id}</span>
                 </h3>
                 <Link href="/">
                   <div className="w-fit relative md:mr-2">
-                    <Image
+                    {/* <Image
                       src={ring}
                       alt="icons"
                       height={24}
                       width={24}
                       className="w-[22px] md:w-[32px] flex items-center"
-                    />
-                    <Image
+                    /> */}
+                    {/* <Image
                       src={heart}
                       alt="heart"
                       width={12}
                       height={12}
                       className="w-[10px] md:w-[15px] absolute top-0 bottom-0 left-0 right-0 m-auto"
-                    />
+                    /> */}
                   </div>
                 </Link>
               </div>
@@ -122,7 +122,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                 </div> */}
               </div>
               <button className="FinanceCard_Btn" onClick={() => openModal(item)}>
-                  Get Loan
+                  Buy Now Pay Later
               </button>
             </div>
           </div>
