@@ -15,7 +15,9 @@ type CollectionSlugsType = {
   const collectionSlugs: CollectionSlugsType = {
     "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d" : "boredapeyachtclub",
     "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258" : "otherdeed",
-    "0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949" : "beanzofficial"
+    "0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949" : "beanzofficial",
+    "0x60e4d786628fea6478f785a6d7e704777c86a7c6" : "mutant-ape-yacht-club",
+    "0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b" : "clonex"
   };
   
   function getCollectionSlug(address: string): string {
@@ -40,7 +42,7 @@ export default function  Collection () {
         console.log("slug is: ", slug);
         console.log("NFT Equity Page");
         fetchNFT(slug);
-    }, []);
+    }, [collection]);
 
     // fetch nft fcuntion with moralis api
     const fetchNFT = async (collectionSlug: string) => {
@@ -64,7 +66,7 @@ export default function  Collection () {
 
     return(
         <div>
-            <h1>{collection}</h1>
+            {/* <h1>{collection}</h1> */}
             <HeroF />
             <Pagenv />
             <FinanceMain collectionAddress={collection} nftData={nftData}/>

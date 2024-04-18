@@ -189,7 +189,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                   <div className="container">
                     <div className="Detailed_Bg relative w-full max-w-[651px]">
                       <h1 className="text-white text-[22px] md:text-2xl xl:text-[27px] font-bold text-center">
-                        Get the Loan
+                        Buy Now Pay Later
                       </h1>
                       {/* <p className="mt-[10px] text-white text-sm md:text-lg font-medium text-center">
                         Finance the NFT of Your Dreams
@@ -380,78 +380,8 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                               />
                             </div>
                           </div>
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              input
-                            </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              imput
-                            </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              input
-                            </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
-                          </div>
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              input
-                            </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
-                          </div>
+
+           
                           <div>
                             <label
                               htmlFor="amount"
