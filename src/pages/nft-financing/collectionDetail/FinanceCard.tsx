@@ -44,6 +44,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
   const [loanNftName, setLoanNftName] = useState("");
   const [loanNftId, setLoanNftId] = useState("");
   const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
+  const [selectedNft, setSelectedNft] = useState<any>(null);
 
   useEffect(() => {
     getFloorPrice('boredapeyachtclub');
@@ -66,6 +67,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
 
   const openModal = (item: any) => {
     setIsModalOpen(true);
+    setSelectedNft(item);
     setLoanImageUrl(item.metadata && JSON.parse(item.metadata)?.image);
     setLoanNftName(item.name);
     setLoanNftId(item.token_id);
@@ -265,7 +267,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                               {loanNftName}
                             </h2>
                             <p className="text-[10px] lg:text-xl text-white font-bold">
-                              #{loanNftId}
+                              #{selectedNft?.protocol_data.parameters.offer[0].identifierOrCriteria}
                             </p>
                           </div>
                           <div className="hidden md:flex justify-between mb-[19px]">
@@ -302,7 +304,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Floor Price
+                                  Price
                                 </p>
                                 <p className="Text_gradient font-bold flex items-center justify-center text-[10px] md:text-sm xl:text-base">
                                   <span>
@@ -312,24 +314,24 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                                       className="w-3 h-3 md:h-[18px] mr-1"
                                     />
                                   </span>
-                                  {selectedNftFloorPrice} ETH
+                                   {(parseFloat(selectedNft?.price.current.value)/10**18).toFixed(3)} ETH
                                 </p>
                               </div>
                             </div>
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Liquidation Factor
+                                  Minimum Pay
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                                  100%
+                                {(parseFloat(selectedNft?.price.current.value)/10**18*0.5).toFixed(3)} ETH
                                 </p>
                               </div>
                             </div>
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Current Auction Price
+                                  Price
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                                   N/A
@@ -389,16 +391,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                             >
                               input
                             </label>
-                            <div className="Amount_Bg relative flex items-center">
-                              <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
-                              </p>
-                              <input
-                                type="text"
-                                className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
-                              />
-                            </div>
+
                           </div>
                         </div>
                       </div>
@@ -412,7 +405,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                               value=""
                               className="w-5 h-5 Checkbox mr-3"
                             />
-                            <label
+                            {/* <label
                               htmlFor="default-checkbox"
                               className="block text-left md:text-center text-xs md:text-base font-medium text-white"
                             >
@@ -423,10 +416,10 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                                   terms and conditions
                                 </span>
                               </Link>
-                            </label>
+                            </label> */}
                           </div>
                         </div>
-                        <button className="Nft_Bg capitalize">BUY NFT</button>
+                        <button className="Nft_Bg capitalize">Buy Now Pay Later</button>
                       </div>
                     </div>
                   </div>
