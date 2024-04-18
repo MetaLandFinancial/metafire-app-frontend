@@ -16,7 +16,7 @@ type CollectionSlugsType = {
 const collectionSlugs: CollectionSlugsType = {
     "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d" : "boredapeyachtclub",
     "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258" : "otherdeed",
-    "0x306b1ea3ecdf94aB739F1910bbda052Ed4A9f949" : "beanzofficial",
+    "0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949" : "beanzofficial",
     "0xb4ad36f95e84d7b8c1dca17526b37958798ae1ad": "Motherdeed",
   };
 

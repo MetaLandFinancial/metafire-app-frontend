@@ -10,6 +10,32 @@ import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import whitelistedNFTList from "@/components/constant/whitelistedNFTList.json";
 
+type CollectionSlugsType = {
+  [key: string]: string;
+};
+
+// Use the defined type for your object
+const collectionImageUrls: CollectionSlugsType = {
+
+  "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258" : "https://i.seadn.io/gae/yIm-M5-BpSDdTEIJRt5D6xphizhIdozXjqSITgK4phWq7MmAU3qE7Nw7POGCiPGyhtJ3ZFP8iJ29TFl-RLcGBWX5qI4-ZcnCPcsY4zI?w=500&auto=format",
+  "0xbd3531da5cf5857e7cfaa92426877b022e612cf8": "https://i.seadn.io/gae/yNi-XdGxsgQCPpqSio4o31ygAV6wURdIdInWRcFIl46UjUQ1eV7BEndGe8L661OoG-clRi7EgInLX4LPu9Jfw4fq0bnVYHqg7RFi?w=500&auto=format",
+  "0xa3aee8bce55beea1951ef834b99f3ac60d1abeeb": "https://i.seadn.io/gae/5y-UCAXiNOFXH551w5bWdZEYOCdHPwbqmcKb-xa3uVQEjQgxvih3HtZWSmzqDqd0uk7kIqFrZhw32Gt6xPBFg4t_n9BKhpou-dwnOg?w=500&auto=format",
+  "0xe785e82358879f061bc3dcac6f0444462d4b5330": "https://i.seadn.io/gae/hP4JJhiY5yXu1mCvNycTke2O_xbtgIFfkLTjfT7C9TNKinkGpP2COikt7cwn0xqzoATRNC21wsiwy_Fe-MQ3PPTgRjkbbCfJf__L?w=500&auto=format",
+  "0x23581767a106ae21c074b2276d25e5c3e136a68b": "https://i.seadn.io/gae/H-eyNE1MwL5ohL-tCfn_Xa1Sl9M9B4612tLYeUlQubzt4ewhr4huJIR5OLuyO3Z5PpJFSwdm7rq-TikAh7f5eUw338A2cy6HRH75?w=500&auto=format",
+  "0x60e4d786628fea6478f785a6d7e704777c86a7c6": "https://i.seadn.io/gae/lHexKRMpw-aoSyB1WdFBff5yfANLReFxHzt1DOj_sg7mS14yARpuvYcUtsyyx-Nkpk6WTcUPFoG53VnLJezYi8hAs0OxNZwlw6Y-dmI?w=500&auto=format",
+  "0x8a90cab2b38dba80c64b7734e58ee1db38b8992e": "https://i.seadn.io/gae/7B0qai02OdHA8P_EOVK672qUliyjQdQDGNrACxs7WnTgZAkJa_wWURnIFKeOh5VTf8cfTqW3wQpozGedaC9mteKphEOtztls02RlWQ?w=500&auto=format",
+  "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb": "https://i.seadn.io/gae/iIo0vm6cqiOaUwFI58-Rz61Watioc0GZ_SdhdcFJqgdYlQJNjjdzJ7-vodNEDJMG0ZJ-dE6yELuQfAJ6FzjpqtovU0bd3pLp1F1grg?w=500&auto=format",
+  "0x1cb1a5e65610aeff2551a50f76a87a7d3fb649c6": "https://i.seadn.io/gae/iofetZEyiEIGcNyJKpbOafb_efJyeo7QOYnTog8qcQJhqoBU-Vu9l3lXidZhXOAdu6dj4fzWW6BZDU5vLseC-K03rMMu-_j2LvwcbHo?w=500&auto=format",
+  "0x1a92f7381b9f03921564a437210bb9396471050c": "https://i.seadn.io/gae/LIov33kogXOK4XZd2ESj29sqm_Hww5JSdO7AFn5wjt8xgnJJ0UpNV9yITqxra3s_LMEW1AnnrgOVB_hDpjJRA1uF4skI5Sdi_9rULi8?w=500&auto=format",
+  "0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b": "https://i.seadn.io/gae/xOw5gYzZzkm83sL8ObO_wv-adMrsw5w9TkPjrJLT3c2dbGIS8DR_Qm_hsth7esBM2l3q_FOmlqzO0dR4BFquFEX5wSx-Suc82669?w=500&auto=format",
+  "0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949": "https://i.seadn.io/gae/_R4fuC4QGYd14-KwX2bD1wf-AWjDF2VMabfqWFJhIgiN2FnAUpnD5PLdJORrhQ8gly7KcjhQZZpuzYVPF7CDSzsqmDh97z84j2On?w=500&auto=format",
+  "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d": "https://i.seadn.io/gae/Ju9CkWtV-1Okvf45wo8UctR-M9He2PjILP0oOvxE89AyiPPGtrR3gysu1Zgy0hjd2xKIgjJJtWIc0ybj4Vd7wv8t3pxDGHoJBzDB?w=500&auto=format",
+  "0xed5af388653567af2f388e6224dc7c4b3241c544": "https://i.seadn.io/gae/H8jOCJuQokNqGBpkBN5wk1oZwO7LM8bNnrHCaekV2nKjnCqw6UB5oaH8XyNeBDj6bA_n1mjejzhFQUP3O1NfjFLHr3FOaeHcTOOT?w=500&auto=format"
+};
+
+function getCollectionImageUrl(address: string): string {
+  return collectionImageUrls[address.toLowerCase()];
+}
 
 
 const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string, nftData: any }) => {
@@ -60,7 +86,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
               <div  style={{ width: '100%', height: '214px', overflow: 'hidden' }} className="h-full w-full xl:max-w-[247px] rounded Finance_img_shadow overflow-hidden">
                 <img
                   // src={(item.metadata && JSON.parse(item.metadata)?.image) || ""}
-                  src={whitelistedNFTList.data[index].logoUrl || ""}
+                  src={getCollectionImageUrl(collectionAddress) || ""}
                   alt="robo"
                   height={234}
                   width={247}
@@ -95,7 +121,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.31)]">
                   <div className="flex flex-row justify-between items-center">
                     <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                      Floor Price
+                      Listing Price
                     </p>
                     <p className="Text_gradient font-bold flex items-center justify-center text-[10px] md:text-sm xl:text-base">
                       <span>
