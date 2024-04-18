@@ -5,7 +5,7 @@ import FinInput from "./FinInput";
 
 
 
-const FinanceMain = ({ nftData }: { nftData: any }) => {
+const FinanceMain = ({ collectionAddress, nftData }: { collectionAddress:string, nftData: any }) => {
   return (
     <div className="relative mt-[79px] mb-[69px]">
       <div className="container mx-auto">
@@ -14,7 +14,7 @@ const FinanceMain = ({ nftData }: { nftData: any }) => {
           {/* <div style={{color:"white"}} >sadas2 {nftData?.[0]?.name} </div> */}
           <div className="w-full">
             <FinInput />
-            <FinanceCard nftData={nftData} />
+            <FinanceCard collectionAddress={collectionAddress}  nftData={nftData} />
           </div>
         </div>
       </div>

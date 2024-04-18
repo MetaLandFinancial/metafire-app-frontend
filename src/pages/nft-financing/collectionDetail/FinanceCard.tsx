@@ -8,9 +8,11 @@ import ring from "../../../../public/img/ring.svg";
 import close1 from "../../../../public/img/close1.svg";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
+import whitelistedNFTList from "@/components/constant/whitelistedNFTList.json";
 
 
-const FinanceCard = ({ nftData }: { nftData: any }) => {
+
+const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string, nftData: any }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
   const [loanNftName, setLoanNftName] = useState("");
@@ -46,15 +48,19 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+
+
   return (
     <>
-      <div className="grid gap-[19px] md:gap-6 grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
+      <div className="grid gap-[19px] md:gap-6 grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
         {Array.isArray(nftData) && nftData.map((item, index) => (
           <div className="Finance_Card_BG" key={index}>
             <div className="w-full flex flex-col p-[10px] md:p-5">
               <div  style={{ width: '100%', height: '214px', overflow: 'hidden' }} className="h-full w-full xl:max-w-[247px] rounded Finance_img_shadow overflow-hidden">
-                <Image
-                  src={(item.metadata && JSON.parse(item.metadata)?.image) || ""}
+                <img
+                  // src={(item.metadata && JSON.parse(item.metadata)?.image) || ""}
+                  src={whitelistedNFTList.data[index].logoUrl || ""}
                   alt="robo"
                   height={234}
                   width={247}
@@ -63,8 +69,8 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
               </div>
               <div className="flex flex-row justify-between items-center mt-[13px]">
                 <h3 className="text-xs md:text-sm font-bold text-white">
-                  {item.name}
-                  <span className="ml-[10px]">#{item.token_id}</span>
+                  
+                  <span className="ml-[10px]">#{item.protocol_data.parameters.offer[0].identifierOrCriteria}</span>
                 </h3>
                 <Link href="/">
                   <div className="w-fit relative md:mr-2">
@@ -86,7 +92,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                 </Link>
               </div>
               <div className="flex flex-col border-[0.318px] border-[rgba(71,119,230,0.31)] rounded-[10px] overflow-hidden mt-4">
-                {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.31)]">
+                <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.31)]">
                   <div className="flex flex-row justify-between items-center">
                     <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                       Floor Price
@@ -99,7 +105,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                           className="w-[9px] md:w-3 h-4 md:h-[18px] mr-1"
                         />
                       </span>
-                      {item.price}
+                      {(parseFloat(item.price.current.value)/10**18).toFixed(3)}
                     </p>
                   </div>
                 </div>
@@ -119,7 +125,7 @@ const FinanceCard = ({ nftData }: { nftData: any }) => {
                       {item.listingprice}
                     </p>
                   </div>
-                </div> */}
+                </div>
               </div>
               <button className="FinanceCard_Btn" onClick={() => openModal(item)}>
                   Buy Now Pay Later
