@@ -9,6 +9,11 @@ import close1 from "../../../../public/img/close1.svg";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import whitelistedNFTList from "@/components/constant/whitelistedNFTList.json";
+// import {ethers} from "ethers";
+const { ethers } = require("ethers");
+import WETHGateway from "../../../contracts/wethGateway.json";
+import BNPL from "../../../contracts/BNPL.json";
+import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 
 type CollectionSlugsType = {
   [key: string]: string;
@@ -39,6 +44,9 @@ function getCollectionImageUrl(address: string): string {
 
 
 const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string, nftData: any }) => {
+
+  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
   const [loanNftName, setLoanNftName] = useState("");
@@ -77,6 +85,39 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
     setIsModalOpen(false);
   };
 
+
+
+
+
+  const callBNPL = async () => {
+    console.log('Buy Now Pay Later');
+    try {
+      
+      const { ethereum } = window as any;
+      if (ethereum) {
+        const provider = new ethers.BrowserProvider(ethereum);
+        // const signer = await provider.getSigner();
+        
+        // const bnpl = new ethers.Contract("0x82c2D6217B8F1a5627a43934ce0b82d567C83849", BNPL.abi, signer);
+
+        const userAddress = "0x031a82A61b2c59Ab9f8ffE4C2B6efDD4D37F1Dc4";
+        const nftAsset = "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258"
+        const nftTokenId = "95385";
+        const bnplResponse = await fetch(`/api/getFulfillParameters?nftAsset=${nftAsset}&nftTokenId=${nftTokenId}&userAddress=${userAddress}`);
+
+        const data = await bnplResponse.json(); // Parse JSON d
+        console.log('bnplResponse', data);
+        const currentPrice = data.currentPrice;
+        const parameters = data.parameters;
+        console.log('currentPrice', currentPrice);
+        console.log('parameters', parameters);
+      }
+
+    } catch (error) {
+      console.log("Error initializing ethereum:", error);
+    }
+    
+  }
 
 
   return (
@@ -211,9 +252,10 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                       <div className="flex gap-4 mt-[54px]">
                         <div className="w-full">
                           <div style={{ width: '247px', height: '234px', overflow: 'hidden' }} className="w-full max-w-[261px] rounded-[3px]">
-                            <Image
-                              src={loanImageUrl}
-                              alt="bgImg"
+                            <img
+                              src={getCollectionImageUrl(collectionAddress) || ""}
+                              alt="robo"
+               
                               className="w-full h-full object-cover rounded-[3px]"
                               width={105}
                               height={105}
@@ -419,7 +461,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                             </label> */}
                           </div>
                         </div>
-                        <button className="Nft_Bg capitalize">Buy Now Pay Later</button>
+                        <button onClick={callBNPL} className="Nft_Bg capitalize">Buy Now Pay Later</button>
                       </div>
                     </div>
                   </div>
