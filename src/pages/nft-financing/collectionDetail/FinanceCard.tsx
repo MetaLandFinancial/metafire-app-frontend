@@ -9,8 +9,8 @@ import close1 from "../../../../public/img/close1.svg";
 import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import whitelistedNFTList from "@/components/constant/whitelistedNFTList.json";
-// import {ethers} from "ethers";
-const { ethers } = require("ethers");
+// import {ethers, AbiCoder} from "ethers";
+const { ethers, AbiCoder } = require("ethers");
 import WETHGateway from "../../../contracts/wethGateway.json";
 import BNPL from "../../../contracts/BNPL.json";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
@@ -87,7 +87,28 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
 
 
 
+  const [bytesdata, setbytesdata] = useState("");
+  const [signature, setsignature] = useState("");
 
+  const encodeDataTest = () => {
+    // Define the types of the parameters you want to encode
+    const types = ['address', 'uint256', 'string'];
+
+    // Values must match the types order and be in the format that the Ethereum VM expects
+    const values = [
+        '0x407d73d8a49eeb85d32cf465507dd71d507100c1', // Example Ethereum address
+        123,                                         // Example unsigned integer
+        'Hello, blockchain!'                         // Example string
+    ];
+
+    // Use ethers.js's defaultAbiCoder to encode the data
+    const  value = ethers.parseEther("0.15");
+    console.log('value:', value);
+    const encodedData = AbiCoder.defaultAbiCoder().encode(types, values);
+
+    console.log('Encoded Data:', encodedData);
+
+};
 
   const callBNPL = async () => {
     console.log('Buy Now Pay Later');
@@ -96,21 +117,121 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
       const { ethereum } = window as any;
       if (ethereum) {
         const provider = new ethers.BrowserProvider(ethereum);
-        // const signer = await provider.getSigner();
+        const signer = await provider.getSigner();
         
-        // const bnpl = new ethers.Contract("0x82c2D6217B8F1a5627a43934ce0b82d567C83849", BNPL.abi, signer);
+     
 
+        console.log("signner", signer.address);
+        const bnplAddress = "0x82c2D6217B8F1a5627a43934ce0b82d567C83849"
+        const adapterAddress = "0x048CEDAaDB2b0b0a34db76530DDabb5785f1f480"
         const userAddress = "0x031a82A61b2c59Ab9f8ffE4C2B6efDD4D37F1Dc4";
         const nftAsset = "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258"
         const nftTokenId = "95385";
         const bnplResponse = await fetch(`/api/getFulfillParameters?nftAsset=${nftAsset}&nftTokenId=${nftTokenId}&userAddress=${userAddress}`);
 
-        const data = await bnplResponse.json(); // Parse JSON d
-        console.log('bnplResponse', data);
-        const currentPrice = data.currentPrice;
-        const parameters = data.parameters;
+        const bnplrest = await bnplResponse.json(); // Parse JSON d
+        console.log('bnplResponse', bnplrest);
+        const currentPrice = bnplrest.currentPrice;
+        const parameters = bnplrest.parameters;
         console.log('currentPrice', currentPrice);
         console.log('parameters', parameters);
+
+        const bnplres = {
+          parameters: bnplrest.parameters,
+          currentPrice: bnplrest.currentPrice
+        }
+        
+        const encodeData = (bnplres: any) => {
+          const abi_encode_types =
+            "(address,uint256,uint256,address,address,address,uint256,uint256,uint8,uint256,uint256,bytes32,uint256,bytes32,bytes32,uint256,(uint256,address)[],bytes)";
+          const fees = bnplres?.parameters?.additionalRecipients.map((i:any) => [
+            i.amount,
+            i.recipient,
+          ]);
+          const encodedData = ethers.defaultAbiCoder.encode(
+            [abi_encode_types],
+            [
+              [
+                bnplres?.parameters?.considerationToken,
+                bnplres?.parameters?.considerationIdentifier,
+                bnplres?.parameters?.considerationAmount,
+                bnplres?.parameters?.offerer,
+                bnplres?.parameters?.zone,
+                bnplres?.parameters?.offerToken,
+                bnplres?.parameters?.offerIdentifier,
+                bnplres?.parameters?.offerAmount,
+                bnplres?.parameters?.basicOrderType,
+                bnplres?.parameters?.startTime,
+                bnplres?.parameters?.endTime,
+                bnplres?.parameters?.zoneHash,
+                bnplres?.parameters?.salt,
+                bnplres?.parameters?.offererConduitKey,
+                bnplres?.parameters?.fulfillerConduitKey,
+                bnplres?.parameters?.totalOriginalAdditionalRecipients,
+                fees,
+                bnplres?.parameters?.signature,
+              ],
+            ]
+          );
+          setbytesdata(encodedData);
+        };
+
+        const createSignature = async (bnplres:any) => {
+          const value = {
+            ...bnplres?.parameters,
+            nonce: ethers.BigNumber.from(bnplres?.parameters?.nonce?.hex),
+          };
+          const provider = new ethers.providers.Web3Provider(window.ethereum);
+          await provider.send("eth_requestAccounts", []);
+          const signer = provider.getSigner(userAddress);
+          const types = {
+            Params: [
+              { name: "considerationToken", type: "address" },
+              { name: "considerationIdentifier", type: "uint256" },
+              { name: "considerationAmount", type: "uint256" },
+              { name: "offerer", type: "address" },
+              { name: "zone", type: "address" },
+              { name: "offerToken", type: "address" },
+              { name: "offerIdentifier", type: "uint256" },
+              { name: "offerAmount", type: "uint256" },
+              { name: "basicOrderType", type: "uint8" },
+              { name: "startTime", type: "uint256" },
+              { name: "endTime", type: "uint256" },
+              { name: "zoneHash", type: "bytes32" },
+              { name: "salt", type: "uint256" },
+              { name: "offererConduitKey", type: "bytes32" },
+              { name: "fulfillerConduitKey", type: "bytes32" },
+              { name: "totalOriginalAdditionalRecipients", type: "uint256" },
+              { name: "additionalRecipients", type: "AdditionalRecipient[]" },
+              { name: "signature", type: "bytes" },
+              { name: "nonce", type: "uint256" },
+            ],
+            AdditionalRecipient: [
+              { name: "amount", type: "uint256" },
+              { name: "recipient", type: "address" },
+            ],
+          };
+          const signature = await signer._signTypedData(
+            {
+              name: process.env.NEXT_PUBLIC_EXCHANGE_ADAPTER_NAME,
+              version: process.env.NEXT_PUBLIC_EXCHANGE_ADAPTER_VERSION,
+              chainId: 1,
+              verifyingContract: process.env.NEXT_PUBLIC_LOAN_ADAPTER_ADDRESS,
+            },
+            types,
+            value
+          );
+          const actualSign = ethers.utils.splitSignature(signature);
+          setsignature(actualSign);
+        };
+        // encodeData(bnplres);
+        // createSignature(bnplres);
+        // const bnpl = new ethers.Contract(bnplAddress, BNPL.abi, signer);
+        // const buyRespobse = await bnpl.buy(adapterAddress,"100000000000000000", bytesdata, signature, {value: ethers.utils.parseEther("0.15")});
+
+        
+        encodeDataTest();
+
       }
 
     } catch (error) {
