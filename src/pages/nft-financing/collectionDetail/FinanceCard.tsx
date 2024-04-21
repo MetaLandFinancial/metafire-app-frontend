@@ -10,7 +10,7 @@ import Link from "next/link";
 import { Dialog, Transition } from "@headlessui/react";
 import whitelistedNFTList from "@/components/constant/whitelistedNFTList.json";
 // import {ethers, AbiCoder} from "ethers";
-const { ethers, AbiCoder } = require("ethers");
+const { ethers, AbiCoder, Signature } = require("ethers");
 import WETHGateway from "../../../contracts/wethGateway.json";
 import BNPL from "../../../contracts/BNPL.json";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
@@ -122,11 +122,12 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
      
 
         console.log("signner", signer.address);
+        
         const bnplAddress = "0x82c2D6217B8F1a5627a43934ce0b82d567C83849"
         const adapterAddress = "0x048CEDAaDB2b0b0a34db76530DDabb5785f1f480"
-        const userAddress = "0x031a82A61b2c59Ab9f8ffE4C2B6efDD4D37F1Dc4";
+        const userAddress = signer.address;
         const nftAsset = "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258"
-        const nftTokenId = "95385";
+        const nftTokenId = "81911";
         const bnplResponse = await fetch(`/api/getFulfillParameters?nftAsset=${nftAsset}&nftTokenId=${nftTokenId}&userAddress=${userAddress}`);
 
         const bnplrest = await bnplResponse.json(); // Parse JSON d
@@ -148,7 +149,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
             i.amount,
             i.recipient,
           ]);
-          const encodedData = ethers.defaultAbiCoder.encode(
+          const encodedData = AbiCoder.defaultAbiCoder().encode(
             [abi_encode_types],
             [
               [
@@ -174,16 +175,20 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
             ]
           );
           setbytesdata(encodedData);
+          return encodedData;
         };
+
+        const EXCHANGE_ADAPTER_NAME = "Seaport Downpayment Adapter";
+        const EXCHANGE_ADAPTER_VERSION = "1.0";
 
         const createSignature = async (bnplres:any) => {
           const value = {
             ...bnplres?.parameters,
-            nonce: ethers.BigNumber.from(bnplres?.parameters?.nonce?.hex),
+            nonce: BigInt(bnplres?.parameters?.nonce?.hex),
           };
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
-          await provider.send("eth_requestAccounts", []);
-          const signer = provider.getSigner(userAddress);
+          // const provider = new ethers.BrowserProvider(window.ethereum);
+          // await provider.send("eth_requestAccounts", []);
+          // const signer = provider.getSigner();
           const types = {
             Params: [
               { name: "considerationToken", type: "address" },
@@ -211,26 +216,37 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
               { name: "recipient", type: "address" },
             ],
           };
-          const signature = await signer._signTypedData(
+
+          const signature = await signer.signTypedData(
             {
-              name: process.env.NEXT_PUBLIC_EXCHANGE_ADAPTER_NAME,
-              version: process.env.NEXT_PUBLIC_EXCHANGE_ADAPTER_VERSION,
+              name: EXCHANGE_ADAPTER_NAME,
+              version: EXCHANGE_ADAPTER_VERSION,
               chainId: 1,
-              verifyingContract: process.env.NEXT_PUBLIC_LOAN_ADAPTER_ADDRESS,
+              verifyingContract: adapterAddress,
             },
             types,
             value
           );
-          const actualSign = ethers.utils.splitSignature(signature);
+          const actualSign = Signature.from(signature);
           setsignature(actualSign);
+          return actualSign;
         };
-        // encodeData(bnplres);
-        // createSignature(bnplres);
-        // const bnpl = new ethers.Contract(bnplAddress, BNPL.abi, signer);
-        // const buyRespobse = await bnpl.buy(adapterAddress,"100000000000000000", bytesdata, signature, {value: ethers.utils.parseEther("0.15")});
+
+        // encodeDataTest();
+
+        const encodedData = await encodeData(bnplres);
+        const actualSign = await createSignature(bnplres);
+        console.log('encodedData', encodedData);
+        console.log('actualSign', actualSign);
+        const bnpl = new ethers.Contract(bnplAddress, BNPL.abi, signer);
+        const buyRespobse = await bnpl.buy(adapterAddress,"50000000000000000", encodedData, actualSign, 
+          {
+            value: ethers.parseEther("0.2"),
+            gasLimit: "2000000"
+          });
 
         
-        encodeDataTest();
+   
 
       }
 
