@@ -46,13 +46,19 @@ function getCollectionImageUrl(address: string): string {
 const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string, nftData: any }) => {
 
   const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
+  const BNPL_ADDRESS = process.env.NEXT_PUBLIC_BNPL_ADDRESS as string;
+  const SEAPORT_ADAPTER_ADDRESS = process.env.NEXT_PUBLIC_SEAPORT_ADAPTER_ADDRESS as string;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
   const [loanNftName, setLoanNftName] = useState("");
+  const [loanNftAsset, setLoanNftAsset] = useState("");
   const [loanNftId, setLoanNftId] = useState("");
   const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
   const [selectedNft, setSelectedNft] = useState<any>(null);
+
+  const [bytesdata, setbytesdata] = useState("");
+  const [signature, setsignature] = useState("");
 
   useEffect(() => {
     getFloorPrice('boredapeyachtclub');
@@ -74,41 +80,47 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
   }
 
   const openModal = (item: any) => {
+    console.log("item", item);
+    console.log("item", item.protocol_data.parameters.offer[0].token);
+    console.log("item", item.protocol_data.parameters.offer[0].identifierOrCriteria);
+    
     setIsModalOpen(true);
     setSelectedNft(item);
-    setLoanImageUrl(item.metadata && JSON.parse(item.metadata)?.image);
-    setLoanNftName(item.name);
-    setLoanNftId(item.token_id);
+    
+    setLoanNftAsset(item.protocol_data.parameters.offer[0].token);
+    setLoanNftId(item.protocol_data.parameters.offer[0].identifierOrCriteria);
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
   };
 
+  
+  useEffect(() => {
+    const initializeEthereum = async () => {
+      const { ethereum } = window as any;
+      if (!ethereum) {
+        console.error("Ethereum object doesn't exist!");
+        alert("Please install MetaMask.");
+        return;
+      }
+    
+      try {
+        await ethereum.request({ method: 'eth_requestAccounts' });
+        const provider = new ethers.BrowserProvider(ethereum);
+        const signer = await provider.getSigner();
+        // setSigner(signer);
+      } catch (error) {
+        console.error("Error initializing ethereum:", error);
+      }
+    };
+
+    initializeEthereum();
+  }, []);
 
 
-  const [bytesdata, setbytesdata] = useState("");
-  const [signature, setsignature] = useState("");
 
-  const encodeDataTest = () => {
-    // Define the types of the parameters you want to encode
-    const types = ['address', 'uint256', 'string'];
 
-    // Values must match the types order and be in the format that the Ethereum VM expects
-    const values = [
-        '0x407d73d8a49eeb85d32cf465507dd71d507100c1', // Example Ethereum address
-        123,                                         // Example unsigned integer
-        'Hello, blockchain!'                         // Example string
-    ];
-
-    // Use ethers.js's defaultAbiCoder to encode the data
-    const  value = ethers.parseEther("0.15");
-    console.log('value:', value);
-    const encodedData = AbiCoder.defaultAbiCoder().encode(types, values);
-
-    console.log('Encoded Data:', encodedData);
-
-};
 
   const callBNPL = async () => {
     console.log('Buy Now Pay Later');
@@ -119,16 +131,13 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
         const provider = new ethers.BrowserProvider(ethereum);
         const signer = await provider.getSigner();
         
-     
-
+    
         console.log("signner", signer.address);
-        
-        const bnplAddress = "0x82c2D6217B8F1a5627a43934ce0b82d567C83849"
-        const adapterAddress = "0x048CEDAaDB2b0b0a34db76530DDabb5785f1f480"
+
         const userAddress = signer.address;
-        const nftAsset = "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258"
-        const nftTokenId = "81911";
-        const bnplResponse = await fetch(`/api/getFulfillParameters?nftAsset=${nftAsset}&nftTokenId=${nftTokenId}&userAddress=${userAddress}`);
+
+        const nftTokenId = 95385;
+        const bnplResponse = await fetch(`/api/getFulfillParameters?nftAsset=${loanNftAsset}&nftTokenId=${nftTokenId}&userAddress=${userAddress}`);
 
         const bnplrest = await bnplResponse.json(); // Parse JSON d
         console.log('bnplResponse', bnplrest);
@@ -222,7 +231,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
               name: EXCHANGE_ADAPTER_NAME,
               version: EXCHANGE_ADAPTER_VERSION,
               chainId: 1,
-              verifyingContract: adapterAddress,
+              verifyingContract: SEAPORT_ADAPTER_ADDRESS,
             },
             types,
             value
@@ -238,11 +247,11 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
         const actualSign = await createSignature(bnplres);
         console.log('encodedData', encodedData);
         console.log('actualSign', actualSign);
-        const bnpl = new ethers.Contract(bnplAddress, BNPL.abi, signer);
-        const buyRespobse = await bnpl.buy(adapterAddress,"50000000000000000", encodedData, actualSign, 
+        const bnpl = new ethers.Contract(BNPL_ADDRESS, BNPL.abi, signer);
+        const buyRespobse = await bnpl.buy(SEAPORT_ADAPTER_ADDRESS, "50000000000000000", encodedData, actualSign, 
           {
             value: ethers.parseEther("0.2"),
-            gasLimit: "2000000"
+            // gasLimit: "2000000"
           });
 
         

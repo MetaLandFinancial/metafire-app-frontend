@@ -29,7 +29,7 @@ export default async function handler(
         });
 
         if (!response.ok) {
-        throw new Error(`Error from Moralis API: ${response.statusText}`);
+        throw new Error(`Error from Opensea API: ${response.statusText}`);
         }
 
         const data = await response.json();
