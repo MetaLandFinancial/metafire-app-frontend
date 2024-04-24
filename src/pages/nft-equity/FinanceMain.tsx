@@ -13,7 +13,7 @@ const FinanceMain = ({ nftData, signer}: { nftData: any, signer: any }) => {
           {/* <Sidebar /> */}
           {/* <div style={{color:"white"}} >sadas2 {nftData?.[0]?.name} </div> */}
           <div className="w-full">
-            <FinInput />
+            {/* <FinInput /> */}
             <FinanceCard nftData={nftData} signer={signer} />
           </div>
         </div>

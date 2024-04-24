@@ -96,7 +96,7 @@ const index = () => {
         <div className="relative">
             {/* <div style={{color:"white"}} >sadas  {test}  </div> */}
         <HeroF />
-        <Pagenv />
+        {/* <Pagenv /> */}
         <FinanceMain nftData={nftData} signer={signer} />
         </div>
     );

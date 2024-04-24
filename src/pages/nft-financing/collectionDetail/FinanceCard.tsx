@@ -352,7 +352,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
 
   return (
     <>
-      <div className="grid gap-[19px] md:gap-6 grid-cols-2 lg:grid-cols-3 xl:grid-cols-3">
+      <div className="grid gap-[19px] md:gap-6 grid-cols-2 lg:grid-cols-4 xl:grid-cols-4">
         {Array.isArray(nftData) && nftData.map((item, index) => (
           <div className="Finance_Card_BG" key={index}>
             <div className="w-full flex flex-col p-[10px] md:p-5">
