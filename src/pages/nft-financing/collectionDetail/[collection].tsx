@@ -21,6 +21,10 @@ type CollectionSlugsType = {
   };
   
   function getCollectionSlug(address: string): string {
+    if (typeof address !== 'string') {
+        console.error("Invalid address provided:", address);
+        return ""; // Return a default value or handle the error as appropriate
+      }
     return collectionSlugs[address.toLowerCase()];
   }
   
