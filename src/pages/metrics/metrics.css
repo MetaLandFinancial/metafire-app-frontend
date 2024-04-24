@@ -1,0 +1,107 @@
+.main_bg {
+    background-image: url(../../../public/img/metricsbg.svg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.common_shadow_bg {
+    border-radius: 15px;
+    border: 1px solid rgba(187, 207, 255, 0.40);
+    background: linear-gradient(90deg, rgba(71, 118, 230, 0.04) 0%, rgba(142, 84, 233, 0.04) 100%);
+    box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
+}
+
+.without_bg {
+    border: 1px solid #4776E6;
+
+    border-radius: 12px;
+    -webkit-border-radius: 12px;
+    -moz-border-radius: 12px;
+    -ms-border-radius: 12px;
+    -o-border-radius: 12px;
+}
+
+.gradient-text {
+    -webkit-text-fill-color: transparent;
+}
+
+.Text_gradient_bg {
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.parent_bg {
+    border: 1px solid #4776E6;
+    background: linear-gradient(90deg, #4776e626 0%, #8e54e926 100%);
+}
+
+.parent_bg:hover .Text_gradient_bg {
+    background: white;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.parent_bg:hover {
+    border: 1px solid transparent !important;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+}
+
+/* _____________ pagination arrow btn hover css ____________ */
+.svg2 {
+    display: none !important;
+}
+
+.Loned_Heart:hover .svg1 {
+    display: none !important;
+
+}
+
+.Loned_Heart:hover .svg2 {
+    display: block !important;
+}
+
+.Left_Svg_2 {
+    display: none !important;
+}
+
+.Pagination_Btn:hover .Left_Svg_1 {
+    display: none !important;
+}
+
+.Pagination_Btn:hover .Left_Svg_2 {
+    display: block !important;
+}
+
+.remove_btn .common_shadow_bg .btn_metrics {
+    display: none;
+}
+
+.remove_btn .common_shadow_bg:first-child .btn_metrics {
+    display: block;
+}
+
+/* slider */
+.slide_M {
+    width: fit-content !important;
+    padding: 12px 16px;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: flex-start;
+    gap: 8px;
+}
+
+.Metrics_Slider .slick-slide>div {
+    width: fit-content;
+    margin: 0 6px 0 6px;
+}
+
+.slider-container .slick-slide {
+    width: fit-content !important;
+}
+
+.Metrics_Slider .slick-slider .slick-track {
+    display: flex;
+}
