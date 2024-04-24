@@ -9,7 +9,7 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { collectionSlug } = req.query;
+  const { collectionSlug,next } = req.query;
   console.log('collectionSlug', collectionSlug);
   const PROXY_URL = process.env.PROXY_URL||'';
   const listingLimit = 12;
@@ -29,9 +29,15 @@ export default async function handler(
         requestOptions.httpsAgent = proxyAgent;
       }
       
+      let response;
       // const response = await axios.get(`https://api.opensea.io/api/v2/listings/collection/${collectionSlug}/all?limit=${listingLimit}`, requestOptions);
-      const response = await axios.get(`https://api.opensea.io/api/v2/listings/collection/${collectionSlug}/best?limit=${listingLimit}`, requestOptions);
-  
+      if(next){
+        response = await axios.get(`https://api.opensea.io/api/v2/listings/collection/${collectionSlug}/best?limit=${listingLimit}&next=${next}`, requestOptions);
+        console.log('next', next);
+      }else{
+        response = await axios.get(`https://api.opensea.io/api/v2/listings/collection/${collectionSlug}/best?limit=${listingLimit}`, requestOptions);
+      }
+      
   
       // Log or process the response data
       console.log('NFT stats', response.status);

@@ -18,16 +18,7 @@ const FinanceMain = ({ collectionAddress, nftData }: { collectionAddress:string,
             <FinInput />
             <FinanceCard collectionAddress={collectionAddress}  nftData={nftData} />
 
-            <div className="pagination flex gap-2 items-center justify-center pt-7">
-              <button
-                  className={"w-[40px] h-[40px] border border-[#798295] rounded-[6px] flex justify-center items-center"}>
-                  <img src={leftArrow.src} alt=""/>
-              </button>
-              <button
-                  className={"w-[40px] h-[40px] border border-[#798295] rounded-[6px] flex justify-center items-center"}>
-                  <img src={rightArrow.src} alt=""/>
-              </button>
-            </div>
+
           </div>
           
         </div>

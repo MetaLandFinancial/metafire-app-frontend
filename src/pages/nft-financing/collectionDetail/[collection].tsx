@@ -2,10 +2,13 @@
 import * as React from 'react'
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
+
 import "./financing.css";
 import HeroF from "./HeroF";
 import Pagenv from "./Pagenv";
 import FinanceMain from "./FinanceMain";
+import leftArrow from "../../../../public/assets/arrow_left.svg";
+import rightArrow from "../../../../public/assets/arrow-right.svg";
 
 type CollectionSlugsType = {
     [key: string]: string;
@@ -38,42 +41,73 @@ export default function  Collection () {
 
 
     const [nftData, setNftData] = useState<any[]>([]);
-    const [test, setTest] = useState("");
+    const [nextPageKey, setNextPageKey] = useState<string>('');
+    const [pageKeyStack, setPageKeyStack] = useState<string[]>([]); 
 
     useEffect(() => {
-        console.log("address is: ", collection);
+        // console.log("address is: ", collection);
         const slug = getCollectionSlug(collection);
-        console.log("slug is: ", slug);
-        console.log("NFT Equity Page");
-        fetchNFT(slug);
+        // console.log("slug is: ", slug);
+        // console.log("NFT Equity Page");
+        fetchNFTData(nextPageKey);
     }, [collection]);
 
-    // fetch nft fcuntion with moralis api
-    const fetchNFT = async (collectionSlug: string) => {
-        const url = `/api/getNftsByCollection?collectionSlug=${collectionSlug}`;
-        
+    async function fetchNFTData(nextKey: string) {
+        const slug = getCollectionSlug(collection);
+        // console.log("slug is: ", slug);
+        const url = `/api/getNftsByCollection?collectionSlug=${slug}&next=${nextKey}`;
         const response = await fetch(url);
         const data = await response.json();
-        console.log(data);
-        // console.log(data.result);
-        // const metadata = data.result[0].metadata;
-        // const ojbMetadata = JSON.parse(metadata);
 
-        // const array = [22, 33, 44];
-        if(data && data.listings) {
-            // Store the fetched data in state
-            // setTest(data.result[0].name);
+        if (data && data.listings) {
+            window.scrollTo(0, 0);
             setNftData(data.listings);
-        }
-    };
+            setNextPageKey(data.next);
 
+        }
+    }
+    
+    function goToNextPage() {
+        if (nextPageKey) {
+            setPageKeyStack(["", ...pageKeyStack, nextPageKey]); // Push current page key onto stack
+            fetchNFTData(nextPageKey);
+        }
+    }
+
+    function goToPreviousPage() {
+        // console.log("pageKeyStack", pageKeyStack);
+        if (pageKeyStack.length > 1) { // Ensure there's a previous page
+            const newStack = [...pageKeyStack];
+            newStack.pop(); // Remove the current key
+            const prevKey = newStack.pop(); // Get the previous key
+    
+            // Check if prevKey is undefined before calling fetchNFTData
+            if (typeof prevKey === 'string') {
+                setPageKeyStack(newStack);
+                // console.log("prevKey", prevKey);
+                fetchNFTData(prevKey);
+            } else {
+                // Handle the case where prevKey is unexpectedly undefined
+                console.error("Previous key is undefined.");
+            }
+        }
+    }
+    
 
     return(
-        <div>
+        <div >
             {/* <h1>{collection}</h1> */}
-            <HeroF />
+            <HeroF  />
             {/* <Pagenv /> */}
-            <FinanceMain collectionAddress={collection} nftData={nftData}/>
+            <FinanceMain  collectionAddress={collection} nftData={nftData}/>
+            <div className="pagination flex gap-2 items-center justify-center pt-7">
+              <button onClick={goToPreviousPage} className={"w-[40px] h-[40px] border border-[#798295] rounded-[6px] flex justify-center items-center"}>
+                  <img src={leftArrow.src} alt=""/>
+              </button>
+              <button onClick={goToNextPage} disabled={!nextPageKey} className={"w-[40px] h-[40px] border border-[#798295] rounded-[6px] flex justify-center items-center"}>
+                  <img src={rightArrow.src} alt=""/>
+              </button>
+            </div>
         </div>
     )
 };
