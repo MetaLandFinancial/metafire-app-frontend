@@ -11,7 +11,9 @@ import { Dialog, Transition } from "@headlessui/react";
 import whitelistedNFTList from "@/components/constant/whitelistedNFTList.json";
 // import {ethers, AbiCoder} from "ethers";
 const { ethers, AbiCoder, Signature } = require("ethers");
-import WETHGateway from "../../../contracts/wethGateway.json";
+
+import WETH from "../../../contracts/weth.json";
+import DebtToken from "../../../contracts/debtToken.json";
 import BNPL from "../../../contracts/BNPL.json";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 
@@ -45,7 +47,8 @@ function getCollectionImageUrl(address: string): string {
 
 const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string, nftData: any }) => {
 
-  const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
+  const WETH_ADDRESS = process.env.NEXT_PUBLIC_WETH_ADDRESS as string;
+  const DEBT_TOKEN_ADDRESS = process.env.NEXT_PUBLIC_DEBT_TOKEN_ADDRESS as string;
   const BNPL_ADDRESS = process.env.NEXT_PUBLIC_BNPL_ADDRESS as string;
   const SEAPORT_ADAPTER_ADDRESS = process.env.NEXT_PUBLIC_SEAPORT_ADAPTER_ADDRESS as string;
 
@@ -56,6 +59,8 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
   const [loanNftId, setLoanNftId] = useState("");
   const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
   const [selectedNft, setSelectedNft] = useState<any>(null);
+
+  const [borrowAmountInput, setBorrowAmountInput] = useState("");
 
   const [bytesdata, setbytesdata] = useState("");
   const [signature, setsignature] = useState("");
@@ -78,6 +83,13 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
       console.log('Failed to fetch NFT stats', error);
     }
   }
+
+  const handleBorrowAmountChange = (event: any) => {
+    console.log("borrow amount: ", event.target.value);
+    setBorrowAmountInput(event.target.value);
+  }
+
+
 
   const openModal = (item: any) => {
     console.log("item", item);
@@ -247,12 +259,19 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
         const actualSign = await createSignature(bnplres);
         console.log('encodedData', encodedData);
         console.log('actualSign', actualSign);
+        const amountToBorrow = ethers.parseUnits(borrowAmountInput.toString(), 18);
+
         const bnpl = new ethers.Contract(BNPL_ADDRESS, BNPL.abi, signer);
-        const buyRespobse = await bnpl.buy(SEAPORT_ADAPTER_ADDRESS, "50000000000000000", encodedData, actualSign, 
+        const debtTokenContract = new ethers.Contract(DEBT_TOKEN_ADDRESS, DebtToken.abi, signer);
+        const wethContract = new ethers.Contract(WETH_ADDRESS, WETH.abi, signer);
+
+        const buyRespobse = await bnpl.buy(SEAPORT_ADAPTER_ADDRESS, amountToBorrow, encodedData, actualSign, 
           {
             value: ethers.parseEther("0.2"),
             // gasLimit: "2000000"
-          });
+          }
+        );
+
 
         
    
@@ -324,7 +343,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                     </p>
                   </div>
                 </div>
-                <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]">
+                {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]">
                   <div className="flex flex-row justify-between items-center">
                     <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                       Listing price
@@ -340,7 +359,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                       {item.listingprice}
                     </p>
                   </div>
-                </div>
+                </div> */}
               </div>
               <button className="FinanceCard_Btn" onClick={() => openModal(item)}>
                   Buy Now Pay Later
@@ -509,7 +528,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Minimum Pay
+                                  Max Borrow
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                                 {(parseFloat(selectedNft?.price.current.value)/10**18*0.5).toFixed(3)} ETH
@@ -561,26 +580,19 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                             </label>
                             <div className="Amount_Bg relative flex items-center">
                               <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Amount:
+                                Borrow Amount:
                               </p>
                               <input
+                                style={{ caretColor: 'white' }}
                                 type="text"
                                 className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
                                 placeholder="0.0"
+                                value={borrowAmountInput}
+                                onChange={handleBorrowAmountChange}
                               />
                             </div>
                           </div>
 
-           
-                          <div>
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              input
-                            </label>
-
-                          </div>
                         </div>
                       </div>
                       {/* button */}
