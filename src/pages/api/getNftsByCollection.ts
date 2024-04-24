@@ -28,8 +28,9 @@ export default async function handler(
         const proxyAgent = new HttpsProxyAgent(PROXY_URL);
         requestOptions.httpsAgent = proxyAgent;
       }
-  
-      const response = await axios.get(`https://api.opensea.io/api/v2/listings/collection/${collectionSlug}/all?limit=${listingLimit}`, requestOptions);
+      
+      // const response = await axios.get(`https://api.opensea.io/api/v2/listings/collection/${collectionSlug}/all?limit=${listingLimit}`, requestOptions);
+      const response = await axios.get(`https://api.opensea.io/api/v2/listings/collection/${collectionSlug}/best?limit=${listingLimit}`, requestOptions);
   
   
       // Log or process the response data

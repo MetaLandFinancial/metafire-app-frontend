@@ -3,7 +3,7 @@ import Sidebar from "../../nft-equity/Sidebar";
 import FinanceCard from "./FinanceCard";
 import FinInput from "./FinInput";
 
-
+import Pagination from "@/components/shared/Pagination";
 
 const FinanceMain = ({ collectionAddress, nftData }: { collectionAddress:string, nftData: any }) => {
   return (
@@ -15,7 +15,9 @@ const FinanceMain = ({ collectionAddress, nftData }: { collectionAddress:string,
           <div className="w-full">
             <FinInput />
             <FinanceCard collectionAddress={collectionAddress}  nftData={nftData} />
+            <Pagination />
           </div>
+          
         </div>
       </div>
     </div>

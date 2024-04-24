@@ -57,6 +57,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
   const [loanNftName, setLoanNftName] = useState("");
   const [loanNftAsset, setLoanNftAsset] = useState("");
   const [loanNftId, setLoanNftId] = useState("");
+  const [loanNftPrice, setLoanNftPrice] = useState("");
   const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
   const [selectedNft, setSelectedNft] = useState<any>(null);
 
@@ -64,6 +65,11 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
 
   const [bytesdata, setbytesdata] = useState("");
   const [signature, setsignature] = useState("");
+
+  // Transaction state management
+  const [isApproving, setIsApproving] = useState(false);
+  const [isBorrowing, setIsBorrowing] = useState(false);
+
 
   useEffect(() => {
     getFloorPrice('boredapeyachtclub');
@@ -101,6 +107,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
     
     setLoanNftAsset(item.protocol_data.parameters.offer[0].token);
     setLoanNftId(item.protocol_data.parameters.offer[0].identifierOrCriteria);
+    setLoanNftPrice(item.price.current.value);
   };
 
   const closeModal = () => {
@@ -131,9 +138,6 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
   }, []);
 
 
-
-
-
   const callBNPL = async () => {
     console.log('Buy Now Pay Later');
     try {
@@ -148,7 +152,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
 
         const userAddress = signer.address;
 
-        const nftTokenId = 95385;
+        const nftTokenId = loanNftId;
         const bnplResponse = await fetch(`/api/getFulfillParameters?nftAsset=${loanNftAsset}&nftTokenId=${nftTokenId}&userAddress=${userAddress}`);
 
         const bnplrest = await bnplResponse.json(); // Parse JSON d
@@ -259,21 +263,78 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
         const actualSign = await createSignature(bnplres);
         console.log('encodedData', encodedData);
         console.log('actualSign', actualSign);
+
         const amountToBorrow = ethers.parseUnits(borrowAmountInput.toString(), 18);
+        const loanNftPriceBigNumber = ethers.parseUnits(loanNftPrice.toString(), 0);
+
+        console.log('amountToBorrow', amountToBorrow);
+        console.log('loanNftPriceBigNumber', loanNftPriceBigNumber);
+        const payAmount = loanNftPriceBigNumber-amountToBorrow;
+        console.log('payAmount', payAmount);
 
         const bnpl = new ethers.Contract(BNPL_ADDRESS, BNPL.abi, signer);
         const debtTokenContract = new ethers.Contract(DEBT_TOKEN_ADDRESS, DebtToken.abi, signer);
         const wethContract = new ethers.Contract(WETH_ADDRESS, WETH.abi, signer);
 
-        const buyRespobse = await bnpl.buy(SEAPORT_ADAPTER_ADDRESS, amountToBorrow, encodedData, actualSign, 
-          {
-            value: ethers.parseEther("0.2"),
-            // gasLimit: "2000000"
+        //detect weth allowance to seaport adapter 
+        const wethAllowance = await debtTokenContract.borrowAllowance(signer.address, SEAPORT_ADAPTER_ADDRESS);
+        //detect borrow allowance
+        const borrowAllowance = await debtTokenContract.borrowAllowance(signer.address, SEAPORT_ADAPTER_ADDRESS);
+        // const payAmount = loanNftPrice - amountToBorrow;
+
+        console.log("wethAllowance", wethAllowance);
+        console.log("borrowAllowance", borrowAllowance);
+
+        let isWethAllowanceEnough = false;
+        let isBorrowAllowanceEnough = false;
+
+        isWethAllowanceEnough = true;
+        console.log("isWethAllowanceEnough", isWethAllowanceEnough);
+        if( wethAllowance < payAmount){
+          const approveWethTx = await wethContract.approve(DEBT_TOKEN_ADDRESS, amountToBorrow);
+          console.log('less', wethAllowance);
+          if (approveWethTx && approveWethTx.hash) {
+            setIsApproving(true);
           }
-        );
+          const approveWETHReceipt = await approveWethTx.wait();
+          if (approveWETHReceipt.status === 1) {
+            console.log("Approval WETH successfully");
+            setIsApproving(false);
+            isWethAllowanceEnough = true;
+            alert("Approval failed");
+            return;
+          } 
+        }else{
+          isWethAllowanceEnough = true;
+          console.log('weth allowance is enough');
+        }
 
+        if (borrowAllowance < amountToBorrow) {
+          const approveBorrowTx = await debtTokenContract.approve(SEAPORT_ADAPTER_ADDRESS, amountToBorrow);
+          if (approveBorrowTx && approveBorrowTx.hash) {
+            setIsApproving(true);
+          }
+          const approveBorrowReceipt = await approveBorrowTx.wait();
+          if (approveBorrowReceipt.status === 1) {
+            console.log("Approval successfully");
+            setIsApproving(false);
+            isBorrowAllowanceEnough = true;
+            alert("Approval failed");
+            return;
+          }
+        }else{
+          isBorrowAllowanceEnough = true;
+          console.log('borrow allowance is enough');
+        }
 
-        
+        if(isWethAllowanceEnough && isBorrowAllowanceEnough){
+          const buyRespobse = await bnpl.buy(SEAPORT_ADAPTER_ADDRESS, amountToBorrow, encodedData, actualSign, 
+            {
+              value: ethers.parseEther("0.2"),
+              // gasLimit: "2000000"
+            }
+          );
+        }
    
 
       }

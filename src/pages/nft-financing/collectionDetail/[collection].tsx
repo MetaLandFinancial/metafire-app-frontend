@@ -68,7 +68,7 @@ export default function  Collection () {
         <div>
             {/* <h1>{collection}</h1> */}
             <HeroF />
-            <Pagenv />
+            {/* <Pagenv /> */}
             <FinanceMain collectionAddress={collection} nftData={nftData}/>
         </div>
     )

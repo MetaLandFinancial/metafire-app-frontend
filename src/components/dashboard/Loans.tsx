@@ -190,9 +190,15 @@ const Loans = () => {
 
     const data = await response.json();
     console.log(data);
-    console.log(data[0].media?.media_collection?.medium.url);
-    const urls = data.map((item: any) => item.media?.media_collection?.medium.url);
-    setNftImageUrlList(urls);
+    console.log(data[0]?.media?.media_collection?.medium.url);
+    if (Array.isArray(data)) {
+      const urls = data.map((item: any) => item.media?.media_collection?.medium.url);
+      setNftImageUrlList(urls);
+    } else {
+      console.error('Expected an array but got:', typeof data, data);
+    }
+    
+
   
   }
 
