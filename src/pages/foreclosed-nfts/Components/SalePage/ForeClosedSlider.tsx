@@ -165,7 +165,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
 
         const liquidatingBuyPrice = ethers.parseUnits((parseFloat(saleNftData[0].loanAmount)/10**18).toFixed(4), 18);
         const liquidateBuyTx = await wethGatewaycontract
-        .liquidatingBuyETH(nftAsset, parseInt(nftTokenId), signer.address, {value: "200000000000000000"});
+        .liquidatingBuyETH(nftAsset, parseInt(nftTokenId), signer.address, {value: "190000000000000000"});
 
         if (liquidateBuyTx && liquidateBuyTx.hash) {
           setIsLiquidating(true);
