@@ -334,9 +334,10 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
         }
 
         if(isWethAllowanceEnough && isBorrowAllowanceEnough){
+          const payAmountBigNumber = ethers.BigNumber.from(payAmount);
           const buyTx = await bnpl.buy(SEAPORT_ADAPTER_ADDRESS, amountToBorrow, encodedData, actualSign, 
             {
-              value: payAmount*1.1,
+              value: payAmountBigNumber.mul(110).div(100)
               // gasLimit: "2000000"
             }
           );
