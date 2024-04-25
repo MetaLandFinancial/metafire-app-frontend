@@ -152,10 +152,30 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
     setup();
   }, []);
 
-
-  const callLiquidatingBuy = async (nftAsset:string, nftTokenId: string, loanAmount: string) => {
-    console.log("Buy amount: ");
+  const getFloorPrice = async (collectionSlug: string) => {
     try {
+      const response = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch NFT stats');
+      }
+      const data = await response.json();
+      console.log('NFT stats', data);
+      console.log('nft floor price', data?.total?.floor_price);
+
+      return data?.total?.floor_price
+    } catch (error) {
+      console.log('Failed to fetch NFT stats', error);
+    }
+  }
+
+
+  const callLiquidatingBuy = async (nftAsset:string, nftTokenId: string, loanAmount: string, floorPrice: number) => {
+
+    // console.log("loanAmount: ", loanAmount);
+    // console.log("floorPrice: ", floorPrice);
+    try {
+
+
       
       const { ethereum } = window as any;
       if (ethereum) {
@@ -163,9 +183,21 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
         const signer = await provider.getSigner();
         const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
 
+        let buyAmount: string;
+        if(floorPrice > parseFloat(loanAmount)){
+          buyAmount = Math.round(floorPrice * 0.95 * 1.001).toString();
+        
+          console.log("Floor price is greater than loan amount");
+          console.log("Buy amount: ", buyAmount);
+        }else{
+          buyAmount = loanAmount;
+          console.log("Floor price is less than loan amount");
+          console.log("Buy amount: ", buyAmount);
+        }
+
         const liquidatingBuyPrice = ethers.parseUnits((parseFloat(saleNftData[0].loanAmount)/10**18).toFixed(4), 18);
         const liquidateBuyTx = await wethGatewaycontract
-        .liquidatingBuyETH(nftAsset, parseInt(nftTokenId), signer.address, {value: "190000000000000000"});
+        .liquidatingBuyETH(nftAsset, parseInt(nftTokenId), signer.address, {value: buyAmount});
 
         if (liquidateBuyTx && liquidateBuyTx.hash) {
           setIsLiquidating(true);
@@ -355,11 +387,11 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                 </div>
               </div>
               <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
-                <button onClick={() => openModal(index, item?.nftAsset, item?.nftTokenId)} className="Sale_Btn_Bg">
+                {/* <button onClick={() => openModal(index, item?.nftAsset, item?.nftTokenId)} className="Sale_Btn_Bg">
                   <span className="Text_gradient_bg_text">Auction</span>
-                </button>
-                <button onClick={() => callLiquidatingBuy(item?.nftAsset, item?.nftTokenId, item.loanAmount)} className="Sale_Btn_Bg">
-                  <span  className="Text_gradient_bg_text">Buy (10% Off) </span>
+                </button> */}
+                <button onClick={() => callLiquidatingBuy(item?.nftAsset, item?.nftTokenId, item.loanAmount, (parseFloat(item.loanAmount)/0.7/item.healthFactor))} className="Sale_Btn_Bg">
+                  <span  className="Text_gradient_bg_text">Liquidate </span>
                 </button>
               </div>
             </div>
