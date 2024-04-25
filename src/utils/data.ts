@@ -34,7 +34,7 @@ export const NavBarData: NavItem[] = [
         name: "NFT Equity",
         path: "/nft-equity"
     }, {
-        name: "Foreclosed NFTs",
+        name: "Liquidate",
         path: "/foreclosed-nfts"
     }, {
         name: "Deposit",
