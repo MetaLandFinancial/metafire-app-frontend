@@ -55,7 +55,7 @@ export default function  Collection () {
     async function fetchNFTData(nextKey: string) {
         const slug = getCollectionSlug(collection);
         // console.log("slug is: ", slug);
-        const url = `/api/getNftsByCollection?collectionSlug=${slug}&next=${nextKey}`;
+        const url = `/api/getNftsByCollection?collectionSlug=${slug}${nextKey ? `&next=${nextKey}` : ''}`;
         const response = await fetch(url);
         const data = await response.json();
 

@@ -72,7 +72,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
 
   // Transaction state management
   const [isApproving, setIsApproving] = useState(false);
-  const [isBorrowing, setIsBorrowing] = useState(false);
+  const [isBuying, setIsBuying] = useState(false);
 
 
   useEffect(() => {
@@ -281,10 +281,10 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
         const wethContract = new ethers.Contract(WETH_ADDRESS, WETH.abi, signer);
 
         //detect weth allowance to seaport adapter 
-        const wethAllowance = await debtTokenContract.borrowAllowance(signer.address, SEAPORT_ADAPTER_ADDRESS);
+        const wethAllowance = await wethContract.allowance(signer.address, SEAPORT_ADAPTER_ADDRESS);
         //detect borrow allowance
         const borrowAllowance = await debtTokenContract.borrowAllowance(signer.address, SEAPORT_ADAPTER_ADDRESS);
-        // const payAmount = loanNftPrice - amountToBorrow;
+    
 
         console.log("wethAllowance", wethAllowance);
         console.log("borrowAllowance", borrowAllowance);
@@ -292,11 +292,13 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
         let isWethAllowanceEnough = false;
         let isBorrowAllowanceEnough = false;
 
-        isWethAllowanceEnough = true;
+   
         console.log("isWethAllowanceEnough", isWethAllowanceEnough);
+
         if( wethAllowance < payAmount){
-          const approveWethTx = await wethContract.approve(DEBT_TOKEN_ADDRESS, amountToBorrow);
+          const approveWethTx = await wethContract.approve(SEAPORT_ADAPTER_ADDRESS, payAmount);
           console.log('less', wethAllowance);
+          console.log("payAmount", payAmount);
           if (approveWethTx && approveWethTx.hash) {
             setIsApproving(true);
           }
@@ -305,26 +307,26 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
             console.log("Approval WETH successfully");
             setIsApproving(false);
             isWethAllowanceEnough = true;
-            alert("Approval failed");
-            return;
+            alert("Approval successfully");
           } 
         }else{
           isWethAllowanceEnough = true;
           console.log('weth allowance is enough');
         }
 
+        console.log("start to detect borrow allowance")
         if (borrowAllowance < amountToBorrow) {
-          const approveBorrowTx = await debtTokenContract.approve(SEAPORT_ADAPTER_ADDRESS, amountToBorrow);
+
+          const approveBorrowTx = await debtTokenContract.approveDelegation(SEAPORT_ADAPTER_ADDRESS, amountToBorrow);
           if (approveBorrowTx && approveBorrowTx.hash) {
             setIsApproving(true);
           }
           const approveBorrowReceipt = await approveBorrowTx.wait();
           if (approveBorrowReceipt.status === 1) {
-            console.log("Approval successfully");
+            console.log("Approval borrow allowance successfully");
             setIsApproving(false);
             isBorrowAllowanceEnough = true;
-            alert("Approval failed");
-            return;
+            alert("Approval borrow allowance successfully");
           }
         }else{
           isBorrowAllowanceEnough = true;
@@ -332,13 +334,26 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
         }
 
         if(isWethAllowanceEnough && isBorrowAllowanceEnough){
-          const buyRespobse = await bnpl.buy(SEAPORT_ADAPTER_ADDRESS, amountToBorrow, encodedData, actualSign, 
+          const buyTx = await bnpl.buy(SEAPORT_ADAPTER_ADDRESS, amountToBorrow, encodedData, actualSign, 
             {
-              value: ethers.parseEther("0.2"),
+              value: payAmount,
               // gasLimit: "2000000"
             }
           );
+          if (buyTx && buyTx.hash) {
+            setIsApproving(true);
+          }
+          const buyTxReceipt = await buyTx.wait();
+          if (buyTxReceipt.status === 1) {
+            console.log("Buy NFT successfully");
+            setIsBuying(false);
+            isWethAllowanceEnough = false;
+            isBorrowAllowanceEnough = false;
+            alert("Buy NFT  successfully");
+            return;
+          } 
         }
+        setIsBuying(false);
    
 
       }
@@ -684,7 +699,9 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                             </label> */}
                           </div>
                         </div>
-                        <button onClick={callBNPL} className="Nft_Bg capitalize">Buy Now Pay Later</button>
+                        <button onClick={callBNPL} disabled={isApproving || isBuying} className="Nft_Bg capitalize">
+                            {isApproving ? 'Approving...' : isBuying ? 'Buying...' : 'Buy Now Pay Later '}
+                        </button>
                       </div>
                     </div>
                   </div>
