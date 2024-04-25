@@ -295,7 +295,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
    
         console.log("isWethAllowanceEnough", isWethAllowanceEnough);
 
-        if( wethAllowance < payAmount){
+        if( wethAllowance < loanNftPriceBigNumber){
           const approveWethTx = await wethContract.approve(SEAPORT_ADAPTER_ADDRESS, loanNftPriceBigNumber);
           console.log('less', wethAllowance);
           console.log("payAmount", payAmount);
