@@ -336,7 +336,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
         if(isWethAllowanceEnough && isBorrowAllowanceEnough){
           const buyTx = await bnpl.buy(SEAPORT_ADAPTER_ADDRESS, amountToBorrow, encodedData, actualSign, 
             {
-              value: payAmount,
+              value: payAmount*1.1,
               // gasLimit: "2000000"
             }
           );
