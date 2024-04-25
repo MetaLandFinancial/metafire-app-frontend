@@ -13,7 +13,7 @@ const Hero = () => {
           className="absolute w-full h-full z-[-1]"
         />
         <div className="container">
-          <div className="pt-[161px] md:pt-[136px] pb-8 md:pb-10 ">
+          <div className="pt-[80px] md:pt-[50px] pb-8 md:pb-6 ">
             <div className="relative flex flex-col justify-center items-center ">
               <div className="text-center">
                 <h1 className="main-title">
@@ -23,7 +23,7 @@ const Hero = () => {
                   </span>
                 </h1>
               </div>
-              <div className="mb-10 md:mb-[83px] mt-5 lg:mt-7 xl:mt-9">
+              <div className="mb-10 md:mb-[53px] mt-3 lg:mt-5 xl:mt-7">
                 <p className="text-center text-white font-bold text-lg md:text-2xl">
                   Finance the NFT of Your Dreams
                 </p>

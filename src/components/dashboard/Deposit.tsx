@@ -363,7 +363,6 @@ const Deposit = () => {
             <h2 className={"text-3xl md:text-5xl font-medium text-white"}>
               Deposit Summary
             </h2>
-            <button onClick={callWithdrawETH} style={{color:"white"}}>withdraw</button>
           </div>
 
           <div className="deposit_summery grid grid-cols-12 bg-deporitsImgTwo sm:bg-deporitsImg bg-no-repeat pb-[80px]">

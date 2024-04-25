@@ -1,6 +1,6 @@
 "use client"
 import {useState} from 'react';
-import profileAvatar from "../../../public/assets/profile_avatar.svg"
+import profileAvatar from "../../../public/assets/avatar.jpeg"
 import Link from "next/link";
 import {profileSocialInfo} from "@/utils/data";
 import Deposit from "@/components/dashboard/Deposit";
@@ -11,7 +11,7 @@ import Loans from "@/components/dashboard/Loans";
 import Auctions from "@/components/dashboard/Auctions";
 
 const Profile = () => {
-    const [teb, setTab] = useState('Loans')
+    const [teb, setTab] = useState('Deposits')
 
     return (
         <>
@@ -20,11 +20,12 @@ const Profile = () => {
                     <div
                         className="profile_info_wrapper flex gap-3 md:gap-0 md:flex-col items-center justify-center pb-10 md:pb-20 relative">
                         <div className="profile_avatar pb-5 md:pb-10 -mt-[25%] md:-mt-[10%]">
-                            <img src={profileAvatar.src} alt=""/>
+                            <img src={profileAvatar.src} alt="" style={{ borderRadius: '50%' }}/>
                         </div>
+
                         <div className="profile_info md:text-center">
                             <h2 className={"text-lg md:text-5xl font-bold text-white pb-3 md:pb-9"}>
-                                Guy Hawkins
+                                MetaFire
                             </h2>
 
                             <ul className={"flex lg:justify-center gap-4"}>
@@ -52,7 +53,7 @@ const Profile = () => {
                             Deposits
                         </button>
 
-                        <button onClick={() => setTab('My NFTs')}
+                        {/* <button onClick={() => setTab('My NFTs')}
                                 className={`tabBtn ${teb === 'My NFTs' ? 'activeBtn' : 'InActiveBtn'}`}>
                             My NFTs
                         </button>
@@ -60,7 +61,7 @@ const Profile = () => {
                         <button onClick={() => setTab('My Favorites')}
                                 className={`tabBtn ${teb === 'My Favorites' ? 'activeBtn' : 'InActiveBtn'}`}>
                             My Favorites
-                        </button>
+                        </button> */}
 
                         <button onClick={() => setTab('Loans')}
                                 className={`tabBtn ${teb === 'Loans' ? 'activeBtn' : 'InActiveBtn'}`}>
