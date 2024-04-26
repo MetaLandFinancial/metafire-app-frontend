@@ -157,7 +157,7 @@ const StackingBlock = () => {
                   </div>
                   <div>
                     <p className=" text-white/70 text-sm md:text-base font-normal leading-[150%] tracking-[0.15px] ">
-                      Total loan
+                      Total loaned
                     </p>
                     <h3 className="flex items-center text-white text-2xl md:text-[28px] lg:text-3xl xl:text-[32px] font-semibold leading-[130%]">
                       {Borrowvalue}
