@@ -11,7 +11,7 @@ const fakeData = [
   {
     title: "Stake MetaFire",
     totalStaked: "5,827 ETH (~$17.6M)",
-    stakingAPR: "15.64 %",
+    stakingAPR: "null",
     walletBalance: "0",
     mimg: metricsC1,
     mtitle: "MetaFire",
@@ -19,7 +19,7 @@ const fakeData = [
   {
     title: "Stake ETH",
     totalStaked: "5,827 ETH (~$17.6M)",
-    stakingAPR: "6.58 %",
+    stakingAPR: "null",
     walletBalance: "0",
     mimg: metricsC2,
     mtitle: "Ethereum",
@@ -27,7 +27,7 @@ const fakeData = [
   {
     title: "Stake MATIC",
     totalStaked: "5,827 ETH (~$17.6M)",
-    stakingAPR: "6.58 %",
+    stakingAPR: "null",
     walletBalance: "0",
     mimg: metricsC3,
     mtitle: "MATIC",
@@ -35,7 +35,7 @@ const fakeData = [
   {
     title: "Stake OP",
     totalStaked: "5,827 ETH (~$17.6M)",
-    stakingAPR: "6.58 %",
+    stakingAPR: "null",
     walletBalance: "0",
     mimg: metricsC4,
     mtitle: "Optimism",
@@ -110,7 +110,7 @@ const StakeCard = () => {
                   </div>
                   <div className="max-md:w-full lg:w-1/2 xl:w-fit">
                     <button className="max-md:w-full py-2 px-7 text-white rounded-[7px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] hover:opacity-[0.7]">
-                      Stake
+                      Developing
                     </button>
                   </div>
                 </div>
