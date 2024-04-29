@@ -92,9 +92,12 @@ const SliderItem = () => {
                 </div>
                 <div className="h-[1px] w-full my-2 xl:my-[13px] bg-gradient-to-r from-[#e8d9ff63] to-[#ffffff00]"></div>
                 <div className="flex justify-between">
-                  <h4 className="text-white text-xs md:text-sm  font-medium">
+                  {/* <h4 className="text-white text-xs md:text-sm  font-medium">
                       Buy Now Pay Later
-                  </h4>
+                  </h4> */}
+                  <button className="max-md:w-full py-2 px-4 text-white rounded-[7px] bg-gradient-to-r from-[#4776E6] to-[#8E54E9] hover:opacity-[0.7]">
+                  Buy Now Pay Later
+                    </button>
                   {/* <div className="w-1/2 flex flex-col gap-1">
                     <h5 className="text-white text-xs md:text-sm  font-medium">
                       Floor Price

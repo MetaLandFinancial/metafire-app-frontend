@@ -24,7 +24,10 @@ const Collection = () => {
               Top Collection
             </h1>
             <p className="text-[#ffffffb3] text-lg md:text-xl xl:text-2xl mt-6 hidden md:block">
-              Finance the NFT of Your Dreams, See our Top collections
+              Finance the NFT of Your Dreams
+            </p>
+            <p className="text-[#ffffffb3] text-lg md:text-xl xl:text-2xl mt-6 hidden md:block">
+               Click on a collection below:
             </p>
           </div>
           <div className="relative z-10 mt-10 md:mt-12 lg:mt-14 xl:mt-20">

@@ -9,14 +9,14 @@ import discord from "../../../../public/img/discord.svg";
 import world from "../../../../public/img/world.svg";
 import Link from "next/link";
 
-const Pagenv = () => {
+const Pagenv = ({nftStatsData, collectionName}:{nftStatsData:any, collectionName: string}) => {
   return (
     <div className="relative py-10 border-b border-[#4777e63e]">
       <div className="container">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="max-md:w-full left mb-10 md:mb-0 flex flex-row max-md:justify-between md:flex-col">
             <h1 className="text-lg md:text-2xl xl:text-[27px] text-white font-bold md:mb-6">
-              MetaFire NFT
+              {collectionName}
             </h1>
             <div className="flex flex-row">
               <Link href="/">
@@ -108,7 +108,7 @@ const Pagenv = () => {
                   Owner
                 </label>
                 <p className="Text_gradient font-bold text-sm md:text-base lg:text-lg xl:text-[21px]">
-                  28
+                  {nftStatsData.num_owners}
                 </p>
               </div>
               <div className="xl:w-[128px] text-center">
@@ -116,7 +116,7 @@ const Pagenv = () => {
                   Sales
                 </label>
                 <p className="Text_gradient font-bold text-sm md:text-base lg:text-lg xl:text-[21px]">
-                  7
+                {nftStatsData.sales}
                 </p>
               </div>
               <div className="xl:w-[128px] text-center">
@@ -127,26 +127,18 @@ const Pagenv = () => {
                   <span>
                     <Image src={eth} alt="eth" className="w-3 h-[18px] mr-1" />
                   </span>
-                  28
-                </p>
-              </div>
-              <div className="xl:w-[128px] text-center">
-                <label className="text-xs md:text-[17px] font-normal text-white mb-4">
-                  Floor Price
-                </label>
-                <p className="Text_gradient font-bold flex items-center justify-center text-sm md:text-base lg:text-lg xl:text-[21px]">
-                  <span>
-                    <Image src={eth} alt="eth" className="w-3 h-[18px] mr-1" />
-                  </span>
-                  28
+                  {nftStatsData.floor_price}
                 </p>
               </div>
               <div className="xl:w-[128px] text-center">
                 <label className="text-xs md:text-[17px] font-normal text-white mb-4">
                   Market Cap
                 </label>
-                <p className="Text_gradient font-bold text-sm md:text-base lg:text-lg xl:text-[21px]">
-                  2.66
+                <p className="Text_gradient font-bold flex items-center justify-center text-sm md:text-base lg:text-lg xl:text-[21px]">
+                  <span>
+                    <Image src={eth} alt="eth" className="w-3 h-[18px] mr-1" />
+                  </span>
+                  {nftStatsData.market_cap?.toFixed(2)} 
                 </p>
               </div>
             </div>

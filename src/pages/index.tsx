@@ -6,7 +6,7 @@ export default function Home() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push('/nft-financing');
+    router.push('/deposit');
   }, [router]); // The empty array ensures this effect runs once on mount
 
   return (

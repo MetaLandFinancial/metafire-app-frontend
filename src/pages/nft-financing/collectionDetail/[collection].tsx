@@ -41,19 +41,24 @@ export default function  Collection () {
 
 
     const [nftData, setNftData] = useState<any[]>([]);
+    const [nftStatsData, setNftStatsData] = useState<any[]>([]);
+    const [collectionName, setCollectionName] = useState<string>('');
     const [nextPageKey, setNextPageKey] = useState<string>('');
     const [pageKeyStack, setPageKeyStack] = useState<string[]>([]); 
 
     useEffect(() => {
         // console.log("address is: ", collection);
         const slug = getCollectionSlug(collection);
+        setCollectionName(slug);
         // console.log("slug is: ", slug);
         // console.log("NFT Equity Page");
         fetchNFTData(nextPageKey);
+        fetchNFTStats();
     }, [collection]);
 
     async function fetchNFTData(nextKey: string) {
         const slug = getCollectionSlug(collection);
+
         // console.log("slug is: ", slug);
         const url = `/api/getNftsByCollection?collectionSlug=${slug}${nextKey ? `&next=${nextKey}` : ''}`;
         const response = await fetch(url);
@@ -67,6 +72,25 @@ export default function  Collection () {
         }
     }
     
+    async function fetchNFTStats() {
+
+        try {
+            const slug = getCollectionSlug(collection);
+            // console.log("slug is: ", slug);
+            const response = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(slug)}`);
+            const data = await response.json();
+    
+            if (data) {
+                console.log('data', data.total);
+                setNftStatsData(data.total);
+            }
+        } catch (error) {
+            console.log('error', error);
+        }
+
+    }
+    
+
     function goToNextPage() {
         if (nextPageKey) {
             setPageKeyStack(["", ...pageKeyStack, nextPageKey]); // Push current page key onto stack
@@ -98,7 +122,7 @@ export default function  Collection () {
         <div >
             {/* <h1>{collection}</h1> */}
             <HeroF  />
-            {/* <Pagenv /> */}
+            <Pagenv nftStatsData={nftStatsData} collectionName={collectionName} />
             <FinanceMain  collectionAddress={collection} nftData={nftData}/>
             <div className="pagination flex gap-2 items-center justify-center pt-7">
               <button onClick={goToPreviousPage} className={"w-[40px] h-[40px] border border-[#798295] rounded-[6px] flex justify-center items-center"}>

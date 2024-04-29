@@ -76,23 +76,23 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
 
 
   useEffect(() => {
-    getFloorPrice('boredapeyachtclub');
+    // getFloorPrice('boredapeyachtclub');
   }, []);
 
-  const getFloorPrice = async (collectionSlug: string) => {
-    try {
-      const response = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch NFT stats');
-      }
-      const data = await response.json();
-      console.log('NFT stats', data);
-      console.log('nft floor price', data?.total?.floor_price);
-      setSelectedNftFloorPrice(data?.total?.floor_price);
-    } catch (error) {
-      console.log('Failed to fetch NFT stats', error);
-    }
-  }
+  // const getFloorPrice = async (collectionSlug: string) => {
+  //   try {
+  //     const response = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`);
+  //     if (!response.ok) {
+  //       throw new Error('Failed to fetch NFT stats');
+  //     }
+  //     const data = await response.json();
+  //     console.log('NFT stats', data);
+  //     console.log('nft floor price', data?.total?.floor_price);
+  //     setSelectedNftFloorPrice(data?.total?.floor_price);
+  //   } catch (error) {
+  //     console.log('Failed to fetch NFT stats', error);
+  //   }
+  // }
 
   const handleBorrowAmountChange = (event: any) => {
     console.log("borrow amount: ", event.target.value);
