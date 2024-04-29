@@ -610,7 +610,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Max Borrow
+                                  Min Downpayment
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                                 {(parseFloat(selectedNft?.price.current.value)/10**18*0.5).toFixed(3)} ETH
@@ -620,14 +620,14 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
-                                  Price
+                                  Borrow Rate
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                                  N/A
+                                  22%
                                 </p>
                               </div>
                             </div>
-                            <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
+                            {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                                   Bidder
@@ -636,8 +636,8 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                                   N/A
                                 </p>
                               </div>
-                            </div>
-                            <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
+                            </div> */}
+                            {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
                                 <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                                   Auction End
@@ -646,7 +646,7 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                                   23 Feb, 2024
                                 </p>
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -662,13 +662,13 @@ const FinanceCard = ({ collectionAddress, nftData }: { collectionAddress:string,
                             </label>
                             <div className="Amount_Bg relative flex items-center">
                               <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
-                                Borrow Amount:
+                                Down Payment
                               </p>
                               <input
                                 style={{ caretColor: 'white' }}
                                 type="text"
                                 className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder="0.0"
+                                placeholder={(parseFloat(selectedNft?.price.current.value)/10**18*0.5*1.001).toFixed(3)}
                                 value={borrowAmountInput}
                                 onChange={handleBorrowAmountChange}
                               />
