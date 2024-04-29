@@ -108,7 +108,7 @@ const Pagenv = ({nftStatsData, collectionName}:{nftStatsData:any, collectionName
                   Owner
                 </label>
                 <p className="Text_gradient font-bold text-sm md:text-base lg:text-lg xl:text-[21px]">
-                  {nftStatsData.num_owners}
+                  {nftStatsData?.num_owners}
                 </p>
               </div>
               <div className="xl:w-[128px] text-center">
@@ -116,7 +116,7 @@ const Pagenv = ({nftStatsData, collectionName}:{nftStatsData:any, collectionName
                   Sales
                 </label>
                 <p className="Text_gradient font-bold text-sm md:text-base lg:text-lg xl:text-[21px]">
-                {nftStatsData.sales}
+                {nftStatsData?.sales}
                 </p>
               </div>
               <div className="xl:w-[128px] text-center">
@@ -127,7 +127,7 @@ const Pagenv = ({nftStatsData, collectionName}:{nftStatsData:any, collectionName
                   <span>
                     <Image src={eth} alt="eth" className="w-3 h-[18px] mr-1" />
                   </span>
-                  {nftStatsData.floor_price}
+                  {nftStatsData?.floor_price}
                 </p>
               </div>
               <div className="xl:w-[128px] text-center">
@@ -138,7 +138,7 @@ const Pagenv = ({nftStatsData, collectionName}:{nftStatsData:any, collectionName
                   <span>
                     <Image src={eth} alt="eth" className="w-3 h-[18px] mr-1" />
                   </span>
-                  {nftStatsData.market_cap?.toFixed(2)} 
+                  {nftStatsData?.market_cap?.toFixed(2)} 
                 </p>
               </div>
             </div>
