@@ -206,7 +206,7 @@ const LoanedCard = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: an
                 </div>
               </div>
               <div className="mt-4 md:mt-5 border-[1px] border-[rgba(71,119,230,0.20)] rounded-[10px] overflow-hidden">
-                <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
+                {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                   <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                     Floor Price
                   </p>
@@ -221,7 +221,7 @@ const LoanedCard = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: an
                     {item.floorPrice}
                     {item.loanAmount}
                   </p>
-                </div>
+                </div> */}
                 <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                   <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                     Health Factor

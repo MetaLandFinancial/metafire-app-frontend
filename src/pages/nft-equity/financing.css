@@ -4,6 +4,20 @@
     box-shadow: 0px 0px 30px 7px rgba(142, 84, 233, 0.20) inset;
 }
 
+/* first section title */
+.main_title_FCHero {
+    @apply font-bold text-white text-[53px] md:text-6xl xl:text-[100px] md:leading-normal lg:leading-normal xl:leading-normal leading-normal tracking-normal;
+    text-shadow: 0px 4px 70px #8E54E9;
+    -webkit-text-stroke-width: 5px;
+    -webkit-text-stroke-color: #FFF;
+    background: linear-gradient(90deg, #4776E6 0%, #8E54E9 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-family: "Barlow", sans-serif;
+}
+
+
 .Customized_inputbox {
     @apply w-full z-[100];
     background-color: #0F1029;
@@ -181,5 +195,20 @@
     .form-group {
         max-width: 243px;
         margin: 0 auto;
+    }
+}
+
+@media (max-width: 767px) {
+    .main_title_FCHero {
+        line-height: 1.3em;
+        text-shadow: 0px 2.399px 41.983px #8E54E9;
+        -webkit-text-stroke-width: 2px;
+        -webkit-text-stroke-color: #FFF;
+    }
+}
+
+@media (min-width: 768px) and (max-width:1279px) {
+    .main_title_FCHero {
+        -webkit-text-stroke-width: 2px;
     }
 }

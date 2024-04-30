@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./financing.css";
 import HeroF from "@/pages/nft-equity/HeroF";
+// import DHero from "./DHero";
+import FCHero from "./FCHero";
 import Pagenv from "./Pagenv";
 import FinanceMain from "./FinanceMain";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
@@ -95,7 +97,9 @@ const index = () => {
     return (
         <div className="relative">
             {/* <div style={{color:"white"}} >sadas  {test}  </div> */}
-        <HeroF />
+        {/* <HeroF /> */}
+        {/* <DHero /> */}
+        <FCHero />
         {/* <Pagenv /> */}
         <FinanceMain nftData={nftData} signer={signer} />
         </div>

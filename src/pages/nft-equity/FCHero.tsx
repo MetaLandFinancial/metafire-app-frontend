@@ -17,12 +17,12 @@ const FCHero = () => {
             <div className="relative flex flex-col justify-center items-center ">
               <div className="text-center">
                 <div className="main_title_FCHero">
-                  <h1 className="pr-[2px] md:pr-[3px]">Foreclosed NFT</h1>
+                  <h1 className="pr-[2px] md:pr-[3px]"> NFT Equity</h1>
                 </div>
               </div>
               <div className="mb-10 md:mb-[83px] mt-5 lg:mt-7 xl:mt-9">
                 <p className="text-center text-white font-bold text-lg md:text-2xl">
-                  Finance the NFT of Your Dreams
+                   Get NFT loan
                 </p>
               </div>
               <div className="w-fit h-fit">
