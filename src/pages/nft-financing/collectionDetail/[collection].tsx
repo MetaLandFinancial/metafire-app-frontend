@@ -45,6 +45,7 @@ export default function  Collection () {
     const [collectionName, setCollectionName] = useState<string>('');
     const [nextPageKey, setNextPageKey] = useState<string>('');
     const [pageKeyStack, setPageKeyStack] = useState<string[]>([]); 
+    const [nftImageUrlList, setNftImageUrlList] = useState<any[]>([]);
 
     useEffect(() => {
         // console.log("address is: ", collection);
@@ -65,11 +66,55 @@ export default function  Collection () {
         const data = await response.json();
 
         if (data && data.listings) {
+            const tokens = data.listings?.map((item: any) => ({
+                "token_address": item?.protocol_data?.parameters?.offer[0].token,
+                "token_id": item?.protocol_data?.parameters?.offer[0].identifierOrCriteria
+            }));
+            // console.log('tokens', tokens);
+            fetchMultiNftsMetaData(tokens);
             window.scrollTo(0, 0);
             setNftData(data.listings);
             setNextPageKey(data.next);
 
         }
+    }
+
+    type Token = {
+        token_address: string;
+        token_id: string | number; // Depending on whether you use numeric IDs or string representations
+      };
+
+    async function fetchMultiNftsMetaData(tokens: Token[]) {
+        console.log("fetch multple nfts");
+        const response = await fetch('/api/getMultipleNfts', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            tokens,
+            normalizeMetadata: false,
+            media_items: true
+          }),
+        });
+      
+        if (!response.ok) {
+          // throw new Error('Failed to fetch NFTs');
+          console.log("Failed to fetch NFTs");
+          return;
+        }
+    
+        const data = await response.json();
+        // console.log(data);
+        // console.log(data[0]?.media?.media_collection?.medium.url);
+        if (Array.isArray(data)) {
+          const urls = data.map((item: any) => item.media?.media_collection?.medium.url);
+        //   console.log("url",urls);
+          setNftImageUrlList(urls);
+        } else {
+          console.error('Expected an array but got:', typeof data, data);
+        }
+        
     }
     
     async function fetchNFTStats() {
@@ -123,7 +168,7 @@ export default function  Collection () {
             {/* <h1>{collection}</h1> */}
             <HeroF  />
             <Pagenv nftStatsData={nftStatsData} collectionName={collectionName} />
-            <FinanceMain  collectionAddress={collection} nftData={nftData}/>
+            <FinanceMain  collectionAddress={collection} nftData={nftData} nftImageUrlList={nftImageUrlList}/>
             <div className="pagination flex gap-2 items-center justify-center pt-7">
               <button onClick={goToPreviousPage} className={"w-[40px] h-[40px] border border-[#798295] rounded-[6px] flex justify-center items-center"}>
                   <img src={leftArrow.src} alt=""/>
