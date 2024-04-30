@@ -10,8 +10,8 @@ const Stacking_main = () => {
       <div className="pb-[72px] md:pb-[130px] lg:pb-[180px] xl:pb-[229px] pt-[50px]">
         <StackingBlock />
         <StakeBtnMetrics />
-        <StakeCard />
-        <PageBtn />
+        {/* <StakeCard /> */}
+        {/* <PageBtn /> */}
       </div>
     </div>
   );

@@ -361,7 +361,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                     {(parseFloat(item.loanAmount)/10**18).toFixed(4)}
                   </p>
                 </div>
-                <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
+                {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                   <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                     Current Auction Price
                   </p>
@@ -384,7 +384,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
                   <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                     {item.auctionEnd || "N/A"}
                   </p>
-                </div>
+                </div> */}
               </div>
               <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
                 {/* <button onClick={() => openModal(index, item?.nftAsset, item?.nftTokenId)} className="Sale_Btn_Bg">

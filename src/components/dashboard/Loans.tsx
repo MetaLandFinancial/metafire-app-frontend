@@ -130,26 +130,26 @@ const Loans = () => {
 
       // Fetch floor prices and map them back to currentLoanInfos
       const floorPrices = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
-      const collectionSlug = getCollectionSlug(loan.nftAsset);
-      // console.log("collectionSlug", collectionSlug);
-      const nftStatDataResponse = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`)
-      const nftStatData = await nftStatDataResponse.json();
-      // console.log('nft floor price', nftStatData?.total?.floor_price);
+        const collectionSlug = getCollectionSlug(loan.nftAsset);
+        // console.log("collectionSlug", collectionSlug);
+        const nftStatDataResponse = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`)
+        const nftStatData = await nftStatDataResponse.json();
+        // console.log('nft floor price', nftStatData?.total?.floor_price);
 
-      return nftStatData?.total?.floor_price || 0; // Use null or a suitable fallback for missing floor prices
-    }));
+        return nftStatData?.total?.floor_price || 0; // Use null or a suitable fallback for missing floor prices
+      }));
 
-    const tokens = data.currentLoanInfos.map((loan: any) => ({
-      "token_address": loan.nftAsset,
-      "token_id": loan.nftTokenId
-    }));
-    fetchNfts(tokens);
+      const tokens = data.currentLoanInfos.map((loan: any) => ({
+        "token_address": loan.nftAsset,
+        "token_id": loan.nftTokenId
+      }));
+      fetchNfts(tokens);
 
-    // console.log('All floor prices:', floorPrices);
-    setFloorPriceList(floorPrices);
-    } catch (error) {
-      console.log("Error fetching data: ", error);
-    }
+      // console.log('All floor prices:', floorPrices);
+      setFloorPriceList(floorPrices);
+      } catch (error) {
+        console.log("Error fetching data: ", error);
+      }
   }
   // async function fetchFloorPriceList() {}
 
