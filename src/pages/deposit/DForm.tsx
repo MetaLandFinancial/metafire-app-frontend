@@ -23,7 +23,7 @@ const depositPeriodOptions = [
   { id: 1, name: "Anytime",  unavailable: false },
   { id: 2, name: "120 Days",  unavailable: false },
   { id: 3, name: "210 Days", unavailable: false },
-  { id: 4, name: "300 Days", unavailable: true }
+  { id: 4, name: "300 Days", unavailable: false }
 ];
 const stakeOptions = [
   { id: 1, name: "ETH", unavailable: false },
