@@ -210,9 +210,6 @@ export const footerTwo: footerTwo[] = [
     },
 
     {
-        name: "My Nfts",
-        link: "#",
-    }, {
         name: "Settings",
         link: "#",
     },
@@ -227,20 +224,7 @@ export const footerThree: footerThree[] = [
     {
         name: "About",
         link: "#",
-    },
-
-    {
-        name: "Career",
-        link: "#",
-    },
-
-    {
-        name: "My Nfts",
-        link: "#",
-    }, {
-        name: "Settings",
-        link: "#",
-    },
+    }
 ]
 
 interface footerSocialInfo {
