@@ -22,7 +22,7 @@ const FCHero = () => {
               </div>
               <div className="mb-10 md:mb-[83px] mt-5 lg:mt-7 xl:mt-9">
                 <p className="text-center text-white font-bold text-lg md:text-2xl">
-                  Finance the NFT of Your Dreams
+                  Buy the NFT of Your Dreams
                 </p>
               </div>
               <div className="w-fit h-fit">
