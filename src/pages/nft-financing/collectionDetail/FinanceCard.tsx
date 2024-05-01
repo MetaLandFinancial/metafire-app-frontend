@@ -64,6 +64,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
   const [loanNftPrice, setLoanNftPrice] = useState("");
   const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
   const [selectedNft, setSelectedNft] = useState<any>(null);
+  const [selectedIndex, setSelectedIndex] = useState(0);
 
   const [borrowAmountInput, setBorrowAmountInput] = useState("");
 
@@ -86,7 +87,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
   }
 
 
-  const openModal = (item: any) => {
+  const openModal = (item: any, index: number) => {
     console.log("item", item);
     console.log("item", item.protocol_data.parameters.offer[0].token);
     console.log("item", item.protocol_data.parameters.offer[0].identifierOrCriteria);
@@ -97,6 +98,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
     setLoanNftAsset(item.protocol_data.parameters.offer[0].token);
     setLoanNftId(item.protocol_data.parameters.offer[0].identifierOrCriteria);
     setLoanNftPrice(item.price.current.value);
+    setSelectedIndex(index);
   };
 
   const closeModal = () => {
@@ -428,7 +430,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
                   </div>
                 </div> */}
               </div>
-              <button className="FinanceCard_Btn" onClick={() => openModal(item)}>
+              <button className="FinanceCard_Btn" onClick={() => openModal(item, index)}>
                   Buy Now Pay Later
               </button>
             </div>
@@ -485,7 +487,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
                         <div className="w-full">
                           <div style={{ width: '247px', height: '234px', overflow: 'hidden' }} className="w-full max-w-[261px] rounded-[3px]">
                             <img
-                              src={getCollectionImageUrl(collectionAddress) || ""}
+                               src={nftImageUrlList?.[selectedIndex] || getCollectionImageUrl(collectionAddress) }
                               alt="robo"
                
                               className="w-full h-full object-cover rounded-[3px]"
