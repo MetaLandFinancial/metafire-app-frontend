@@ -15,7 +15,6 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 import {ethers} from "ethers";
 import WETHGateway from "../../contracts/wethGateway.json";
-import ChainLinkOracle from "../../contracts/chainLinkOracle.json";
 import { getOracleAddress } from "@/utils/whitelistedNfts";
 
 type CollectionSlugsType = {
