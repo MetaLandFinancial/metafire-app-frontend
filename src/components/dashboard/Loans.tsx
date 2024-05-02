@@ -15,6 +15,8 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 import {ethers} from "ethers";
 import WETHGateway from "../../contracts/wethGateway.json";
+import ChainLinkOracle from "../../contracts/chainLinkOracle.json";
+import { getOracleAddress } from "@/utils/whitelistedNfts";
 
 type CollectionSlugsType = {
   [key: string]: string;
@@ -39,13 +41,14 @@ const Loans = () => {
   const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
   const SUBGRAPH_URL = process.env.NEXT_PUBLIC_LOAN_SUBGRAPH_URL;
   const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
-
+  
   const [repayModal, setRepayModal] = useState(false);
 
   const [floorPriceList, setFloorPriceList] = useState<any[]>([]);
   const [nftImageUrlList, setNftImageUrlList] = useState<any[]>([]);
 
   const [loanList, setLoanList] = useState<any[]>([]);
+  const [loanInfoFromBackend, setLoanInfoFromBackend] = useState<any[]>([]);
   const [reserveData, setReserveData] = useState<any>();
   const [first, setfirst] = useState(10);
   const [skip, setskip] = useState(0);
@@ -129,15 +132,15 @@ const Loans = () => {
       setLoanList([...data.currentLoanInfos]);
 
       // Fetch floor prices and map them back to currentLoanInfos
-      const floorPrices = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
-        const collectionSlug = getCollectionSlug(loan.nftAsset);
-        // console.log("collectionSlug", collectionSlug);
-        const nftStatDataResponse = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`)
-        const nftStatData = await nftStatDataResponse.json();
-        // console.log('nft floor price', nftStatData?.total?.floor_price);
+      // const floorPrices = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
+      //   const collectionSlug = getCollectionSlug(loan.nftAsset);
+      //   // console.log("collectionSlug", collectionSlug);
+      //   const nftStatDataResponse = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`)
+      //   const nftStatData = await nftStatDataResponse.json();
+      //   // console.log('nft floor price', nftStatData?.total?.floor_price);
 
-        return nftStatData?.total?.floor_price || 0; // Use null or a suitable fallback for missing floor prices
-      }));
+      //   return nftStatData?.total?.floor_price || 0; // Use null or a suitable fallback for missing floor prices
+      // }));
 
       const tokens = data.currentLoanInfos.map((loan: any) => ({
         "token_address": loan.nftAsset,
@@ -145,8 +148,48 @@ const Loans = () => {
       }));
       fetchNfts(tokens);
 
+      //get health factor from getLonaedNFTs
+
+    
+      const loanedResponse = await fetch(`/api/getLoanedNfts`, {
+        method: "GET",
+      });
+      const loanedData = await loanedResponse.json();
+      console.log(loanedData);
+
+      setLoanInfoFromBackend(loanedData);
+
+      // const filteredLoans = loanedData.filter(loan =>
+      //   data.currentLoanInfos.some(info =>
+      //     info.nftAsset === loan.nftAsset && info.nftTokenId === loan.nftTokenId
+      //   )
+      // );
+      // console.log("filteredLoans", filteredLoans);
+
+      //write loop for tokens list
+      // console.log("find oracle address for each token");
+      // const floorPrices: any[] = [];
+      // console.log("tokens", tokens);
+      // for (let i = 0; i < data.currentLoanInfos.length; i++) {
+      //   console.log("token address", data.currentLoanInfos[i].nftAsset)
+      //   const oracleAddress = getOracleAddress(tokens[i].token_address);
+      //   console.log("oracleAddress", oracleAddress);
+      //   if(!oracleAddress) {
+      //     const chainLinkOracleContract = new ethers.Contract("0x6e3A4376B4C8D3ba49602f8542D9D3C4A87ba901", ChainLinkOracle.abi, signer);
+      //     const floorPrice = await chainLinkOracleContract.latestRound();
+      //     console.log("floor price", floorPrice);
+      //     floorPrices.push(floorPrice);
+      //   }else{
+      //     floorPrices.push(0);
+      //   }
+
+      // }
+      // console.log("All floor prices:", floorPrices);
+
+
+
       // console.log('All floor prices:', floorPrices);
-      setFloorPriceList(floorPrices);
+      // setFloorPriceList(floorPrices);
       } catch (error) {
         console.log("Error fetching data: ", error);
       }
@@ -214,7 +257,6 @@ const Loans = () => {
     // fetchNfts();
 
 
-    
 
   }, [address]);
 
@@ -527,9 +569,9 @@ const Loans = () => {
                             "text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text"
                           }
                         >
-                        
+                          {(loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor*100).toFixed(2)}
                           {/* (parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27)).toFixed(4) */}
-                          {  ((parseFloat(reserveData?.variableBorrowIndex)  / 10**25 * parseFloat(ethers.formatEther(loansDataItems.loanAmount))) / floorPriceList[index] / 0.8).toFixed(4)}
+                          {/* {  ((parseFloat(reserveData?.variableBorrowIndex)  / 10**25 * parseFloat(ethers.formatEther(loansDataItems.loanAmount))) / floorPriceList[index] / 0.8).toFixed(4)} */}
                           %
                         </p>
                         </div>
