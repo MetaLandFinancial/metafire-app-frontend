@@ -159,37 +159,6 @@ const Loans = () => {
 
       setLoanInfoFromBackend(loanedData);
 
-      // const filteredLoans = loanedData.filter(loan =>
-      //   data.currentLoanInfos.some(info =>
-      //     info.nftAsset === loan.nftAsset && info.nftTokenId === loan.nftTokenId
-      //   )
-      // );
-      // console.log("filteredLoans", filteredLoans);
-
-      //write loop for tokens list
-      // console.log("find oracle address for each token");
-      // const floorPrices: any[] = [];
-      // console.log("tokens", tokens);
-      // for (let i = 0; i < data.currentLoanInfos.length; i++) {
-      //   console.log("token address", data.currentLoanInfos[i].nftAsset)
-      //   const oracleAddress = getOracleAddress(tokens[i].token_address);
-      //   console.log("oracleAddress", oracleAddress);
-      //   if(!oracleAddress) {
-      //     const chainLinkOracleContract = new ethers.Contract("0x6e3A4376B4C8D3ba49602f8542D9D3C4A87ba901", ChainLinkOracle.abi, signer);
-      //     const floorPrice = await chainLinkOracleContract.latestRound();
-      //     console.log("floor price", floorPrice);
-      //     floorPrices.push(floorPrice);
-      //   }else{
-      //     floorPrices.push(0);
-      //   }
-
-      // }
-      // console.log("All floor prices:", floorPrices);
-
-
-
-      // console.log('All floor prices:', floorPrices);
-      // setFloorPriceList(floorPrices);
       } catch (error) {
         console.log("Error fetching data: ", error);
       }
