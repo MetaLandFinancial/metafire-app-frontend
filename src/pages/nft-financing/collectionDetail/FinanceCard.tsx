@@ -66,7 +66,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
   const [selectedNft, setSelectedNft] = useState<any>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
-  const [borrowAmountInput, setBorrowAmountInput] = useState("");
+  const [downPayAmountInput, setDownPayAmountInput] = useState("");
 
   const [bytesdata, setbytesdata] = useState("");
   const [signature, setsignature] = useState("");
@@ -83,7 +83,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
 
   const handleBorrowAmountChange = (event: any) => {
     console.log("borrow amount: ", event.target.value);
-    setBorrowAmountInput(event.target.value);
+    setDownPayAmountInput(event.target.value);
   }
 
 
@@ -255,13 +255,15 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
         console.log('encodedData', encodedData);
         console.log('actualSign', actualSign);
 
-        const amountToBorrow = ethers.parseUnits(borrowAmountInput.toString(), 18);
-        const loanNftPriceBigNumber = ethers.parseUnits(loanNftPrice.toString(), 0);
 
-        console.log('amountToBorrow', amountToBorrow);
+        const loanNftPriceBigNumber = ethers.parseUnits(loanNftPrice.toString(), 0);
         console.log('loanNftPriceBigNumber', loanNftPriceBigNumber);
-        const payAmount = loanNftPriceBigNumber-amountToBorrow;
+        // const payAmount = loanNftPriceBigNumber-amountToBorrow;
+        
+        const payAmount =  ethers.parseUnits(downPayAmountInput.toString(), 18);
+        const amountToBorrow = loanNftPriceBigNumber - payAmount;
         console.log('payAmount', payAmount);
+        console.log('amountToBorrow', amountToBorrow);
 
         const bnpl = new ethers.Contract(BNPL_ADDRESS, BNPL.abi, signer);
         const debtTokenContract = new ethers.Contract(DEBT_TOKEN_ADDRESS, DebtToken.abi, signer);
@@ -600,7 +602,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
                                   Min Downpayment
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                                {(parseFloat(selectedNft?.price.current.value)/10**18*0.5*1.002).toFixed(3)} ETH
+                                {(parseFloat(selectedNft?.price.current.value)/10**18*0.5*1.002).toFixed(4)} ETH
                                 </p>
                               </div>
                             </div>
@@ -655,8 +657,9 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
                                 style={{ caretColor: 'white' }}
                                 type="text"
                                 className="text-base font-semibold Text_gradient text-start md:text-end w-full outline-none focus:outline-none border-none md:pl-[10px]"
-                                placeholder={(parseFloat(selectedNft?.price.current.value)/10**18*0.5*1.002).toFixed(3)}
-                                value={borrowAmountInput}
+                                // placeholder={(parseFloat(selectedNft?.price.current.value)/10**18*0.5*1.002).toFixed(3)}
+                                // placeholder="0"
+                                value={downPayAmountInput}
                                 onChange={handleBorrowAmountChange}
                               />
                             </div>
