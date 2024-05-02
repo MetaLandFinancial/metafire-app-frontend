@@ -408,7 +408,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
                           className="w-[9px] md:w-3 h-4 md:h-[18px] mr-1"
                         />
                       </span>
-                      {(parseFloat(item.price.current.value)/10**18).toFixed(3)}
+                      {(parseFloat(item.price.current.value)/10**18).toFixed(4)}
                     </p>
                   </div>
                 </div>
