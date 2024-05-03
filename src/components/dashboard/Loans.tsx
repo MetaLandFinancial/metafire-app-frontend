@@ -368,8 +368,8 @@ const Loans = () => {
                             "text-[10px] md:text-xl font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text flex items-center gap-2 pb-5"
                           }
                         >
-                          <img src={EthIcon.src} alt="icon" />
-                          {floorPriceList[index]?.toFixed(4)} ETH
+                          {/* <img src={EthIcon.src} alt="icon" /> */}
+                          {/* {floorPriceList[index]?.toFixed(4)} ETH */}
                         </p>
 
                         <button
@@ -498,12 +498,15 @@ const Loans = () => {
                         >
                           Asset class <img src={ToolTip.src} alt="tooltip" />
                         </h2>
-                        <p
-                          className={
-                            "text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text flex items-center gap-2"
-                          }
-                        >
-                          5 <img src={Star.src} alt="icon" />
+                        <p className="text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text flex items-center gap-2">
+                          {/* Ensure all star images are displayed in a row using flex */}
+                          <div className="flex items-center">
+                            <img src={Star.src} alt="star icon" />
+                            <img src={Star.src} alt="star icon" />
+                            <img src={Star.src} alt="star icon" />
+                            <img src={Star.src} alt="star icon" />
+                            <img src={Star.src} alt="star icon" />
+                          </div>
                           {loansDataItems.assetClass}
                         </p>
                       </div>
@@ -535,6 +538,7 @@ const Loans = () => {
                         >
                           Liquidation Factor
                         </h2>
+
 
                         <div className="card_right w-full flex items-center md:flex-col justify-between pb-5 md:pb-0">
                           <div className="flex items-center ml-8">

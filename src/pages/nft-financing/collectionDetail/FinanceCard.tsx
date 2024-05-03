@@ -15,6 +15,7 @@ const { ethers, AbiCoder, Signature } = require("ethers");
 import WETH from "../../../contracts/weth.json";
 import DebtToken from "../../../contracts/debtToken.json";
 import BNPL from "../../../contracts/BNPL.json";
+import NFTLinkOracleGetter from "../../../contracts/NFTLinkOracleGetter.json";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 
 type CollectionSlugsType = {
@@ -55,6 +56,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
   const DEBT_TOKEN_ADDRESS = process.env.NEXT_PUBLIC_DEBT_TOKEN_ADDRESS as string;
   const BNPL_ADDRESS = process.env.NEXT_PUBLIC_BNPL_ADDRESS as string;
   const SEAPORT_ADAPTER_ADDRESS = process.env.NEXT_PUBLIC_SEAPORT_ADAPTER_ADDRESS as string;
+  const MAINNET_RPC_URL = process.env.NEXT_PUBLIC_MAINNET_RPC_URL as string; 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
@@ -62,7 +64,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
   const [loanNftAsset, setLoanNftAsset] = useState("");
   const [loanNftId, setLoanNftId] = useState("");
   const [loanNftPrice, setLoanNftPrice] = useState("");
-  const [selectedNftFloorPrice, setSelectedNftFloorPrice] = useState(0);
+  const [collectionFloorPrice, setCollectionFloorPrice] = useState(0);
   const [selectedNft, setSelectedNft] = useState<any>(null);
   const [selectedIndex, setSelectedIndex] = useState(0);
 
@@ -91,7 +93,10 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
     console.log("item", item);
     console.log("item", item.protocol_data.parameters.offer[0].token);
     console.log("item", item.protocol_data.parameters.offer[0].identifierOrCriteria);
-    
+    const minDownPayment = item.price.current.value - collectionFloorPrice * 0.5;
+    console.log("minDownPayment", minDownPayment);
+    const downPaymentAmountInput = (parseFloat(item.price.current.value)/10**18*0.6*1.002).toFixed(4);
+    setDownPayAmountInput(downPaymentAmountInput);
     setIsModalOpen(true);
     setSelectedNft(item);
     
@@ -107,6 +112,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
 
   
   useEffect(() => {
+    console.log("collectionAddress", collectionAddress); 
     const initializeEthereum = async () => {
       const { ethereum } = window as any;
       if (!ethereum) {
@@ -124,11 +130,32 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
         console.error("Error initializing ethereum:", error);
       }
     };
-
+ 
     initializeEthereum();
+    getOracleFloorPrice();
   }, []);
 
 
+
+  const getOracleFloorPrice = async () => {
+    console.log('Buy Now Pay Later');
+    try {
+      // cconst { ethers } = require("ethers")
+  
+        const provider = new ethers.JsonRpcProvider(MAINNET_RPC_URL);
+
+        console.log("collectionAddress", collectionAddress);
+        const nFTLinkOracleGetter = new ethers.Contract("0x11C3Ef0113D589ED17e5488E0a8bd8bf7085f2a9", NFTLinkOracleGetter.abi, provider);
+        const oracleFloorPrice = await nFTLinkOracleGetter.getAssetPrice(collectionAddress);
+        console.log('oracleFloorPrice', oracleFloorPrice);
+        setCollectionFloorPrice(oracleFloorPrice);
+        
+  
+    }
+    catch (error) {
+      console.log("Error initializing ethereum:", error);
+    }
+  }
   const callBNPL = async () => {
     console.log('Buy Now Pay Later');
     try {
