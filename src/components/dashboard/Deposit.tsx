@@ -52,6 +52,7 @@ const Deposit = () => {
 
 
   const openModal = (index: number) => {
+    console.log("index", index);
     setSelectedIndex(index);
     setIsModalOpen(true);
   };
@@ -76,13 +77,13 @@ const Deposit = () => {
       
       const selectedMTokenAddress = mTokenAddresses[selectedIndex];
       const amountToWithdraw = ethers.parseUnits(withdrawAmountInput.toString(), 18);
-
+      console.log("selectedMTokenAddress: ", selectedMTokenAddress);
       const mTokenContract = new ethers.Contract(selectedMTokenAddress, MToken.abi, signer);
       const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
 
       // Check allowance
       const allowance = await mTokenContract.allowance(signer.address, WETHGATEWAY_ADDRESS);
-
+      console.log("Allowance: ", allowance);
       if (allowance < amountToWithdraw) {
         console.log("Approving...");
         const approveTx = await mTokenContract.approve(WETHGATEWAY_ADDRESS, amountToWithdraw);
@@ -107,7 +108,7 @@ const Deposit = () => {
 
       // Withdraw
       console.log("Withdrawing...");
-      const withdrawTx = await wethGatewaycontract.withdrawETH(amountToWithdraw, signer.address, 0);
+      const withdrawTx = await wethGatewaycontract.withdrawETH(amountToWithdraw, signer.address, selectedIndex);
       if (withdrawTx && withdrawTx.hash) {
         setIsWithdrawing(true);
       }
