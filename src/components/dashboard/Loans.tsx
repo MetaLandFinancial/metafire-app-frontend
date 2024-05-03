@@ -545,7 +545,7 @@ const Loans = () => {
                             {/* Optional image if needed; uncomment if you have an image source */}
                             {/* <img src="{loansDataItems.loanActiveHealth.src}" alt="" /> */}
                             <p className="text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
-                              {(loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)}%
+                              {(loanInfoFromBackend?.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)}%
                             </p>
                             {parseFloat((loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)) > 100 ?
                               <>
