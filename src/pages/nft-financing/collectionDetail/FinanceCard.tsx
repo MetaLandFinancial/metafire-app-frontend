@@ -93,6 +93,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
     console.log("item", item);
     console.log("item", item.protocol_data.parameters.offer[0].token);
     console.log("item", item.protocol_data.parameters.offer[0].identifierOrCriteria);
+    console.log("collectionFloorPrice", collectionFloorPrice);
     const minDownPayment = item.price.current.value - collectionFloorPrice * 0.5;
     console.log("minDownPayment", minDownPayment);
     const downPaymentAmountInput = (parseFloat(item.price.current.value)/10**18*0.6*1.002).toFixed(4);
