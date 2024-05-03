@@ -530,19 +530,21 @@ const Loans = () => {
                           Liquidation Factor
                         </h2>
 
-                        <div className={"ml-8"}>
-                          {/* <img src="{loansDataItems.loanActiveHealth.src}" alt="" /> */}
-                          <p
-                          className={
-                            "text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text"
-                          }
-                        >
-                          {(loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor*100).toFixed(2)}
-                          {/* (parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27)).toFixed(4) */}
-                          {/* {  ((parseFloat(reserveData?.variableBorrowIndex)  / 10**25 * parseFloat(ethers.formatEther(loansDataItems.loanAmount))) / floorPriceList[index] / 0.8).toFixed(4)} */}
-                          %
-                        </p>
-                        </div>
+                        <div className="card_right w-full flex items-center md:flex-col justify-between pb-5 md:pb-0">
+  <div className="flex items-center ml-8">
+    {/* Optional image if needed; uncomment if you have an image source */}
+    {/* <img src="{loansDataItems.loanActiveHealth.src}" alt="" /> */}
+    <p className="text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+      {(loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)}%
+    </p>
+    {parseFloat((loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)) > 100 ?
+      <img src="/assets/wrong-icon.png" alt="icon" className="w-12 ml-2" /> :
+      <img src="/assets/right-icon.png" alt="icon" className="w-12 ml-2" />
+    }
+  </div>
+</div>
+
+
                       </div>
                     </div>
                   </div>
@@ -591,7 +593,7 @@ const Loans = () => {
                             <span>{getCollectionSlug(loansDataItems?.nftAsset)}</span>
                             <span>#{loansDataItems?.nftTokenId}</span>
                           </h2>
-
+{/* 
                           <div
                             className={"flex items-center justify-between w-full pb-2"}
                           >
@@ -604,10 +606,10 @@ const Loans = () => {
                               0.0025487 ETH
                             </p>
 
-                            {/* <button className="border border-[#4776E6] h-[37px] w-[37px] flex justify-center items-center rounded-full">
+                            <button className="border border-[#4776E6] h-[37px] w-[37px] flex justify-center items-center rounded-full">
                               <img src={FavouriteImgOne.src} alt="favourite-img" />
-                            </button> */}
-                          </div>
+                            </button> 
+                          </div> */}
 
                           <div className="repay_info w-full border border-[#4776e65e] rounded-2xl">
                             <p
@@ -671,6 +673,7 @@ const Loans = () => {
                                 {  ((parseFloat(reserveData?.variableBorrowIndex)  / 10**25 * parseFloat(ethers.formatEther(loansDataItems.loanAmount))) / floorPriceList[index] / 0.8).toFixed(4)}
                                 %
                               </span>
+
                             </p>
                    
                      
