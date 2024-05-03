@@ -33,7 +33,7 @@ const DTabel = () => {
         query: gql(RESERVE_SUBGRAPH_QUERY),
       })
       .then((data) => {
-        console.log("Data fetched: ", data.data.reserveDataUpdateds[0].liquidityRates);
+        // console.log("Data fetched: ", data.data.reserveDataUpdateds[0].liquidityRates);
         setLiquidityRates(
           data.data.reserveDataUpdateds[0].liquidityRates.map((rate: any) =>
             (rate / 10 ** 25).toFixed(4)

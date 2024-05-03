@@ -41,14 +41,21 @@ const Navbar = () => {
               ))}
             </ul>
           </nav>
-          {/* <button className={"mr-3 md:hidden"} onClick={handleNav}>
+          <button className={"mr-3 md:hidden"} onClick={handleNav}>
                         <img src={humburger.src} alt=""/>
                     </button>
-                    <button
+                    {/* <button
                         className={"text-base font-semibold text-white py-4 px-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[6px]"}>
                         Connect Wallet
                     </button> */}
-          <ConnectButton chainStatus="icon" showBalance={false} />
+          <ConnectButton 
+            chainStatus="icon"
+            accountStatus={{
+              smallScreen: 'avatar',
+              largeScreen: 'full',
+            }}
+           showBalance={false} 
+           />
         </div>
       </div>
       {openNav && (
