@@ -258,18 +258,24 @@ const Loans = () => {
     setRepayAmountInput(event.target.value);
   }
 
-  const callRepayETH = async (nftAsset: string, nftTokenId: string) => {
-    console.log("call repay ");
-    console.log("nft asset: ", nftAsset);
-    console.log("nft token id: ", nftTokenId);
+  const callRepayETH = async (nftAsset: string, nftTokenId: string, loanAmount: any) => {
+    // console.log("call repay ");
+    // console.log("nft asset: ", nftAsset);
+    // console.log("nft token id: ", nftTokenId);
+    // console.log("loan amount: ", loanAmount);
 
     try {
       
       const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
-
+    
       const amountToRepay = ethers.parseUnits(repayAmountInput, 18);
-      console.log("amount to repay: ");
-      console.log("signer: ", signer);
+      console.log("loan amount: ", loanAmount);
+      console.log("amount to repay: ", repayAmountInput);
+      if(repayAmountInput > loanAmount){
+        alert("Amount to repay is more than the loan amount");
+        return;
+      }
+
       const repayTx = await wethGatewaycontract.repayETH(nftAsset, parseInt(nftTokenId), amountToRepay, {value: amountToRepay});
       if (repayTx && repayTx.hash) {
         setIsRepaying(true);
@@ -531,18 +537,18 @@ const Loans = () => {
                         </h2>
 
                         <div className="card_right w-full flex items-center md:flex-col justify-between pb-5 md:pb-0">
-  <div className="flex items-center ml-8">
-    {/* Optional image if needed; uncomment if you have an image source */}
-    {/* <img src="{loansDataItems.loanActiveHealth.src}" alt="" /> */}
-    <p className="text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
-      {(loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)}%
-    </p>
-    {parseFloat((loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)) > 100 ?
-      <img src="/assets/wrong-icon.png" alt="icon" className="w-12 ml-2" /> :
-      <img src="/assets/right-icon.png" alt="icon" className="w-12 ml-2" />
-    }
-  </div>
-</div>
+                          <div className="flex items-center ml-8">
+                            {/* Optional image if needed; uncomment if you have an image source */}
+                            {/* <img src="{loansDataItems.loanActiveHealth.src}" alt="" /> */}
+                            <p className="text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+                              {(loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)}%
+                            </p>
+                            {parseFloat((loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)) > 100 ?
+                              <img src="/assets/wrong-icon.png" alt="icon" className="w-10 ml-2" /> :
+                              <img src="/assets/right-icon.png" alt="icon" className="w-10 ml-2" />
+                            }
+                          </div>
+                        </div>
 
 
                       </div>
@@ -633,7 +639,7 @@ const Loans = () => {
                                 {(parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27)).toFixed(4) } ETH
                               </span>
                             </p>
-                            <p
+                            {/* <p
                               className={
                                 "flex justify-between border-b border-b-[#4776e65e] px-[13px] py-[10px]"
                               }
@@ -652,8 +658,8 @@ const Loans = () => {
                               >
                                 {floorPriceList[index]?.toFixed(4)} ETH
                               </span>
-                            </p>
-                            <p
+                            </p> */}
+                            {/* <p
                               className={
                                 "flex justify-between border-b border-b-[#4776e65e] px-[13px] py-[10px]"
                               }
@@ -674,7 +680,7 @@ const Loans = () => {
                                 %
                               </span>
 
-                            </p>
+                            </p> */}
                    
                      
                           </div>
@@ -719,7 +725,7 @@ const Loans = () => {
                       </label> */}
 
                       <button
-                        onClick={() => callRepayETH(loansDataItems?.nftAsset, loansDataItems?.nftTokenId)}
+                        onClick={() => callRepayETH(loansDataItems?.nftAsset, loansDataItems?.nftTokenId, (parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27) * 1.001).toFixed(6))}
                         className={
                           "bg-gradient-to-r from-blue-500 to-purple-600 w-full py-[18px] rounded-[4px] text-white mt-5"
                         }
