@@ -547,11 +547,17 @@ const Loans = () => {
                             <p className="text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
                               {(loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)}%
                             </p>
-                            {parseFloat((loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)) > 100 ?
-                              <img src="/assets/wrong-icon.png" alt="icon" className="w-10 ml-2" /> :
+                            {parseFloat((loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 1000).toFixed(2)) > 100 ?
+                              <>
+                              <img src="/assets/wrong-icon.png" alt="icon" className="w-10 ml-2" />
+                                <p className="absolute text-white bg-black bg-opacity-50 opacity-0 hover:opacity-100">
+                                  Liquidation will occur soon.
+                                </p>
+                              </> :
                               <img src="/assets/right-icon.png" alt="icon" className="w-10 ml-2" />
                             }
                           </div>
+
                         </div>
 
 
