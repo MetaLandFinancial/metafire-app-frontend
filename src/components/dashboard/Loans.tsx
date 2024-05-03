@@ -541,22 +541,27 @@ const Loans = () => {
 
 
                         <div className="card_right w-full flex items-center md:flex-col justify-between pb-5 md:pb-0">
-                          <div className="flex items-center ml-8">
-                            {/* Optional image if needed; uncomment if you have an image source */}
-                            {/* <img src="{loansDataItems.loanActiveHealth.src}" alt="" /> */}
-                            <p className="text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
-                              {(loanInfoFromBackend?.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)}%
-                            </p>
-                            {parseFloat((loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)) > 100 ?
-                              <>
+                        <div className="flex items-center ml-8">
+                          {/* Optional image if needed; uncomment if you have an image source */}
+                          {/* <img src="{loansDataItems.loanActiveHealth.src}" alt="" /> */}
+                          <p className="text-[10px] md:text-base font-bold bg-gradient-to-r from-blue-500 to-purple-600 text-transparent bg-clip-text">
+                            {Array.isArray(loanInfoFromBackend) ? 
+                              (loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2) : 
+                              'N/A'}%
+                          </p>
+                          {Array.isArray(loanInfoFromBackend) && parseFloat((loanInfoFromBackend.find(loan => loan.nftAsset === loansDataItems.nftAsset && loan.nftTokenId === loansDataItems.nftTokenId)?.healthFactor * 100).toFixed(2)) > 100 ?
+                            <>
                               <img src="/assets/wrong-icon.png" alt="icon" className="w-10 ml-2" />
-                                <p className="absolute text-white bg-black bg-opacity-50 opacity-0 hover:opacity-100">
-                                  Liquidation will occur soon.
-                                </p>
-                              </> :
-                              <img src="/assets/right-icon.png" alt="icon" className="w-10 ml-2" />
-                            }
-                          </div>
+                              <p className="absolute text-white bg-black bg-opacity-50 opacity-0 hover:opacity-100 transition-opacity duration-300">
+                                Liquidation will occur soon.
+                              </p>
+                            </> :
+                            (Array.isArray(loanInfoFromBackend) ? 
+                              <img src="/assets/right-icon.png" alt="icon" className="w-10 ml-2" /> :
+                              <span>N/A</span>)
+                          }
+                        </div>
+
 
                         </div>
 
