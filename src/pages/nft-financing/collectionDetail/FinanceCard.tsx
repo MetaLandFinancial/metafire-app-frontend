@@ -16,7 +16,7 @@ import WETH from "../../../contracts/weth.json";
 import DebtToken from "../../../contracts/debtToken.json";
 import BNPL from "../../../contracts/BNPL.json";
 import NFTLinkOracleGetter from "../../../contracts/NFTLinkOracleGetter.json";
-import { useWriteContract, useAccount, useWalletClient } from "wagmi";
+import { useWriteContract, useAccount, useWalletClient, cookieToInitialState } from "wagmi";
 
 type CollectionSlugsType = {
   [key: string]: string;
@@ -90,14 +90,22 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
 
 
   const openModal = (item: any, index: number) => {
-    console.log("item", item);
-    console.log("item", item.protocol_data.parameters.offer[0].token);
-    console.log("item", item.protocol_data.parameters.offer[0].identifierOrCriteria);
-    console.log("collectionFloorPrice", collectionFloorPrice);
-    const minDownPayment = item.price.current.value - collectionFloorPrice * 0.5;
-    console.log("minDownPayment", minDownPayment);
-    const downPaymentAmountInput = (parseFloat(item.price.current.value)/10**18*0.6*1.002).toFixed(4);
-    setDownPayAmountInput(downPaymentAmountInput);
+    // console.log("item", item);
+    // console.log("item", item.protocol_data.parameters.offer[0].token);
+    // console.log("item", item.protocol_data.parameters.offer[0].identifierOrCriteria);
+    // console.log("collectionFloorPrice", collectionFloorPrice);
+    const maxBorrow = BigInt(collectionFloorPrice)/ BigInt(2);  // Assuming collectionFloorPrice is already a BigInt
+    
+    const minDownPayment = (BigInt(item.price.current.value) - maxBorrow) * BigInt(1002)/ BigInt(1000);
+    const minDownPaymentInput =  ethers.formatEther(minDownPayment); //in Ether
+    // console.log("minDownPaymentInput", minDownPaymentInput);
+
+
+    // console.log("maxBorrow", maxBorrow);
+    // console.log("minDownPayment", minDownPayment);
+    // const downPaymentAmountInput = (parseFloat(item.price.current.value)/10**18*0.6*1.002).toFixed(4);
+    setDownPayAmountInput(minDownPaymentInput);
+
     setIsModalOpen(true);
     setSelectedNft(item);
     
@@ -630,7 +638,8 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
                                   Min Downpayment
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                                {(parseFloat(selectedNft?.price.current.value)/10**18*0.5*1.002).toFixed(4)} ETH
+                                {/* {(parseFloat(selectedNft?.price.current.value)/10**18*0.5*1.002).toFixed(4)} ETH */}
+                                {parseFloat(downPayAmountInput).toFixed(4)} ETH
                                 </p>
                               </div>
                             </div>
