@@ -2,7 +2,7 @@
 import * as React from 'react'
 import { useState, useEffect } from "react";
 import { useRouter } from 'next/router';
-
+import { getSlugByKey } from "@/utils/whitelistedNfts";
 import "./financing.css";
 import HeroF from "./HeroF";
 import Pagenv from "./Pagenv";
@@ -49,7 +49,7 @@ export default function  Collection () {
 
     useEffect(() => {
         // console.log("address is: ", collection);
-        const slug = getCollectionSlug(collection);
+        const slug = getSlugByKey(collection);
         setCollectionName(slug);
         // console.log("slug is: ", slug);
         // console.log("NFT Equity Page");
@@ -58,7 +58,7 @@ export default function  Collection () {
     }, [collection]);
 
     async function fetchNFTData(nextKey: string) {
-        const slug = getCollectionSlug(collection);
+        const slug = getSlugByKey(collection);
 
         // console.log("slug is: ", slug);
         const url = `/api/getNftsByCollection?collectionSlug=${slug}${nextKey ? `&next=${nextKey}` : ''}`;
@@ -120,7 +120,7 @@ export default function  Collection () {
     async function fetchNFTStats() {
 
         try {
-            const slug = getCollectionSlug(collection);
+            const slug = getSlugByKey(collection);
             // console.log("slug is: ", slug);
             const response = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(slug)}`);
             const data = await response.json();

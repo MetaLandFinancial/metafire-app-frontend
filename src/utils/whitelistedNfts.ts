@@ -110,3 +110,15 @@ export function getOracleAddress(addressKey: string): string | null {
         return ''; // Or return undefined, depending on your error handling preference
     }
 }
+
+
+export function getSlugByKey( key: string): string {
+    // Normalize the key to ensure case insensitivity
+    const normalizedKey = key.toLowerCase();
+
+    // Retrieve the oracle by the normalized key
+    const oracle = oracleList[normalizedKey];
+
+    // Return the slug if the oracle exists
+    return oracle ? oracle.slug : "";
+}
