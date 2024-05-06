@@ -30,6 +30,8 @@ const Deposit = () => {
 
 
   const [mTokenBalance, setMTokenBalance] = useState<string[]>([]);
+  // in decimal
+  const [depositBalances, setDepositBalances] = useState<string[]>([]);
   const [depositDates, setDepositDates] = useState<number[]>([]);
   const [unlockDates, setUnlockDates] = useState<number[]>([]);
   const [totalMTokenBalance, setTotalMTokenBalance] = useState(0);
@@ -76,6 +78,7 @@ const Deposit = () => {
 
       
       const selectedMTokenAddress = mTokenAddresses[selectedIndex];
+      // Amount of Ether to withdraw
       const amountToWithdraw = ethers.parseUnits(withdrawAmountInput.toString(), 18);
       console.log("selectedMTokenAddress: ", selectedMTokenAddress);
       const mTokenContract = new ethers.Contract(selectedMTokenAddress, MToken.abi, signer);
@@ -486,10 +489,9 @@ const Deposit = () => {
                         </td>
                         <td className="px-6 py-4">
                           <p className={"text-base font-bold text-white"}>
-                            {/* {
-                                                            tbodyData.totalStaked
-                                                        } */}
-                            {parseFloat(mTokenBalance[index]).toFixed(4)} ETH
+           
+                            {/* {parseFloat(mTokenBalance[index]).toFixed(4)} ETH */}
+                            {Math.floor(parseFloat(mTokenBalance[index]) * Math.pow(10, 4)) / Math.pow(10, 4)} ETH
                           </p>
                         </td>
 
@@ -755,7 +757,7 @@ const Deposit = () => {
                       Available to withdraw
                     </p>
                     <span className="text-white text-[20.5px] md:text-2xl lg:text-3xl xl:text-[40px] font-bold">
-                    {isUnlocked[selectedIndex] ? parseFloat(mTokenBalance[selectedIndex]).toFixed(4): '0'}ETH
+                    {isUnlocked[selectedIndex] ?  Math.floor(parseFloat(mTokenBalance[selectedIndex]) * Math.pow(10, 6)) / Math.pow(10, 6): '0'}ETH
                     </span>
                   </div>
                   <div className="mt-[47px]">
@@ -782,7 +784,7 @@ const Deposit = () => {
                         onChange={handleWithdrawAmountChange}
                       />
                       <div className="absolute top-[50%] translate-y-[-50%] right-5">
-                        <button onClick={() => setWithdrawAmountInput(parseFloat(mTokenBalance[selectedIndex]).toFixed(4))} className="max_btn_bg hover:opacity-[0.7]">
+                        <button onClick={() => setWithdrawAmountInput((Math.floor((parseFloat(mTokenBalance[selectedIndex])) * Math.pow(10, 6)) / Math.pow(10, 6)).toFixed(6))} className="max_btn_bg hover:opacity-[0.7]">
                           Max
                         </button>
                       </div>
