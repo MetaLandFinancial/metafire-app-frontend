@@ -48,6 +48,7 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
 
     // Transaction state management
     const [isDepositing, setIsDepositing] = useState(false);
+    const [depositStatus, setDepositStatus] = useState('Stake2');
 
 
   const callDeposit = async () => {
@@ -78,30 +79,35 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
       const signer = await provider.getSigner();
 
       const contract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
-      const depositTx = await contract.depositETH(address, periodCode, 0, {
+      const depositTx = contract.depositETH(address, periodCode, 0, {
         value: ethers.parseEther(depositAmountInput)
       });
-      if (depositTx && depositTx.hash) {
-        setIsDepositing(true);
-      }
+      setIsDepositing(true);
+      setDepositStatus('Depositing....');
 
-      const depositReceipt = await depositTx.wait();
-      if (depositReceipt.status === 0) {
-        console.log("Deposit failed");
- 
-        setIsDepositing(false);
-        alert("Deposit failed");
-        return;
-      } else {
-        alert("Deposited successfully");
-        router.push('/dashboard');
-        setIsDepositing(false);
-        //navigate to dashborad page
-
-      }
+      depositTx.then((txResponse) => {
+        console.log("Transaction Hash:", txResponse.hash);
+        txResponse.wait().then((confirmationResult:any) => {
+          console.log("Transaction confirmed:", confirmationResult);
+          // Perform actions after confirmation
+            setIsDepositing(false);
+            setDepositStatus('Stake');
+            alert("Deposited successfully");
+            router.push('/dashboard');
+         
+          }).catch((error:any) => {
+            console.error("Transaction confirmation error:", error);
+            setIsDepositing(false);
+            setDepositStatus('Stake');
+            alert("Deposit failed");
+          });
+        }).catch((error) => {
+          console.log("Transaction error:", error);
+          setDepositStatus('Stake');
+        })
   
-      
     } catch (error) {
+      setDepositStatus('Stake');
       console.error("Error depositing ETH: ", error);
     }
 
@@ -191,9 +197,9 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
               </div>
               <div onClick={callDeposit} className="flex flex-col items-center md:items-start">
                 <p className="text-white text-[27px] font-bold mb-[31px]">
-              {isDepositing ? 'Depositing...' : '3. Stake My Deposit '}
+                    3. Stake My Deposit 
                 </p>
-                <StakeBtn />
+                <StakeBtn depositStatus={depositStatus} />
               </div>
             </div>
           </div>

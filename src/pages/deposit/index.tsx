@@ -15,10 +15,11 @@ const Index = () => {
           <Image src="/img/mainbg.png" alt="bgImg" layout="fill" />
         </div>
         <DHero />
-        <DFinance />
+       
         {/* <ConnectButton/> */}
         <DForm connectButton={<ConnectButton />}/>
         <DTabel />
+        <DFinance />
         
       </div>
     </>
