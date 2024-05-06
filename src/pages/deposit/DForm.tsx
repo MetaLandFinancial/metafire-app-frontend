@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useRouter } from 'next/router';
 import CustomListbox from "./Form/CustomListbox ";
 import Connect from "./Form/ConnectBtn";
 import StakeBtn from "./Form/StakeBtn";
@@ -36,6 +37,7 @@ const stakeOptions = [
 const DForm: React.FC<DFormProps> = ({ connectButton }) => {
   const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
 
+  const router = useRouter();
   const [selectedPerson, setSelectedPerson] = useState(people[0]);
   const [selectedDepositPeriod, setSelectedDepositPeriod] = useState(depositPeriodOptions[0]);
   const [selectedStake, setSelectedStake] = useState(stakeOptions[0]);
@@ -43,6 +45,9 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
 
   const { address, connector, isConnected } = useAccount();
   // const { data: hash, error, isPending, writeContract } = useWriteContract() 
+
+    // Transaction state management
+    const [isDepositing, setIsDepositing] = useState(false);
 
 
   const callDeposit = async () => {
@@ -73,19 +78,29 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
       const signer = await provider.getSigner();
 
       const contract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
-      const txResponse = await contract.depositETH(address, periodCode, 0, {
+      const depositTx = await contract.depositETH(address, periodCode, 0, {
         value: ethers.parseEther(depositAmountInput)
       });
-      // console.log("Transaction Receipt: ", txResponse);
-      // const txResponse = await writeContract({ 
-      //   address: WETHGATEWAY_ADDRESS as `0x${string}`, // Type assertion
-      //   abi: WETHGateway.abi, 
-      //   functionName: 'depositETH', 
-      //   args: [address, 0, 0],
-      //   value: ethers.parseEther("0.1"),
-      // }) 
+      if (depositTx && depositTx.hash) {
+        setIsDepositing(true);
+      }
+
+      const depositReceipt = await depositTx.wait();
+      if (depositReceipt.status === 0) {
+        console.log("Deposit failed");
+ 
+        setIsDepositing(false);
+        alert("Deposit failed");
+        return;
+      } else {
+        alert("Deposited successfully");
+        router.push('/dashboard');
+        setIsDepositing(false);
+        //navigate to dashborad page
+
+      }
   
-      // console.log("Transaction Receipt: ", txResponse)
+      
     } catch (error) {
       console.error("Error depositing ETH: ", error);
     }
@@ -176,7 +191,7 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
               </div>
               <div onClick={callDeposit} className="flex flex-col items-center md:items-start">
                 <p className="text-white text-[27px] font-bold mb-[31px]">
-                  3. Stake My Deposit
+              {isDepositing ? 'Depositing...' : '3. Stake My Deposit '}
                 </p>
                 <StakeBtn />
               </div>
