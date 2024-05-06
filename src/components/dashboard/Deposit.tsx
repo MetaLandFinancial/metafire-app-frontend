@@ -1,5 +1,6 @@
 import React from "react";
 import { Fragment, useState, useEffect } from "react";
+import { useRouter } from 'next/router';
 import totalDeposit from "../../../public/assets/total_deposit.svg";
 import { responsiveTableHead, tableBody, tableHead } from "@/utils/data";
 import resposnvieTableImg from "@/../public/assets/bg.svg";
@@ -124,6 +125,7 @@ const Deposit = () => {
       }else{
         setIsModalOpen(false);
         alert("Withdrawal successful");
+        router.reload();
       }
       setIsWithdrawing(false);
 
