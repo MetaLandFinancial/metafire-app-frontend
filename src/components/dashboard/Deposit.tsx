@@ -567,7 +567,7 @@ const Deposit = () => {
             </div>
 
             {/* deposit for mobile */}
-            {Array.from({ length: 4 }).map((_, index) => (
+            {tableBody.map((tbodyData, index) => (
               <div className="grid grid-cols-12 sm:hidden border border-gray-4 border-opacity-40 rounded-[20px] m-3">
                 <div  className="col-span-6 ">
                   <div
@@ -603,7 +603,7 @@ const Deposit = () => {
                           5.0
                         </li>
                         <li className="text-white text-[12px] font-bold pb-3 capitalize"  >
-                          Days
+                          {tbodyData.timePeriod} Days
                         </li>
                         <li className="text-white text-[12px] font-bold pb-3 capitalize" >
                           {
