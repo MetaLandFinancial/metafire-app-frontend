@@ -568,12 +568,12 @@ const Deposit = () => {
 
             {/* deposit for mobile */}
             {Array.from({ length: 4 }).map((_, index) => (
-              <div className="grid grid-cols-12 sm:hidden">
-                <div  className="col-span-6 border border-white border-opacity-40">
+              <div className="grid grid-cols-12 sm:hidden border border-gray-4 border-opacity-40 rounded-[20px] m-2">
+                <div  className="col-span-6 ">
                   <div
                   style={{height:"100%"}}
                       className={
-                        "bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"
+                        "bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400 rounded-l-[20px]"
                       }
                     >
                       <ul className={"p-4"}>
@@ -592,10 +592,10 @@ const Deposit = () => {
                       </ul>
                   </div>
                 </div>
-                <div className="col-span-6 border border-white border-opacity-40">
+                <div className="col-span-6 ">
                   <div
                       className={
-                        "bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"
+                        "bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r-gray-400 rounded-r-[20px]"
                       }
                     >
                       <ul className={"p-4"}>
@@ -622,7 +622,7 @@ const Deposit = () => {
                             className={
                               "text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"
                             }
-                            // onClick={() => openModal(index)}
+                            onClick={() => openModal(index)}
                           >
                                   Withdraw
                           </button>
