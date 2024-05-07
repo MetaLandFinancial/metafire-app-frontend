@@ -42,8 +42,8 @@ const Navbar = () => {
             </ul>
           </nav>
           <button className={"mr-3 md:hidden"} onClick={handleNav}>
-                        <img src={humburger.src} alt=""/>
-                    </button>
+              <img src={humburger.src} alt=""/>
+          </button>
                     {/* <button
                         className={"text-base font-semibold text-white py-4 px-6 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[6px]"}>
                         Connect Wallet
@@ -65,6 +65,7 @@ const Navbar = () => {
               <li
                 className="text-base font-bold text-white py-4 px-4"
                 key={index}
+                onClick={() => setOpenNav(false)}
               >
                 <Link href={navItem.path}>{navItem.name}</Link>
               </li>
