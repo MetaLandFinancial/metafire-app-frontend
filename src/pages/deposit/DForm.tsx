@@ -48,7 +48,7 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
 
     // Transaction state management
     const [isDepositing, setIsDepositing] = useState(false);
-    const [depositStatus, setDepositStatus] = useState('Stake2');
+    const [depositStatus, setDepositStatus] = useState('Stake');
 
 
   const callDeposit = async () => {

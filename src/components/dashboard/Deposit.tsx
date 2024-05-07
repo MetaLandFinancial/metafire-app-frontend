@@ -392,9 +392,29 @@ const Deposit = () => {
               Deposit Summary
             </h2>
           </div>
+          {/* <div className="grid grid-cols-12 border border-white">
+            <div className="col-span-6 flex flex-col items-center">
+              <h4
+                  className={
+                    "text-3 md:text-2xl font-bold- text-white pb-2 md:pb-3"
+                  }
+              >
+                  Total Deposit
+              </h4>
+            </div>
+            <div className="col-span-6 flex flex-col items-center">
+              <h4
+                  className={
+                    "text-3 md:text-2xl font-bold- text-white pb-2 md:pb-3"
+                  }
+                >
+                  Total Deposit
+              </h4>
+            </div>
+          </div> */}
 
-          <div className="deposit_summery grid grid-cols-12 bg-deporitsImgTwo sm:bg-deporitsImg bg-no-repeat pb-[80px]">
-            <div className="col-span-6">
+          <div className="deposit_summery grid grid-cols-12  bg-no-repeat pb-[80px]">
+            <div className="col-span-6 m-2 border border-white border-opacity-40 rounded-2xl">
               <div className="deposit_item_one flex flex-col items-center py-[25px] md:py-[35px]">
                 <div className={"deposit_icon pb-2 md:pb-6"}>
                   <img
@@ -408,7 +428,7 @@ const Deposit = () => {
                     "text-3 md:text-2xl font-bold- text-white pb-2 md:pb-3"
                   }
                 >
-                  Total Deposit
+                  Available to withdraw
                 </h4>
                 <p className={"text-xl md:text-[40px] font-bold text-white"}>
                   {totalMTokenBalance}
@@ -416,7 +436,7 @@ const Deposit = () => {
               </div>
             </div>
 
-            <div className="col-span-6">
+            <div className="col-span-6 m-2 border border-white border-opacity-40 rounded-2xl">
               <div className="deposit_item_one flex flex-col items-center py-[25px] md:py-[35px]">
                 <div className={"deposit_icon pb-2 md:pb-6"}>
                   <img
@@ -612,123 +632,8 @@ const Deposit = () => {
                   </div>
                 </div>
 
-                <div
-                  className={
-                    "responsive_design flex justify-between border-b border-b-white"
-                  }
-                  style={{
-                    backgroundImage: `url(${resposnvieTableImg2.src})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                  }}
-                >
-                  <div
-                    className={
-                      "bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"
-                    }
-                  >
-                    <ul className={"p-4"}>
-                      {responsiveTableHead.map(
-                        (resPonData: any, index: any): any => (
-                          <li
-                            className={
-                              "text-white text-[10px] font-bold pb-4 capitalize"
-                            }
-                            key={index}
-                          >
-                            {resPonData.title}
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                  <div className={"py-[15px]"}>
-                    <ul className={"p-4"}>
-                      {responsiveTableHead.map(
-                        (respondTableData: any, index: any) => (
-                          <li
-                            className={
-                              "text-white text-[10px] font-medium pb-4 text-end capitalize"
-                            }
-                            key={index}
-                          >
-                            {respondTableData.rightSight === "Withdraw" ? (
-                              <button
-                                className={
-                                  "text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"
-                                }
-                                onClick={() => openModal(index)}
-                              >
-                                Withdraw
-                              </button>
-                            ) : (
-                              respondTableData.rightSight
-                            )}
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                </div>
-
-                <div
-                  className={"responsive_design flex justify-between "}
-                  style={{
-                    backgroundImage: `url(${resposnvieTableImg3.src})`,
-                    backgroundRepeat: "no-repeat",
-                    backgroundSize: "cover",
-                  }}
-                >
-                  <div
-                    className={
-                      "bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"
-                    }
-                  >
-                    <ul className={"p-4"}>
-                      {responsiveTableHead.map(
-                        (resPonData: any, index: any): any => (
-                          <li
-                            className={
-                              "text-white text-[10px] font-bold pb-4 capitalize"
-                            }
-                            key={index}
-                          >
-                            {resPonData.title}
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                  <div className={"py-[15px]"}>
-                    <ul className={"p-4"}>
-                      {responsiveTableHead.map(
-                        (respondTableData: any, index: any) => (
-                          <li
-                            className={
-                              "text-white text-[10px] font-medium pb-4 text-end capitalize"
-                            }
-                            key={index}
-                          >
-                            {respondTableData.rightSight === "Withdraw" ? (
-                              <button
-                                className={
-                                  "text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"
-                                }
-                                onClick={() => openModal(index)}
-                              >
-                                Withdraw
-                              </button>
-                            ) : (
-                              respondTableData.rightSight
-                            )}
-                          </li>
-                        )
-                      )}
-                    </ul>
-                  </div>
-                </div>
               </div>
-              <Pagination />
+              {/* <Pagination /> */}
             </div>
           </div>
         </div>
