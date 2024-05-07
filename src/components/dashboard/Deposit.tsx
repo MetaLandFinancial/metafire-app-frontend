@@ -428,7 +428,7 @@ const Deposit = () => {
                     "text-3 md:text-2xl font-bold- text-white pb-2 md:pb-3"
                   }
                 >
-                  Available to withdraw
+                  Total Deposited
                 </h4>
                 <p className={"text-xl md:text-[40px] font-bold text-white"}>
                   {totalMTokenBalance}
