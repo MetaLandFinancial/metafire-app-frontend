@@ -91,22 +91,30 @@ const Deposit = () => {
       console.log("Allowance: ", allowance);
       if (allowance < amountToWithdraw) {
         console.log("Approving...");
-        const approveTx = await mTokenContract.approve(WETHGATEWAY_ADDRESS, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
+        const approveTx = mTokenContract.approve(WETHGATEWAY_ADDRESS, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         // if transaction is sent, set the isApproving state to true
-        if (approveTx && approveTx.hash) {
-          setIsApproving(true);
-        }
-
-        const approveReceipt = await approveTx.wait();
-        if (approveReceipt.status === 0) {
-          console.log("Approval failed");
-   
-          setIsApproving(false);
-          alert("Approval failed");
-          return;
-        } else {
-          setIsApproving(false);
-        }
+        setIsApproving(true);
+        // if (approveTx && approveTx.hash) {
+        //   setIsApproving(true);
+        // }
+        await approveTx.then((txResponse:any) => {
+          console.log("Transaction Hash:", txResponse.hash);
+          txResponse.wait().then((confirmationResult:any) => {
+            console.log("Transaction confirmed:", confirmationResult);
+             // Perform actions after confirmation
+             setIsApproving(false);
+           
+            }).catch((error:any) => {
+              console.error("Transaction confirmation error:", error);
+              setIsApproving(false);
+         
+              alert("Approve failed");
+            });
+          }).catch((error:any) => {
+            console.log("Transaction error:", error);
+            alert("Approve failed");
+            setIsApproving(false);
+          })
 
         console.log("Approval successfully");
       }
@@ -134,21 +142,7 @@ const Deposit = () => {
           console.log("Transaction error:", error);
           setIsWithdrawing(false);
         })
-      // if (withdrawTx && withdrawTx.hash) {
-      //   setIsWithdrawing(true);
-      // }
 
-      // const withdrawReceipt = await withdrawTx.wait();
-      // if (withdrawReceipt.status === 0) {
-      //   console.log("Withdrawal failed");
-      //   alert("Withdrawal failed");
-      //   return;
-      // }else{
-      //   setIsModalOpen(false);
-      //   alert("Withdrawal successful");
-      //   router.reload();
-      // }
-      // setIsWithdrawing(false);
 
 
     } catch (error) {

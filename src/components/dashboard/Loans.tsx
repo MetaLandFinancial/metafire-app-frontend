@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/router';
 import Pagination from "@/components/shared/Pagination";
 import filerBTn from "@/../public/assets/filter_btn.svg";
 import EthIcon from "@/../public/assets/etm_icon.svg";
@@ -41,6 +42,7 @@ const Loans = () => {
   const SUBGRAPH_URL = process.env.NEXT_PUBLIC_LOAN_SUBGRAPH_URL;
   const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
   
+  const router = useRouter();
   const [repayModal, setRepayModal] = useState(false);
 
   const [floorPriceList, setFloorPriceList] = useState<any[]>([]);
@@ -284,25 +286,34 @@ const Loans = () => {
         return;
       }
 
-      const repayTx = await wethGatewaycontract.repayETH(nftAsset, parseInt(nftTokenId), amountToRepay, {value: amountToRepay});
-      if (repayTx && repayTx.hash) {
-        setIsRepaying(true);
-      }
-      const repayReceipt = await repayTx.wait();
-      if(repayReceipt.status === 0) {
-        console.log("Repay failed");
-        setIsRepaying(false);
-        alert("Repay failed");
-        return;
-      }else {
-        setIsRepaying(false);
-      }
+      const repayTx = wethGatewaycontract.repayETH(nftAsset, parseInt(nftTokenId), amountToRepay, {value: amountToRepay});
 
-      console.log("repay successfully")
+      setIsRepaying(true);
 
+      repayTx.then((txResponse:any) => {
+        console.log("Transaction Hash:", txResponse.hash);
+        txResponse.wait().then((confirmationResult:any) => {
+          console.log("Transaction confirmed:", confirmationResult);
+           // Perform actions after confirmation
+            setIsRepaying(false);
+            alert("Repay successfully");
+          
+             router.reload();
+         
+          }).catch((error:any) => {
+            console.error("Transaction confirmation error:", error);
+            setIsRepaying(false);
+       
+            alert("Repay failed");
+          });
+        }).catch((error:any) => {
+          console.log("Transaction error:", error);
+          setIsRepaying(false);
+        })
 
     } catch (error) {
       console.log("Error repay data: ", error);
+      alert("Repay failed");
     }
   }
 
@@ -341,7 +352,7 @@ const Loans = () => {
                   
                 >
                   <div className="card_left md:flex gap-4 md:gap-8">
-                    <div style={{maxHeight:"200px"}} className="card_img md:flex-shrink-0">
+                    <div style={{width:"200px",maxHeight:"200px"}} className="card_img md:flex-shrink-0">
                       <img
                         style={{maxHeight:"200px"}}
                         className={"md:flex-shrink-0 rounded-lg"}
