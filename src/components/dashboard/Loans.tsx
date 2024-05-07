@@ -117,7 +117,7 @@ const Loans = () => {
   });
 
 
-  const openModal = (index) => {
+  const openModal = (index:any) => {
     setActiveModalIndex(index);  // Set the active modal index
     setRepayModal(true);         // Assuming setRepayModal toggles the visibility of the modal
   };
