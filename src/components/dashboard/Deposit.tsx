@@ -567,7 +567,76 @@ const Deposit = () => {
             </div>
 
             {/* deposit for mobile */}
-            <div className="your_deposite_res md:hidden">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <div className="grid grid-cols-12 sm:hidden">
+                <div  className="col-span-6 border border-white border-opacity-40">
+                  <div
+                  style={{height:"100%"}}
+                      className={
+                        "bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"
+                      }
+                    >
+                      <ul className={"p-4"}>
+                        {responsiveTableHead.map(
+                          (resPonData: any, index: any): any => (
+                            <li
+                              className={
+                                "text-white text-[12px] font-bold pb-3 capitalize"
+                              }
+                              key={index}
+                            >
+                              {resPonData.title}
+                            </li>
+                          )
+                        )}
+                      </ul>
+                  </div>
+                </div>
+                <div className="col-span-6 border border-white border-opacity-40">
+                  <div
+                      className={
+                        "bg-gradient-to-r from-rgba-blue-500 to-rgba-purple-600 shadow-button py-[15px] px-[25px] border-r border-r-gray-400"
+                      }
+                    >
+                      <ul className={"p-4"}>
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
+                          5.0
+                        </li>
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
+                          Time priod
+                        </li>
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
+                          date
+                        </li>
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
+                          unlock date
+                        </li>
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
+                          total stake
+                        </li>
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
+                          apy
+                        </li>
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
+                          <button
+                            className={
+                              "text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"
+                            }
+                            // onClick={() => openModal(index)}
+                          >
+                                  Withdraw
+                          </button>
+                        </li>
+                      
+                
+                      </ul>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+            {/* old version mobile */}
+            {/* <div className="your_deposite_res md:hidden">
               <div
                 className={
                   "responsive_design_wrapper block md:hidden border border-gray-4 rounded-[15px]"
@@ -633,8 +702,8 @@ const Deposit = () => {
                 </div>
 
               </div>
-              {/* <Pagination /> */}
-            </div>
+              <Pagination /> 
+            </div> */}
           </div>
         </div>
       </div>
