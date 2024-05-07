@@ -50,7 +50,7 @@ const StakeBtnMetrics = () => {
         },
       },
       {
-        breakpoint: 420,
+        breakpoint: 480,
         settings: {
           slidesToShow: 3,
           infinite: true,
