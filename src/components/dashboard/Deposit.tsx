@@ -568,7 +568,7 @@ const Deposit = () => {
 
             {/* deposit for mobile */}
             {Array.from({ length: 4 }).map((_, index) => (
-              <div className="grid grid-cols-12 sm:hidden border border-gray-4 border-opacity-40 rounded-[20px] m-2">
+              <div className="grid grid-cols-12 sm:hidden border border-gray-4 border-opacity-40 rounded-[20px] m-3">
                 <div  className="col-span-6 ">
                   <div
                   style={{height:"100%"}}
@@ -599,25 +599,34 @@ const Deposit = () => {
                       }
                     >
                       <ul className={"p-4"}>
-                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize"  >
                           5.0
                         </li>
-                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
-                          Time priod
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize"  >
+                          Days
                         </li>
-                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
-                          date
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize" >
+                          {
+                            depositDates[index] === -1
+                                ? 'N/A'     
+                                : new Date(Number(depositDates[index]) * 1000).toDateString()
+                          }
                         </li>
-                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
-                          unlock date
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize">
+                          { unlockDates[index] === -1
+                            ? 'N/A'     
+                            : new Date(unlockDates[index]*1000).toDateString()
+                          }
                         </li>
-                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
-                          total stake
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize"  >
+                          {Math.floor(parseFloat(mTokenBalance[index]) * Math.pow(10, 4)) / Math.pow(10, 4)} ETH
                         </li>
-                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
-                          apy
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize"  >
+                          {
+                            (liquidityRates[index] / 10 ** 25).toFixed(2)
+                          }%
                         </li>
-                        <li className="text-white text-[12px] font-bold pb-3 capitalize" key={index} >
+                        <li className="text-white text-[12px] font-bold pb-3 capitalize" >
                           <button
                             className={
                               "text-[10] font-medium text-white py-2 px-6 border border-[#4776E6] rounded-[6px] bg-gradient-to-r from-custom-gradient-start to-custom-gradient-end shadow-custom-shadow"
