@@ -63,7 +63,7 @@ const Loans = () => {
     currentLoanInfos(
       where:{
         and:[
-          {onBehalfOf:  "0x64D53b41e9Fd7F6E234A1E7A14b77159Dab3a45e"},
+          {onBehalfOf:  "${address}"},
           {or:[
             {loanState: 1},
             {loanState: 2}
@@ -366,7 +366,7 @@ const Loans = () => {
                             "text-[10px] md:text-2xl font-bold text-white"
                           }
                         >
-                          {index} #{loansDataItems.nftTokenId}
+                           #{loansDataItems.nftTokenId}
                         </span>
                       </div>
 
@@ -419,7 +419,7 @@ const Loans = () => {
                                 / 
                                 (10**27)
                               )
-                              .toFixed(4) 
+                              .toFixed(2) 
                             } ETH
                             {/* {parseFloat(loansDataItems?.borrowIndex)/(10**27)} */}
                             {/* {loansDataItems.loanAmount} */}
@@ -605,14 +605,13 @@ const Loans = () => {
                           REPAY NFT
                         </h2>
                         <p className={"text-[14px] lg:text-lg font-medium text-white"}>
-                          Repay the loan {index}
+                          Repay the loan
                         </p>
                       </div>
 
                       <div className="modal_info flex gap-4">
                         <div className="modal_info_left lg:flex-shrink-0 pb-5">
                           <img src={nftImageUrlList?.[index]} alt="modal_img" />
-                          {index}
                         </div>
                         <div className="modal_info_right w-full">
                           <h2
@@ -660,7 +659,15 @@ const Loans = () => {
                                 }
                               >
                                 <img src={EthIcon.src} alt="icon" />
-                                {(parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27)).toFixed(4) } ETH
+                                {                            ( parseFloat(ethers.formatEther(loansDataItems.loanAmount))
+                                /
+                                (parseFloat(loansDataItems?.borrowIndex)/(10**27))
+                                *
+                                parseFloat(reserveData?.variableBorrowIndex)
+                                / 
+                                (10**27)
+                              )
+                              .toFixed(2)  } ETH
                               </span>
                             </p>
                             {/* <p
@@ -720,7 +727,16 @@ const Loans = () => {
                         onChange={handleRepayAmountChange}
                       />
                       <div className="absolute top-[50%] translate-y-[-50%] right-5">
-                        <button onClick={() => setRepayAmountInput((parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27) * 1.001).toFixed(6) )} className="max_btn_bg hover:opacity-[0.7]">
+                        <button onClick={() => setRepayAmountInput(                            ( parseFloat(ethers.formatEther(loansDataItems.loanAmount))
+                                /
+                                (parseFloat(loansDataItems?.borrowIndex)/(10**27))
+                                *
+                                parseFloat(reserveData?.variableBorrowIndex)
+                                / 
+                                (10**27)
+                                * 1.001
+                              )
+                              .toFixed(6) )} className="max_btn_bg hover:opacity-[0.7]">
                           Max
                         </button>
                       </div>
