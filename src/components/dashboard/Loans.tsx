@@ -53,6 +53,7 @@ const Loans = () => {
   const [skip, setskip] = useState(0);
 
   const { address, connector, isConnected } = useAccount();
+  const [activeModalIndex, setActiveModalIndex] = useState(null);
   const [repayAmountInput, setRepayAmountInput] = useState("");
   const [isRepaying, setIsRepaying] = useState(false);
 
@@ -62,7 +63,7 @@ const Loans = () => {
     currentLoanInfos(
       where:{
         and:[
-          {onBehalfOf:  "${address}"},
+          {onBehalfOf:  "0x64D53b41e9Fd7F6E234A1E7A14b77159Dab3a45e"},
           {or:[
             {loanState: 1},
             {loanState: 2}
@@ -116,10 +117,16 @@ const Loans = () => {
   });
 
 
+  const openModal = (index) => {
+    setActiveModalIndex(index);  // Set the active modal index
+    setRepayModal(true);         // Assuming setRepayModal toggles the visibility of the modal
+  };
+  
   const closeModal = () => {
+    setActiveModalIndex(null);   // Reset on closing the modal
     setRepayModal(false);
   };
-
+  
   async function fetchLoanData() {
     try {
       console.log("address", address);
@@ -129,6 +136,7 @@ const Loans = () => {
       });
       console.log(data.currentLoanInfos);
       setLoanList([...data.currentLoanInfos]);
+      
 
       // Fetch floor prices and map them back to currentLoanInfos
       // const floorPrices = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
@@ -358,7 +366,7 @@ const Loans = () => {
                             "text-[10px] md:text-2xl font-bold text-white"
                           }
                         >
-                          #{loansDataItems.nftTokenId}
+                          {index} #{loansDataItems.nftTokenId}
                         </span>
                       </div>
 
@@ -373,13 +381,13 @@ const Loans = () => {
                         </p>
 
                         <button
-                          onClick={() => setRepayModal(!repayModal)}
+                          onClick={() => openModal(index)}
                           disabled={ isRepaying} 
                           className={
                             "w-[166px] py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[7px] text-white"
                           }
                         >
-                          { isRepaying ? 'Repaying...' : 'Repay'}
+                          { isRepaying ? 'Repaying...' : 'Repay'}1
                         </button>
                       </div>
                     </div>
@@ -570,7 +578,7 @@ const Loans = () => {
                     </div>
                   </div>
                 </div>
-                {repayModal && (
+                { repayModal && activeModalIndex === index && (
                   <div
                     className="modal fixed top-0 left-0 w-full h-full bg-[#000000bf] z-40"
                     onClick={(e) => e.stopPropagation()}
@@ -597,13 +605,14 @@ const Loans = () => {
                           REPAY NFT
                         </h2>
                         <p className={"text-[14px] lg:text-lg font-medium text-white"}>
-                          Repay the loan
+                          Repay the loan {index}
                         </p>
                       </div>
 
                       <div className="modal_info flex gap-4">
                         <div className="modal_info_left lg:flex-shrink-0 pb-5">
                           <img src={nftImageUrlList?.[index]} alt="modal_img" />
+                          {index}
                         </div>
                         <div className="modal_info_right w-full">
                           <h2
@@ -614,7 +623,7 @@ const Loans = () => {
                             <span>{getCollectionSlug(loansDataItems?.nftAsset)}</span>
                             <span>#{loansDataItems?.nftTokenId}</span>
                           </h2>
-{/* 
+                          {/* 
                           <div
                             className={"flex items-center justify-between w-full pb-2"}
                           >
@@ -741,11 +750,12 @@ const Loans = () => {
 
                       <button
                         onClick={() => callRepayETH(loansDataItems?.nftAsset, loansDataItems?.nftTokenId, (parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27) * 1.001).toFixed(6))}
+                        disabled={ isRepaying} 
                         className={
                           "bg-gradient-to-r from-blue-500 to-purple-600 w-full py-[18px] rounded-[4px] text-white mt-5"
                         }
                       >
-                        Repay
+                        { isRepaying ? 'Repaying...' : 'Repay'}
                       </button>
                     </div>
                   </div>
