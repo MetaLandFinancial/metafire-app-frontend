@@ -387,7 +387,7 @@ const Loans = () => {
                             "w-[166px] py-3 bg-gradient-to-r from-blue-500 to-purple-600 rounded-[7px] text-white"
                           }
                         >
-                          { isRepaying ? 'Repaying...' : 'Repay'}1
+                          { isRepaying ? 'Repaying...' : 'Repay'}
                         </button>
                       </div>
                     </div>
