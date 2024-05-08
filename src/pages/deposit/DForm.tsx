@@ -101,10 +101,10 @@ const DForm: React.FC<DFormProps> = ({ connectButton }) => {
             setDepositStatus('Stake');
             alert("Deposit failed");
           });
-        }).catch((error) => {
-          console.log("Transaction error:", error);
-          setDepositStatus('Stake');
-        })
+      }).catch((error) => {
+        console.log("Transaction error:", error);
+        setDepositStatus('Stake');
+      })
   
     } catch (error) {
       setDepositStatus('Stake');

@@ -1,5 +1,6 @@
 import { Fragment, useState } from "react";
 import React, { useEffect, useRef } from "react";
+import { useRouter } from 'next/router';
 import Image from "next/image";
 import eth from "../../../public/img/eth.svg";
 import heart from "../../../public/img/heart.svg";
@@ -77,6 +78,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
   const DEBT_TOKEN_ADDRESS = process.env.NEXT_PUBLIC_DEBT_TOKEN_ADDRESS as string;
   const MAINNET_RPC_URL = process.env.NEXT_PUBLIC_MAINNET_RPC_URL as string; 
 
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
   const [loanNftName, setLoanNftName] = useState("");
@@ -201,10 +203,11 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
 
       if( borrowAllowance < amountToBorrow ){
         console.log("start approving ERC721");
-        const approveDelegationTx = await debtTokenContract.approveDelegation(WETHGATEWAY_ADDRESS, amountToBorrow);
-        if (approveDelegationTx && approveDelegationTx.hash) {
-          setIsApproving(true);
-        }
+        setIsApproving(true);
+        const approveDelegationTx = await debtTokenContract.approveDelegation(WETHGATEWAY_ADDRESS, "9999999999999999999999");
+        // if (approveDelegationTx && approveDelegationTx.hash) {
+        //   setIsApproving(true);
+        // }
 
         const approveDelegationReceipt = await approveDelegationTx.wait();
         if (approveDelegationReceipt.status === 0) {
@@ -224,10 +227,11 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
       const approvedAddress = await erc721Contract.getApproved(parseInt(loanNftId));
       if(approvedAddress !== WETHGATEWAY_ADDRESS) {
         console.log("start approving ERC721");
+        setIsApproving(true);
         const approveTx = await erc721Contract.approve(WETHGATEWAY_ADDRESS, parseInt(loanNftId));
-        if (approveTx && approveTx.hash) {
-          setIsApproving(true);
-        }
+        // if (approveTx && approveTx.hash) {
+        //   setIsApproving(true);
+        // }
 
         const approveReceipt = await approveTx.wait();
         if (approveReceipt.status === 0) {
@@ -246,11 +250,11 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
       console.log("isApproved: ", approvedAddress);
       const wethGatewaycontract = new ethers.Contract(WETHGATEWAY_ADDRESS, WETHGateway.abi, signer);
 
-    
+      setIsBorrowing(true);
       const borrowTx = await wethGatewaycontract.borrowETH(amountToBorrow, loanNftAsset, parseInt(loanNftId), signer.address, 0);
-      if (borrowTx && borrowTx.hash) {
-        setIsBorrowing(true);
-      }
+      // if (borrowTx && borrowTx.hash) {
+      //   setIsBorrowing(true);
+      // }
 
       const borrowReceipt = await borrowTx.wait();
       if (borrowReceipt.status === 0) {
@@ -260,11 +264,15 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
       }else{
         setIsModalOpen(false);
         alert("Borrow successful");
+        // router.push('/dashboard');
+        router.reload();
       }
       setIsBorrowing(false);
 
 
     } catch (error) {
+      setIsApproving(false);
+      setIsBorrowing(false);
       console.log('Failed to borrow ETH', error);
     }
   };
