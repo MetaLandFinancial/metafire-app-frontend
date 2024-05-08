@@ -34,41 +34,7 @@ function getCollectionSlug(address: string): string {
 }
 
 const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: any, saleNftImageUrlList: any}) => {
-  const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 3,
-    slidesToScroll: 3,
-    nextArrow: <SampleNextArrow />,
-    prevArrow: <SamplePrevArrow />,
-    responsive: [
-      {
-        breakpoint: 1152,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 992,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-          initialSlide: 1,
-        },
-      },
-      {
-        breakpoint: 767,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-          initialSlide: 1,
-          centerMode: true,
-        },
-      },
-    ],
-  };
+  
   const assetdata = [
     {
       image: "/img/sale1.jpg",
@@ -104,6 +70,46 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
       auctionEnd: "23 Feb, 2024",
     },
   ];
+  
+  const numberOfItems = saleNftData.length;
+
+  const settings = {
+    dots: false,
+    infinite: numberOfItems > 1,  // Only loop if there are more than 1 item
+    speed: 500,
+    slidesToShow: Math.min(3, numberOfItems),  // Show up to 3 slides, or less if fewer items are available
+    slidesToScroll: Math.min(3, numberOfItems),  // Scroll by the number of items available, up to 3
+    nextArrow: <SampleNextArrow />,
+    prevArrow: <SamplePrevArrow />,
+    responsive: [
+      {
+        breakpoint: 1152,
+        settings: {
+          slidesToShow: Math.min(2, numberOfItems),
+          slidesToScroll: 1,
+        },
+      },
+      {
+        breakpoint: 992,
+        settings: {
+          slidesToShow: Math.min(2, numberOfItems),
+          slidesToScroll: 1,
+          initialSlide: 1,
+        },
+      },
+      {
+        breakpoint: 767,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          initialSlide: 1,
+          centerMode: true,
+        },
+      },
+    ],
+  };
+
+
 
   const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
 
@@ -261,7 +267,7 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
         {saleNftData?.map((item:any, index: any) => (
           <div
             key={index}
-            className="Sale_Card_BG w-full md:max-w-full xl:max-w-[391px] "
+            className="Sale_Card_BG w-full md:max-w-[391px] xl:max-w-[391px] "
           >
             <div className="rounded-[15px] overflow-hidden w-full xl:max-w-[367px]">
               <img
