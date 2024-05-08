@@ -71,7 +71,8 @@ const ForeClosedSlider = ({ saleNftData, saleNftImageUrlList}: { saleNftData: an
     },
   ];
   
-  const numberOfItems = saleNftData.length;
+  const numberOfItems = saleNftData?.length ?? 0;
+
 
   const settings = {
     dots: false,
