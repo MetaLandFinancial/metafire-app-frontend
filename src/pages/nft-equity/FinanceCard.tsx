@@ -13,6 +13,7 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import WETHGateway from "../../contracts/wethGateway.json";
 import ERC721 from "../../contracts/erc721.json";
 import DebtToken from "../../contracts/debtToken.json";
+import NFTLinkOracleGetter from "../../contracts/NFTLinkOracleGetter.json";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 
 
@@ -74,6 +75,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
   const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
   const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
   const DEBT_TOKEN_ADDRESS = process.env.NEXT_PUBLIC_DEBT_TOKEN_ADDRESS as string;
+  const MAINNET_RPC_URL = process.env.NEXT_PUBLIC_MAINNET_RPC_URL as string; 
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loanImageUrl, setLoanImageUrl] = useState("");
@@ -131,6 +133,30 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
     }
   }
 
+  const getOracleFloorPrice = async (collectionAddress: string) => {
+    console.log('Buy Now Pay Later');
+    try {
+      // cconst { ethers } = require("ethers")
+  
+      const { ethers } = require("ethers")
+      const { ethereum } = window as any;
+      const provider = new ethers.JsonRpcProvider(MAINNET_RPC_URL);
+
+      console.log("collectionAddress", collectionAddress);
+      const nFTLinkOracleGetter = new ethers.Contract("0x11C3Ef0113D589ED17e5488E0a8bd8bf7085f2a9", NFTLinkOracleGetter.abi, provider);
+      const oracleFloorPrice = await nFTLinkOracleGetter.getAssetPrice(collectionAddress);
+      console.log('oracleFloorPrice', oracleFloorPrice);
+      // convert it from wei to ether
+      const oracleFloorPriceInEther = ethers.formatEther(oracleFloorPrice);
+      setSelectedNftFloorPrice(oracleFloorPriceInEther);
+      
+  
+    }
+    catch (error) {
+      console.log("Error initializing ethereum:", error);
+    }
+  }
+
   const openModal = (item: any) => {
     console.log("item: ", item);
     setIsModalOpen(true);
@@ -138,8 +164,9 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
     setLoanNftName(item.name);
     setLoanNftAsset(item.token_address);
     setLoanNftId(item.token_id);
-    const collectionSlug = getCollectionSlug(item.token_address);
-    getFloorPrice(collectionSlug);
+    // const collectionSlug = getCollectionSlug(item.token_address);
+    // getFloorPrice(collectionSlug);
+    getOracleFloorPrice(item.token_address);
     
   };
 
@@ -374,7 +401,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
                       </div>
                       <div className="flex gap-4 mt-[54px]">
                         <div className="w-full">
-                          <div style={{ width: '247px', height: '234px', overflow: 'hidden' }} className="w-full max-w-[261px] rounded-[3px]">
+                          <div style={{ width: '200px', height: '224px', overflow: 'hidden' }} className="w-full max-w-[261px] rounded-[3px]">
                             <Image
                               src={loanImageUrl}
                               alt="bgImg"
@@ -383,46 +410,8 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
                               height={105}
                             />
                           </div>
-                          <div className="flex md:hidden justify-between mt-[9px]">
-                            <h2 className="text-[10px] lg:text-xl text-white font-bold">
-                              sss
-                            </h2>
-                            <p className="text-[10px] lg:text-xl text-white font-bold">
-                              #3922
-                            </p>
-                          </div>
-                          <div className="flex md:hidden justify-between mt-[6px]">
-                            <p className="Text_gradient font-bold flex items-center justify-center text-[10px] md:text-sm xl:text-base">
-                              <Link href="/">
-                                <span>
-                                  <Image
-                                    src={eth}
-                                    alt="eth"
-                                    className="w-[8px] h-[8px] mr-1"
-                                  />
-                                </span>
-                              </Link>
-                              0.0025487 ETH
-                            </p>
-                            <div className="w-fit relative md:mr-2">
-                              <Image
-                                src={ring}
-                                alt="icons"
-                                height={28}
-                                width={28}
-                                className="w-[21px] md:w-[28px] flex items-center"
-                              />
-                              <Link href="/">
-                                <Image
-                                  src={heart}
-                                  alt="heart"
-                                  width={12}
-                                  height={12}
-                                  className="w-[11px] md:w-[15px] absolute top-0 bottom-0 left-0 right-0 m-auto"
-                                />
-                              </Link>
-                            </div>
-                          </div>
+  
+                  
                         </div>
                         {/* right part */}
                         <div className="relative w-full">
@@ -467,7 +456,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
                           <div className="flex flex-col border-[0.4px] border-[rgba(71,119,230,0.28)] rounded-[10px] overflow-hidden">
                             <div className="py-2 px-[10px] md:py-[10px] md:px-[13px]  border-b-[0.4px] border-[rgba(71,119,230,0.28)]">
                               <div className="flex flex-row justify-between items-center">
-                                <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
+                                <p className="text-[10px] md:text-sm xl:text-base font-medium text-white mr-3">
                                   Floor Price
                                 </p>
                                 <p className="Text_gradient font-bold flex items-center justify-center text-[10px] md:text-sm xl:text-base">
@@ -478,7 +467,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
                                       className="w-3 h-3 md:h-[18px] mr-1"
                                     />
                                   </span>
-                                  {selectedNftFloorPrice} ETH
+                                  {selectedNftFloorPrice} 
                                 </p>
                               </div>
                             </div>
@@ -518,7 +507,7 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
                                   Max Borrow
                                 </p>
                                 <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                                 {  0.5 * selectedNftFloorPrice} ETH
+                                 {  0.5 * selectedNftFloorPrice}
                                 </p>
                               </div>
                             </div>
@@ -535,12 +524,6 @@ const FinanceCard = ({ nftData, signer}: { nftData: any, signer: any }) => {
                                   Borrow Amount
                             </p>
                         
-                            <label
-                              htmlFor="amount"
-                              className="block text-left md:hidden text-base font-medium text-white/80 mb-[13px]"
-                            >
-                              inputeqweqw
-                            </label>
                             <div className="Amount_Bg relative flex items-center">
                               <p className="text-base font-medium relative top-0 left-0 text-white/80 hidden md:flex  ">
                                 Amount:

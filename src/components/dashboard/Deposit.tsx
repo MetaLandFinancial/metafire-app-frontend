@@ -89,7 +89,7 @@ const Deposit = () => {
       // Check allowance
       const allowance = await mTokenContract.allowance(signer.address, WETHGATEWAY_ADDRESS);
       console.log("Allowance: ", allowance);
-      if (allowance < amountToWithdraw) {
+      if (allowance > amountToWithdraw) {
         console.log("Approving...");
         const approveTx = mTokenContract.approve(WETHGATEWAY_ADDRESS, "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff");
         // if transaction is sent, set the isApproving state to true
@@ -289,7 +289,7 @@ const Deposit = () => {
       parseFloat(formattedBalance2) +
       parseFloat(formattedBalance3) +
       parseFloat(formattedBalance4);
-    setTotalMTokenBalance(parseFloat(formattedTotalBalance.toFixed(6)));
+    setTotalMTokenBalance(parseFloat(formattedTotalBalance.toFixed(4)));
   };
 
   useEffect(() => {
