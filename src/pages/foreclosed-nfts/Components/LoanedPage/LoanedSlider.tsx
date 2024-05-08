@@ -132,18 +132,29 @@ const LoanedSlider = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: 
     <>
       <div className="custom_slider">
         <Slider {...settings}>
-          {lonedData.map((item, index) => (
+          {loanedNftData?.map((item:any, index:any) => (
             <div
               key={index}
-              className="Sale_Card_BG w-full md:max-w-full xl:max-w-[391px] "
+              className="Sale_Card_BG w-full sm:max-w-full xl:max-w-[391px] "
             >
               <div className="rounded-[15px] overflow-hidden w-full xl:max-w-[367px]">
-                <Image
-                  src={item.image}
+                {/* <Image
+                   src={loanedNftImageUrlList?.[index]}
                   alt={item.title}
                   className="rounded-[15px] w-full"
                   width={367}
                   height={229}
+                /> */}
+                <img
+                  src={loanedNftImageUrlList?.[index]}
+                  alt={item.title}
+                  className="rounded-[15px] w-full"
+       
+                  style={{
+                    width: '100%',
+                    height: '200px',
+                    objectFit: 'cover' // Optional: Keeps the image aspect ratio intact while filling the container
+                  }}
                 />
               </div>
               <div className="p-0 md:p-3">
@@ -153,7 +164,7 @@ const LoanedSlider = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: 
                       {item.title}&nbsp;
                     </h1>
                     <span className="text-[10px] md:text-base lg:text-xl xl:text-2xl font-bold text-white">
-                      {item.number}
+                      #{item.nftTokenId}
                     </span>
                   </div>
                   <div className="hidden Loned_Heart md:flex md:w-[37px] md:h-[37px] border-[1px] border-[#4777e623] rounded-full items-center justify-center cursor-pointer">
@@ -204,7 +215,7 @@ const LoanedSlider = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: 
                   </div>
                 </div>
                 <div className="mt-4 md:mt-5 border-[1px] border-[rgba(71,119,230,0.20)] rounded-[10px] overflow-hidden">
-                  <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
+                  {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                     <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                       Floor Price
                     </p>
@@ -218,16 +229,16 @@ const LoanedSlider = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: 
                       </span>
                       {item.floorPrice}
                     </p>
-                  </div>
+                  </div> */}
                   <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                     <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                       Liquidation Factor
                     </p>
                     <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
-                      {item.liquidationFactor}
+                    {(item.healthFactor * 100).toFixed(2)}%
                     </p>
                   </div>
-                  <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
+                  {/* <div className="py-2 px-[10px] md:py-[10px] md:px-[13px] border-b-[0.4px] border-[rgba(71,119,230,0.20)] flex flex-row justify-between items-center">
                     <p className="text-[10px] md:text-sm xl:text-base font-medium text-white">
                       Current Auction Price
                     </p>
@@ -250,16 +261,16 @@ const LoanedSlider = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: 
                     <p className="Text_gradient font-bold text-[10px] md:text-sm xl:text-base">
                       {item.auctionEnd}
                     </p>
-                  </div>
+                  </div> */}
                 </div>
-                <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
+                {/* <div className="mt-[19px] md:mt-[22px] flex flex-row gap-[10px]">
                   <button className="Sale_Btn_Bg">
                     <span className="Text_gradient_bg_text">Auction</span>
                   </button>
                   <button className="Sale_Btn_Bg">
                     <span className="Text_gradient_bg_text">Buy Now</span>
                   </button>
-                </div>
+                </div> */}
               </div>
             </div>
           ))}

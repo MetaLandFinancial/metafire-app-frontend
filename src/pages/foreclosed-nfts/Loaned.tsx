@@ -24,9 +24,9 @@ const Loaned = ({ loanedNftData, loanedNftImageUrlList}: { loanedNftData: any, l
           </div>
           {/* _______ card __________ */}
           <div className="relative mt-6 md:mt-14 lg:mt-16 xl:mt-20">
-            {/* <div className="block md:hidden">
+            <div className="block md:hidden">
               <LoanedSlider loanedNftData={loanedNftData} loanedNftImageUrlList={loanedNftImageUrlList}   />
-            </div> */}
+            </div>
             <div className="hidden md:flex md:justify-center">
               <LoanedCard loanedNftData={loanedNftData} loanedNftImageUrlList={loanedNftImageUrlList}  />
             </div>
