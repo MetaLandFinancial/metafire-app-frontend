@@ -1,5 +1,5 @@
 import React from "react";
-import SliderItem from "./Slider/SliderItem";
+import SliderItem from "./SliderItem";
 
 import Image from "next/image";
 const WhitelistedCollections = () => {
