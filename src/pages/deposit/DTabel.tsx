@@ -50,7 +50,8 @@ const DTabel = () => {
       <div className="container">
         <div className="mx-auto w-fit text-center">
           <h2 className="text-white text-center font-semibold text-xl md:text-2xl xl:text-3xl">
-            What Asset Classes are earning
+            {/* What Asset Classes are earning */}
+            ---- Current Depsoit APR ----
           </h2>
           <div className="my-9">
             <div className="Tabel_Bg grid grid-cols-1 divide-y divide-white/[0.2] py-2 mx-auto">
@@ -76,9 +77,9 @@ const DTabel = () => {
               ))}
             </div>
           </div>
-          <p className="text-white text-center font-medium text-sm md:text-[15px]">
-            *APY is approximate and will be updated as more data comes available
-          </p>
+          {/* <p className="text-white text-center font-medium text-sm md:text-[15px]">
+            *APR is approximate and will be updated as more data comes available
+          </p> */}
         </div>
       </div>
     </div>
