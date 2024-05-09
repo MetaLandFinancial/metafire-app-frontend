@@ -53,3 +53,5 @@ export const SampleNextArrow: React.FC<SampleNextArrowProps> = (props) => {
     </button>
   );
 };
+
+export default SampleNextArrow;
