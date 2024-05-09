@@ -58,3 +58,5 @@ export const SamplePrevArrow: React.FC<SamplePrevArrowProps> = (props) => {
     </button>
   );
 };
+
+export default SamplePrevArrow;

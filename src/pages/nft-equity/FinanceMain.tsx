@@ -1,11 +1,8 @@
 import React from "react";
-import Sidebar from "./Sidebar";
+import Link from "next/link";
 import FinanceCard from "./FinanceCard";
-import FinInput from "./FinInput";
 
-
-
-const FinanceMain = ({ nftData, signer}: { nftData: any, signer: any }) => {
+const FinanceMain = ({ nftData, signer }: { nftData: any, signer: any }) => {
   return (
     <div className="relative mt-[79px] mb-[69px]">
       <div className="container mx-auto">
@@ -15,7 +12,10 @@ const FinanceMain = ({ nftData, signer}: { nftData: any, signer: any }) => {
           <div className="w-full">
             {/* <FinInput /> */}
             <p className="text-center text-white font-bold text-lg md:text-xl mb-5">
-              Only the NFTs you own that are eligible for loans will show up below: Please see our Whitelist Link
+              Only the NFTs you own that are eligible for loans will show up below: Please see our{" "}
+              <Link href="/whitelisted-collections" className="underline text-blue-500 hover:text-blue-700 font-bold" passHref>
+                  Whitelist
+              </Link>
             </p>
             <FinanceCard nftData={nftData} signer={signer} />
           </div>
