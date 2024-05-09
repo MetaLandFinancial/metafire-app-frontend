@@ -199,15 +199,15 @@ interface footerTwo {
 }
 
 export const footerTwo: footerTwo[] = [
-    {
-        name: "Profile",
-        link: "#",
-    },
+    // {
+    //     name: "Profile",
+    //     link: "#",
+    // },
 
-    {
-        name: "Favorites",
-        link: "#",
-    },
+    // {
+    //     name: "Favorites",
+    //     link: "#",
+    // },
 
     {
         name: "Settings",
