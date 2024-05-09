@@ -234,15 +234,15 @@ interface footerSocialInfo {
 }
 
 export const footerSocialInfo: footerSocialInfo[] = [
-    {
-        icon: swOne,
-        name: "telegram",
-        path: "#"
-    },
+    // {
+    //     icon: swOne,
+    //     name: "telegram",
+    //     path: "#"
+    // },
     {
         icon: swTwo,
         name: "twitter",
-        path: "#"
+        path: "https://twitter.com/metafirefinance"
     }, {
         icon: swThree,
         name: "youtube",
@@ -250,12 +250,13 @@ export const footerSocialInfo: footerSocialInfo[] = [
     }, {
         icon: swFour,
         name: "discord",
-        path: "#"
-    }, {
-        icon: swFive,
-        name: "website",
-        path: "#"
-    },
+        path: "https://discord.gg/xEgkXGbA"
+    }, 
+    // {
+    //     icon: swFive,
+    //     name: "website",
+    //     path: "#"
+    // },
 ]
 
 export const myCollections = [

@@ -76,9 +76,9 @@ const Footer = () => {
                                 Subscribe for latest updates
                             </h3>
 
-                            <div className="input_field pb-[30px]">
+                            {/* <div className="input_field pb-[30px]">
                                 <input id={"send_mail"} type="email" className="w-full py-3 px-4 border border-gray-700 rounded-lg bg-transparent text-white bg-no-repeat bg-right pr-2" placeholder="Enter Email"/>
-                            </div>
+                            </div> */}
 
                             <div className={"social_icon"}>
                                 <h3 className={"text-gradient font-bold text-base pb-6"}>
