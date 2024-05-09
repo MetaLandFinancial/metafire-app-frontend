@@ -12,7 +12,10 @@ const FinanceMain = ({ nftData, signer }: { nftData: any, signer: any }) => {
           <div className="w-full">
             {/* <FinInput /> */}
             <p className="text-center text-white font-bold text-lg md:text-xl mb-5">
-              Only the NFTs you own that are eligible for loans will show up below: Please see our{" "}
+              Only the NFTs you own that are eligible for loans will show up below: 
+            </p>
+            <p className="text-center text-white font-bold text-lg md:text-xl mb-5">
+              Please see our{" "}
               <Link href="/whitelisted-collections" className="underline text-blue-500 hover:text-blue-700 font-bold" passHref>
                   Whitelist
               </Link>

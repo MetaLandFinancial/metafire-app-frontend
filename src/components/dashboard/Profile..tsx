@@ -20,7 +20,7 @@ const Profile = () => {
                     <div
                         className="profile_info_wrapper flex gap-3 md:gap-0 md:flex-col items-center justify-center pb-10 md:pb-20 relative">
                         <div className="profile_avatar pb-5 md:pb-10 -mt-[25%] md:-mt-[10%]">
-                            <img src={profileAvatar.src} alt="" style={{ borderRadius: '50%' }}/>
+                            <img src={profileAvatar.src} alt="" className="w-[100px] md:w-[150px] rounded-full"/>
                         </div>
 
                         <div className="profile_info md:text-center">
