@@ -184,7 +184,7 @@ export const footerOne: footerOne[] = [
 
     {
         name: "How it Works",
-        link: "#",
+        link: "https://app.gitbook.com/o/1eo3vi9ZZq99yiOBWxuw/s/4mbNYRKmLy3W4JoSV2Az/",
     },
 
     {
