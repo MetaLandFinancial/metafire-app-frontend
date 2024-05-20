@@ -36,10 +36,10 @@ const config = getDefaultConfig({
   ],
   chains: [
     mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    base,
+    // polygon,
+    // optimism,
+    // arbitrum,
+    // base,
     ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [sepolia] : []),
   ],
   ssr: true,
@@ -51,7 +51,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
   return (
     <WagmiProvider config={config}>
       <QueryClientProvider client={queryClient}>
-        <RainbowKitProvider>{children}</RainbowKitProvider>
+        <RainbowKitProvider initialChain={mainnet}>{children}</RainbowKitProvider>
       </QueryClientProvider>
     </WagmiProvider>
   );
