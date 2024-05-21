@@ -6,6 +6,7 @@ import DFinance from "./DFinance";
 import DTabel from "./DTabel";
 import DForm from "./DForm";
 import { ConnectButton } from '@rainbow-me/rainbowkit';
+import MobileTable from "./MobileTable";
 
 const Index = () => {
   return (
@@ -20,7 +21,7 @@ const Index = () => {
         <DForm connectButton={<ConnectButton />}/>
         <DTabel />
         <DFinance />
-        
+        <MobileTable/>
       </div>
     </>
   );
