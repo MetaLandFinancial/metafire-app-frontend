@@ -154,7 +154,7 @@ const FinanceCard = ({ collectionAddress, nftData, nftImageUrlList }: { collecti
         const provider = new ethers.JsonRpcProvider(MAINNET_RPC_URL);
 
         console.log("collectionAddress", collectionAddress);
-        const nFTLinkOracleGetter = new ethers.Contract("0x11C3Ef0113D589ED17e5488E0a8bd8bf7085f2a9", NFTLinkOracleGetter.abi, provider);
+        const nFTLinkOracleGetter = new ethers.Contract("0x7515Af5f7944345a7ed944b41bC16836ac3f5298", NFTLinkOracleGetter.abi, provider);
         const oracleFloorPrice = await nFTLinkOracleGetter.getAssetPrice(collectionAddress);
         console.log('oracleFloorPrice', oracleFloorPrice);
         setCollectionFloorPrice(oracleFloorPrice);
