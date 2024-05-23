@@ -72,7 +72,7 @@ export const oracleList: OracleList = {
     },
     "0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b": {
         "name": "CloneX",
-        "oracle_address": "0x021264d59DAbD26E7506Ee7278407891Bb8CDCCc",
+        "oracle_address": "0x7515Af5f7944345a7ed944b41bC16836ac3f5298",
         "floor": "1.2501",
         "slug": "clonex"
     },
