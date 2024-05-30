@@ -16,6 +16,7 @@ import { ApolloClient, InMemoryCache, gql } from "@apollo/client";
 import { useWriteContract, useAccount, useWalletClient } from "wagmi";
 import {ethers} from "ethers";
 import WETHGateway from "../../contracts/wethGateway.json";
+import LendPoolLoan from "../../contracts/lendPoolLoan.json";
 import { getOracleAddress } from "@/utils/whitelistedNfts";
 
 type CollectionSlugsType = {
@@ -39,6 +40,8 @@ function getCollectionSlug(address: string): string {
 
 const Loans = () => {
   const WETHGATEWAY_ADDRESS = process.env.NEXT_PUBLIC_WETHGATEWAY_ADDRESS as string;
+  const MAINNET_RPC_URL = process.env.NEXT_PUBLIC_MAINNET_RPC_URL as string; 
+  const LEND_POOL_LOAN_ADDRESS = process.env.NEXT_PUBLIC_LEND_POOL_LOAN_ADDRESS as string;
   const SUBGRAPH_URL = process.env.NEXT_PUBLIC_LOAN_SUBGRAPH_URL;
   const RESERVE_SUBGRAPH_URL = process.env.NEXT_PUBLIC_SUBGRAPH_URL;
   
@@ -49,6 +52,7 @@ const Loans = () => {
   const [nftImageUrlList, setNftImageUrlList] = useState<any[]>([]);
 
   const [loanList, setLoanList] = useState<any[]>([]);
+  const [loanAmounts, setLoanAmounts] = useState<any[]>([]);
   const [loanInfoFromBackend, setLoanInfoFromBackend] = useState<any[]>([]);
   const [reserveData, setReserveData] = useState<any>();
   const [first, setfirst] = useState(10);
@@ -131,6 +135,7 @@ const Loans = () => {
   
   async function fetchLoanData() {
     try {
+
       console.log("address", address);
       // Query loan data from the subgraph
       const { data } = await apolloClient.query({
@@ -138,18 +143,26 @@ const Loans = () => {
       });
       console.log(data.currentLoanInfos);
       setLoanList([...data.currentLoanInfos]);
+      console.log("loan id", data.currentLoanInfos[0].loanId);
+
       
 
-      // Fetch floor prices and map them back to currentLoanInfos
-      // const floorPrices = await Promise.all(data.currentLoanInfos.map(async (loan: any) => {
-      //   const collectionSlug = getCollectionSlug(loan.nftAsset);
-      //   // console.log("collectionSlug", collectionSlug);
-      //   const nftStatDataResponse = await fetch(`/api/getNftFloorPrice?collectionSlug=${encodeURIComponent(collectionSlug)}`)
-      //   const nftStatData = await nftStatDataResponse.json();
-      //   // console.log('nft floor price', nftStatData?.total?.floor_price);
+      const amounts = [];
+     
+      const provider = new ethers.JsonRpcProvider(MAINNET_RPC_URL);
+      const lendPoolLoanContract = new ethers.Contract("0xe6A1C353c4e23AfBbf884B92c3A69E1C99057009", LendPoolLoan.abi, provider);
+      for (let i = 0; i < data.currentLoanInfos.length; i++) {
+        const loanAmount = await lendPoolLoanContract.getLoanReserveBorrowAmount(data.currentLoanInfos[i].loanId);
+        console.log("loan amount", loanAmount[1]);
+        const formattedAmount = parseFloat(ethers.formatEther(loanAmount[1]))+0.00001;
+        amounts.push(formattedAmount.toFixed(6));
+        // amounts.push(ethers.formatEther(loanAmount[1]));
 
-      //   return nftStatData?.total?.floor_price || 0; // Use null or a suitable fallback for missing floor prices
-      // }));
+      }
+
+      setLoanAmounts(amounts);
+      console.log(amounts);
+      console.log("loan amount", loanAmounts);
 
       const tokens = data.currentLoanInfos.map((loan: any) => ({
         "token_address": loan.nftAsset,
@@ -227,7 +240,6 @@ const Loans = () => {
   
   }
 
-
   useEffect(() => {
     console.log("loans use effect")
     fetchLoanData();
@@ -237,6 +249,9 @@ const Loans = () => {
 
 
   }, [address]);
+  useEffect(() => {
+    console.log('Updated loan amounts:', loanAmounts);
+  }, [loanAmounts]);
 
   const [signer, setSigner] = useState<ethers.Signer | null>(null);
   const { data: walletClient, isError, isLoading } = useWalletClient();
@@ -420,17 +435,25 @@ const Loans = () => {
                           }
                         >
                           <img src={EthIcon.src} alt="icon" />
+                          {loanAmounts.length > 1 ? (
+                              <>
+                        
+                                {loanAmounts[index].toString()}
+                              </>
+                            ) : (
+                              <p>Loading...</p>
+                            )}
                             {/* {ethers.formatEther(loansDataItems.loanAmount)} */}
                             {
-                              ( parseFloat(ethers.formatEther(loansDataItems.loanAmount))
-                                /
-                                (parseFloat(loansDataItems?.borrowIndex)/(10**27))
-                                *
-                                parseFloat(reserveData?.variableBorrowIndex)
-                                / 
-                                (10**27)
-                              )
-                              .toFixed(2) 
+                              // ( parseFloat(ethers.formatEther(loansDataItems.loanAmount))
+                              //   /
+                              //   (parseFloat(loansDataItems?.borrowIndex)/(10**27))
+                              //   *
+                              //   parseFloat(reserveData?.variableBorrowIndex)
+                              //   / 
+                              //   (10**27)
+                              // )
+                              // .toFixed(2) 
                             } ETH
                             {/* {parseFloat(loansDataItems?.borrowIndex)/(10**27)} */}
                             {/* {loansDataItems.loanAmount} */}
@@ -670,7 +693,7 @@ const Loans = () => {
                                 }
                               >
                                 <img src={EthIcon.src} alt="icon" />
-                                {                            ( parseFloat(ethers.formatEther(loansDataItems.loanAmount))
+                                {/* {                            ( parseFloat(ethers.formatEther(loansDataItems.loanAmount))
                                 /
                                 (parseFloat(loansDataItems?.borrowIndex)/(10**27))
                                 *
@@ -678,7 +701,15 @@ const Loans = () => {
                                 / 
                                 (10**27)
                               )
-                              .toFixed(2)  } ETH
+                              .toFixed(2)  } ETH */}
+                                                  {loanAmounts.length > 1 ? (
+                              <>
+                        
+                                {loanAmounts[index]}
+                              </>
+                            ) : (
+                              <p>Loading...</p>
+                            )}
                               </span>
                             </p>
                             {/* <p
@@ -738,16 +769,9 @@ const Loans = () => {
                         onChange={handleRepayAmountChange}
                       />
                       <div className="absolute top-[50%] translate-y-[-50%] right-5">
-                        <button onClick={() => setRepayAmountInput(                            ( parseFloat(ethers.formatEther(loansDataItems.loanAmount))
-                                /
-                                (parseFloat(loansDataItems?.borrowIndex)/(10**27))
-                                *
-                                parseFloat(reserveData?.variableBorrowIndex)
-                                / 
-                                (10**27)
-                                * 1.001
+                        <button onClick={() => setRepayAmountInput(                            ( loanAmounts[index]
                               )
-                              .toFixed(6) )} className="max_btn_bg hover:opacity-[0.7]">
+                               )} className="max_btn_bg hover:opacity-[0.7]">
                           Max
                         </button>
                       </div>
@@ -776,7 +800,7 @@ const Loans = () => {
                       </label> */}
 
                       <button
-                        onClick={() => callRepayETH(loansDataItems?.nftAsset, loansDataItems?.nftTokenId, (parseFloat(reserveData?.variableBorrowIndex)*parseFloat(ethers.formatEther(loansDataItems.loanAmount))/ (10**27) * 1.001).toFixed(6))}
+                        onClick={() => callRepayETH(loansDataItems?.nftAsset, loansDataItems?.nftTokenId, loanAmounts[index])}
                         disabled={ isRepaying} 
                         className={
                           "bg-gradient-to-r from-blue-500 to-purple-600 w-full py-[18px] rounded-[4px] text-white mt-5"
