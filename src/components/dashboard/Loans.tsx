@@ -435,10 +435,10 @@ const Loans = () => {
                           }
                         >
                           <img src={EthIcon.src} alt="icon" />
-                          {loanAmounts.length > 1 ? (
+                          {loanAmounts.length > 0 ? (
                               <>
                         
-                                {loanAmounts[index].toString()}
+                                {loanAmounts[index]}
                               </>
                             ) : (
                               <p>Loading...</p>

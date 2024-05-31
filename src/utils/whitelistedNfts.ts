@@ -10,12 +10,12 @@ interface OracleList {
 }
 
 export const oracleList: OracleList = {
-    "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258": {
-        "name": "OTHERDEED FOR OTHERSIDE",
-        "oracle_address": "0x7515Af5f7944345a7ed944b41bC16836ac3f5298",
-        "floor": "0.46399908",
-        "slug": "otherdeed",
-    },
+    // "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258": {
+    //     "name": "OTHERDEED FOR OTHERSIDE",
+    //     "oracle_address": "0x7515Af5f7944345a7ed944b41bC16836ac3f5298",
+    //     "floor": "0.46399908",
+    //     "slug": "otherdeed",
+    // },
     "0xbd3531da5cf5857e7cfaa92426877b022e612cf8": {
         "name": "PUDGY PENGUINS",
         "oracle_address": "0x7515Af5f7944345a7ed944b41bC16836ac3f5298",
