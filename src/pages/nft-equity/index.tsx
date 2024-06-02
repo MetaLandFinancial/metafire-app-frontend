@@ -16,7 +16,15 @@ type CollectionSlugsType = {
 
 // Use the defined type for your object
 const collectionSlugs: CollectionSlugsType = {
+    "0x49cf6f5d44e70224e2e23fdcdd2c053f30ada28b" : "clonex",
+    "0xbd3531da5cf5857e7cfaa92426877b022e612cf8" : "pudgypenguins",
+    "0x23581767a106ae21c074b2276d25e5c3e136a68b" : "proof-moonbirds",
+    "0x60e4d786628fea6478f785a6d7e704777c86a7c6" : "mutant-ape-yacht-club",
+    "0x8a90cab2b38dba80c64b7734e58ee1db38b8992e" : "doodles-official",
+    "0xb47e3cd837ddf8e4c57f05d70ab865de6e193bbb" : "cryptopunks",
     "0xbc4ca0eda7647a8ab7c2061c2e118a18a936f13d" : "boredapeyachtclub",
+    "0xed5af388653567af2f388e6224dc7c4b3241c544" : "azuki",
+
     // "0x34d85c9cdeb23fa97cb08333b511ac86e1c4e258" : "otherdeed",
     // "0x306b1ea3ecdf94ab739f1910bbda052ed4a9f949" : "beanzofficial",
     // "0xb4ad36f95e84d7b8c1dca17526b37958798ae1ad": "Motherdeed",
